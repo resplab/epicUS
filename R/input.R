@@ -135,6 +135,14 @@ get_input <- function(age0 = 40,
 
 
   input_help$agent$p_bgd_by_sex <- "Life table"
+
+  # USlifetables <-read.csv("data-raw/USLifeTables.csv", header = FALSE)
+  # USlifetables_num <- as.matrix(USlifetables)
+  # USlifetables_num <- apply(USlifetables_num, 2, as.numeric)
+  #
+  # input$agent$p_bgd_by_sex <- USlifetables_num
+
+
   input$agent$p_bgd_by_sex <- cbind(male = c(0.00522, 3e-04, 0.00022, 0.00017, 0.00013, 0.00011, 1e-04, 9e-05, 8e-05, 8e-05, 9e-05,
                                              1e-04, 0.00012, 0.00015, 2e-04, 0.00028, 0.00039, 0.00051, 0.00059, 0.00066, 0.00071, 0.00075, 0.00076, 0.00076, 0.00074,
                                              0.00071, 7e-04, 0.00069, 7e-04, 0.00071, 0.00074, 0.00078, 0.00082, 0.00086, 0.00091, 0.00096, 0.00102, 0.00108, 0.00115,

@@ -1,10 +1,10 @@
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/resplab/epicR/workflows/R-CMD-check/badge.svg)](https://github.com/resplab/epicR/actions)
-[![Codecov test coverage](https://codecov.io/gh/resplab/epicR/graph/badge.svg)](https://app.codecov.io/gh/resplab/epicR)
+[![R-CMD-check](https://github.com/resplab/epicR/workflows/R-CMD-check/badge.svg)](https://github.com/resplab/epicUS/actions)
+[![Codecov test coverage](https://codecov.io/gh/resplab/epicR/graph/badge.svg)](https://app.codecov.io/gh/resplab/epicUS)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 <!-- badges: end -->
 
-# epicR
+# epicUS
 R package for Evaluation Platform in COPD (EPIC). Please refer to the published papers for more information: 
 
 Sadatsafavi, M., Ghanbarian, S., Adibi, A., Johnson, K., Mark FitzGerald, J., Flanagan, W., … Sin, D. (2019). Development and Validation of the Evaluation Platform in COPD (EPIC): A Population-Based Outcomes Model of COPD for Canada. Medical Decision Making. [https://doi.org/10.1177/0272989X18824098](https://doi.org/10.1177/0272989X18824098)
@@ -28,7 +28,7 @@ epicR provides an interface to to interact with the Evaluation Platform in COPD 
 5. Install epicR from GitHub:
 
 ```r
-remotes::install_github('resplab/epicR')
+remotes::install_github('resplab/epicUS')
 ```
 
 
@@ -178,7 +178,7 @@ In the events data frame, each type of event has a code corresponding to the tab
 Closed-cohort analysis can be specified by changing the appropriate input parameters. 
 
 ```
-library(epicR)
+library(epicUS)
 input <- get_input(closed_cohort = 1)$values
 init_session()
 run(input=input)

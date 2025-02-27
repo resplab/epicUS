@@ -1,4 +1,4 @@
-#' \code{epicR} package
+#' \code{epicUS} package
 #'
 #' Evaluation Platform in COPD (EPIC) R Package
 #'
@@ -6,8 +6,8 @@
 #' \href{https://github.com/aminadibi/epicR#readme}{GitHub}
 #'
 #' @docType package
-#' @name epicR
-NULL
+#' @name epicUS
+"_PACKAGE"
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
 if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
