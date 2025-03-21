@@ -272,7 +272,7 @@ process_input <- function(ls, decision = 1)
   if(!is.null(ls$manual))
   {
     ls$agent$p_bgd_by_sex <- ls$agent$p_bgd_by_sex - ls$manual$explicit_mortality_by_age_sex
-    ls$agent$p_bgd_by_sex <- ls$agent$p_bgd_by_sex
+
 
 
     ls$smoking$ln_h_inc_betas[1] <- ls$smoking$ln_h_inc_betas[1] + log(ls$manual$smoking$intercept_k)

@@ -4,7 +4,7 @@
 \alias{calibrate_explicit_mortality}
 \title{Calibrates explicit mortality}
 \usage{
-calibrate_explicit_mortality(n_sim = 10^8)
+calibrate_explicit_mortality(n_sim = 10^6)
 }
 \arguments{
 \item{n_sim}{number of agents}

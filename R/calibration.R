@@ -5,7 +5,7 @@ calib_params <- list(COPD = list(prevalence = 0.193))
 #' @param n_sim number of agents
 #' @return difference in mortality rates and life table
 #' @export
-calibrate_explicit_mortality2 <- function(n_sim = 10^7) {
+calibrate_explicit_mortality2 <- function(n_sim = 10^6) {
   cat("Difference between life table and observed mortality\n")
   cat("You need to put the returned values into model_input$manual$explicit_mortality_by_age_sex\n")
   cat(paste("n_sim=", n_sim, "\n"))
@@ -19,7 +19,7 @@ calibrate_explicit_mortality2 <- function(n_sim = 10^7) {
 
   input <- model_input$values
   input$agent$l_inc_betas[1,] <- (-1000)  #No incidence (Life table is only valid for baseline)
-  input$global_parameters$time_horizon <- 20
+  input$global_parameters$time_horizon <- 1
   input$manual$explicit_mortality_by_age_sex <- input$manual$explicit_mortality_by_age_sex * 0
 
   cat("working...\n")
@@ -44,7 +44,7 @@ calibrate_explicit_mortality2 <- function(n_sim = 10^7) {
 #' @param n_sim number of agents
 #' @return difference in mortality rates and life table
 #' @export
-calibrate_explicit_mortality <- function(n_sim = 10^8) {
+calibrate_explicit_mortality <- function(n_sim = 10^6) {
   cat("Difference between life table and observed mortality\n")
   cat("You need to put the returned values into model_input$manual$explicit_mortality_by_age_sex\n")
   cat(paste("n_sim=", n_sim, "\n"))
@@ -56,8 +56,8 @@ calibrate_explicit_mortality <- function(n_sim = 10^8) {
   settings$event_stack_size <- 0
   init_session(settings = settings)
 
-  input <- model_input
-  input$agent$l_inc_betas[1,] <--100  #No incidence (Life table is only valid for baseline)
+  input <- model_input$values
+  input$agent$l_inc_betas[1,] <- (-1000)  #No incidence (Life table is only valid for baseline)
   input$global_parameters$time_horizon <- 1
   input$manual$explicit_mortality_by_age_sex <- input$manual$explicit_mortality_by_age_sex * 0
 
@@ -66,16 +66,16 @@ calibrate_explicit_mortality <- function(n_sim = 10^8) {
 
   cat("Mortality rate was", Cget_output()$n_death/Cget_output()$cumul_time, "\n")
 
-  difference <- model_input$agent$p_bgd_by_sex[41:111, ] - (Cget_output_ex()$n_death_by_age_sex[41:111, ]/Cget_output_ex()$sum_time_by_age_sex[41:111,
+  difference <- input$agent$p_bgd_by_sex[41:111, ] - (Cget_output_ex()$n_death_by_age_sex[41:111, ]/Cget_output_ex()$sum_time_by_age_sex[41:111,
                                                                                                                                                ])
-  plot(40:110, difference[, 1], type = "l", col = "blue", xlab = "age", ylab = "Difference")
-  legend("topright", c("male", "female"), lty = c(1, 1), col = c("blue", "red"))
-  lines(40:110, difference[, 2], type = "l", col = "red")
-  title(cex.main = 0.5, "Difference between expected (life table) to simulated mortality, by sex and age")
+  # plot(40:110, difference[, 1], type = "l", col = "blue", xlab = "age", ylab = "Difference")
+  # legend("topright", c("male", "female"), lty = c(1, 1), col = c("blue", "red"))
+  # lines(40:110, difference[, 2], type = "l", col = "red")
+  # title(cex.main = 0.5, "Difference between expected (life table) to simulated mortality, by sex and age")
 
-  difference[which(is.nan(difference))] <- 0
-  difference[which(abs(difference) == Inf)] <- 0
-  difference <- rbind(matrix(rep(0, 80), ncol = 2), difference)
+  # difference[which(is.nan(difference))] <- 0
+  # difference[which(abs(difference) == Inf)] <- 0
+  # difference <- rbind(matrix(rep(0, 80), ncol = 2), difference)
 
   terminate_session()
   return(difference)

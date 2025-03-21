@@ -1,0 +1,8 @@
+---
+title: "How Does the Optimization Function Work?"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{How Does the Optimization Function Work?}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
