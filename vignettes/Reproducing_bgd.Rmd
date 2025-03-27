@@ -25,13 +25,14 @@ First, we set the intercept of the exacerbation equation to a high value, effect
 
 ```{r, eval = TRUE, echo = TRUE}
 library(epicUS)
+packageVersion("epicUS")
 input<-get_input()
-input$values$exacerbation$logit_p_death_by_sex <- cbind(
-  male = c(intercept = -13000, age = log(1.05), mild = 0, moderate = 0, severe = 7.4, 
-    very_severe = 8, n_hist_severe_exac = 0),
-  female = c(intercept = -13000, age = log(1.05), mild = 0, moderate = 0, severe = 7.4, 
-    very_severe = 8, n_hist_severe_exac = 0)
-)
+# input$values$exacerbation$logit_p_death_by_sex <- cbind(
+#   male = c(intercept = -13000, age = log(1.05), mild = 0, moderate = 0, severe = 7.4, 
+#     very_severe = 8, n_hist_severe_exac = 0),
+#   female = c(intercept = -13000, age = log(1.05), mild = 0, moderate = 0, severe = 7.4, 
+#     very_severe = 8, n_hist_severe_exac = 0)
+# )
 
 ```
 
@@ -40,9 +41,9 @@ input$values$exacerbation$logit_p_death_by_sex <- cbind(
 Longevity is another factor in the model that influences population. To ensure that no external factors impact the population, we set these parameters to 0. This adjustment can be made in the input.R file.
 
 ```{r, eval = TRUE, echo = TRUE}
-input$values$agent$ln_h_bgd_betas <- t(as.matrix(c(intercept = 0, y = 0, y2 = 0, age = 0,
-                                            b_mi = 0, n_mi = 0, b_stroke = 0,
-                                            n_stroke = 0, hf = 0))) 
+# input$values$agent$ln_h_bgd_betas <- t(as.matrix(c(intercept = 0, y = 0, y2 = 0, age = 0,
+#                                             b_mi = 0, n_mi = 0, b_stroke = 0,
+#                                             n_stroke = 0, hf = 0))) 
 
 ```
 
@@ -204,7 +205,7 @@ USlifetables_filtered <- USlifetables_df[USlifetables_df$Age %in% common_ages, ]
 ```
 
 
-```{r, fig.width=8, fig.height=6, eval = TRUE, echo = TRUE}
+```{r, fig.width=8, fig.height=5, eval = TRUE, echo = TRUE}
 library(ggplot2)
 library(dplyr)
 
@@ -253,7 +254,10 @@ USlifetables_filtered <- USlifetables_df[USlifetables_df$Age %in% common_ages, ]
 
 ```
 
-```{r, fig.width=8, fig.height=6, eval = TRUE, echo = FALSE, warning=FALSE}
+When `time_horizon = 6`, we get the following plot.
+
+
+```{r, fig.width=8, fig.height=5, eval = TRUE, echo = TRUE, warning=FALSE}
 
 library(ggplot2)
 library(tidyr)
@@ -270,72 +274,144 @@ combined_data_long5 <- bind_rows(
 final_EPIC_death5<- filter(combined_data_long5, Source == "epicUS")
 final_US_death<- filter(combined_data_long5, Source == "US Life Tables")
 
-
-# Loop through each unique year in the combined_data_long dataset
-for (year in unique(final_EPIC_death5$Year)) {
-  
-  # Filter the data for the current year
-  year_data <- final_EPIC_death5 %>% filter(Year == year)
-  
-  # Create the plot for the current year
-  p <- ggplot(year_data, aes(x = Age, y = Death_Probability, fill = Source)) +
-    geom_col(position = "dodge", width = 1) +  
-    facet_wrap(~Sex) +
-    labs(
-      title = paste("Comparison of epicUS Death Probability vs. US Life Tables for Year", year),
-      x = "Age",
-      y = "Death Probability",
-      fill = "Source:"
-    ) +
-    theme_minimal() +
-    theme(
-      legend.position = "top",
-      legend.justification = "center",
-      plot.title = element_text(hjust = 0.5, margin = margin(b = 10))
-    )
-  
-  # Print the plot for the current year
-  print(p)
-}
-
-```
-
-```{r, fig.width=8, fig.height=6,}
-library(ggplot2)
-library(dplyr)
-
 # Add Death_Probability to USlifetables_filtered
 USlifetables_filtered_long <- USlifetables_filtered %>%
   gather(key = "Sex", value = "Death_Probability", Male, Female)
 
-# Loop through each unique year in the final_EPIC_death5 dataset
-for (year in unique(final_EPIC_death5$Year)) {
+# Loop through each unique year in the combined_data_long dataset
+for (year in unique(combined_data_long5$Year)) {
   
   # Filter the data for the current year
-  year_data <- final_EPIC_death5 %>% filter(Year == year)
+  year_data <- combined_data_long5 %>% filter(Year == year)
   
   # Create the plot for the current year
-  p <- ggplot() +
-    # Bar plot for epicUS data
-    geom_col(data = year_data, aes(x = Age, y = Death_Probability, fill = "epicUS"), position = "dodge", width = 0.8) +  
-    # Overlay the US Life Tables data as bars
-    geom_col(data = USlifetables_filtered_long, aes(x = Age, y = Death_Probability, fill = "US Life Tables"), position = "dodge", width = 0.8) +
-    labs(
-      title = paste("Comparison of epicUS Death Probability vs. US Life Tables for Year", year),
-      x = "Age",
-      y = "Death Probability",
-      fill = "Source:"
-    ) +
-    theme_minimal() +
-    theme(
-      legend.position = "top",
-      legend.justification = "center",
-      plot.title = element_text(hjust = 0.5, margin = margin(b = 10))
-    )
+  p <- ggplot(combined_data_long, aes(x = Age, y = Death_Probability, fill = Source)) +
+  geom_col(position = "dodge", width = 1) +  
+  facet_wrap(~Sex) +
+  labs(
+    title = "Comparison of epicUS Death Probability vs. US Life Tables (time_horizon = 6)",
+    x = "Age",
+    y = "Death Probability",
+    fill = "Source:"
+  ) +
+  theme_minimal()+
+  theme(
+    legend.position = "top",
+    legend.justification = "center",
+    plot.title = element_text(hjust = 0.5, margin = margin(b = 10))
+  )
   
   # Print the plot for the current year
-  print(p)
+  # print(p)
 }
+
+print(p)
+
+
+
 
 
 ```
+When we break it down and analyze per year, it seems to be in line with what we expect.
+
+
+### Eliminating smoking mortality
+
+We have identified a potential source of the observed mortality discrepancies. Specifically, the mortality ratio associated with both former and current smokers appears to be influencing the results.
+
+To investigate this, we set the following smoking-related mortality factors to 1 (indicating no excess mortality risk for former and current smokers):
+
+After making this adjustment, the results align more closely with the life tables.
+
+- This suggests that either:
+  - The model may be generating an excessive number of current and former smokers, leading to higher mortality than expected.
+  - We will need to update the mortality ratio estimates depending on whether an individual currently or formerly smokes.
+
+
+```{r, eval=TRUE, echo=TRUE}
+
+
+input$values$smoking$mortality_factor_former<- c(age40to49=1,age50to59=1,
+                                                 age60to69=1,age70to79=1,
+                                                 age80p=1)
+input$values$smoking$mortality_factor_current<- c(age40to49=1,age50to59=1,
+                                                  age60to69=1,age70to79=1,
+                                                  age80p=1)
+```
+
+```{r, eval=TRUE, echo =FALSE, fig.width=8, fig.height=5}
+
+init_session(settings = settings)
+time_horizon <- 1
+input$values$global_parameters$time_horizon <- time_horizon
+
+run(input = input$values)
+events_smoking <- as.data.frame(Cget_all_events_matrix())
+terminate_session()
+
+# we will group by age so we convert ages into whole numbers.
+events_smoking <- events_smoking %>%
+  mutate(age_and_local = floor(local_time + age_at_creation))
+
+# Filter events to identify individuals who have experienced event 14,
+# while also creating a flag for whether they ever experienced event 13 (death)
+events_smoking_filtered<- events_smoking %>%
+  mutate(death= ifelse(event==13,1,0)) %>%
+  group_by(id) %>%
+  mutate(ever_death = sum(death)) %>%
+  filter(event==14) %>%
+  ungroup()
+
+
+# calculationg probability of death
+death_prob_smoking<- events_smoking_filtered %>%
+  group_by(age_and_local, female) %>%
+  summarise(
+    total_count = n(),
+    death_count = sum(ever_death==1),
+    death_probability = death_count / total_count
+  )
+
+
+death_prob_smoking_clean <- death_prob_smoking %>%
+   ungroup() %>%
+   select(age_and_local, female, death_probability) %>%
+   pivot_wider(names_from = female, values_from = death_probability, names_prefix = "sex_")
+
+colnames(death_prob_smoking_clean) <- c("Age", "Male", "Female")
+
+
+common_ages <- intersect(death_prob_smoking_clean$Age, USlifetables_df$Age)
+
+# filter both so only include the rows with matching Age
+death_prob_smoking_filtered <- death_prob_smoking_clean[death_prob_smoking_clean$Age %in% common_ages, ]
+USlifetables_filtered <- USlifetables_df[USlifetables_df$Age %in% common_ages, ]
+
+combined_data_long_smoking <- bind_rows(
+  death_prob_smoking_filtered %>% mutate(Source = "epicUS"),
+  USlifetables_filtered %>% mutate(Source = "US Life Tables")
+) %>%
+  pivot_longer(cols = c("Male", "Female"), names_to = "Sex", values_to = "Death_Probability") %>%
+  filter(Age > 40)  
+
+ggplot(combined_data_long_smoking, aes(x = Age, y = Death_Probability, fill = Source)) +
+  geom_col(position = "dodge", width = 1) +  
+  facet_wrap(~Sex) +
+  labs(
+    title = "Comparison of epicUS Death Probability vs. US Life Tables (time_horizon =1)",
+    x = "Age",
+    y = "Death Probability",
+    fill = "Source:"
+  ) +
+  theme_minimal()+
+  theme(
+    legend.position = "top",
+    legend.justification = "center",
+    plot.title = element_text(hjust = 0.5, margin = margin(b = 10))
+  )
+
+
+```
+
+
+

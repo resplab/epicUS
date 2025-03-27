@@ -26,7 +26,7 @@ Here, we load the necessary libraries. We also set the default simulation settin
 library(epicUS)
 library(tidyverse)
 
-USSimulation <- read_csv("US_analysis/data/USSimulation.csv")
+USSimulation <- read_csv("../data-raw/USSimulation.csv")
 
 settings <- get_default_settings()
 settings$record_mode <- 0
@@ -280,7 +280,7 @@ rmse_per_range <- df_summed_ranges %>%
 ```
 
 
-```{r, fig.width=8, fig.height=6, eval = TRUE, echo = FALSE, warning=FALSE}
+```{r, fig.width=8, fig.height=5, eval = TRUE, echo = FALSE, warning=FALSE}
 
 # Loop through unique age groups and generate a plot for each
 for(age_grp in unique(df_summed_ranges$age_group)) {
