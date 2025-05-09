@@ -1,0 +1,89 @@
+---
+title: "Calibrate COPD exacerbations"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Calibrating smoking status and prevalence of COPD}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This document outlines the steps taken to calibrate the model to align with U.S.-based validation targets for COPD exacerbations using a 25 year time horizon.
+
+Validation Targets:
+COPD Exacerbations: Ford et al., 2014 (DOI: 10.1378/chest.14-2146)
+
+### Smoking calibration: Overview
+
+This section outlines the U.S.-based validation targets for COPD exacerbations:
+
+COPD exacerbations leading to hospitalizations
+256.3 per 100,000 individuals (Ford et al., 2014; Table 1; Estimate year 2012)
+
+### Smoking calibration: Step 1- Modify intercept value to calibrate proportion of non-smokers and former smokeres in the model
+
+EPIC's existing calibration function (from EPIC Canada) overestimaed the number of COPD exacerbations leading to hospitalization. To address this, we modified the intercept in the logistic regression equation that determines the probability of having an exacerbation. The intercept was decreased to 0.9 to improve alignment with the validation target estimate
+
+
+```{r, eval = TRUE, echo = TRUE}
+library(epicUS)
+input$values$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 0.9, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.3 , gold2 = -0.3 , gold3 = 0.08 , gold4 = -0.35 , diagnosis_effect = 0)))
+```
+
+### Smoking calibration: Step 2- Create data tables 
+
+```{r, eval = TRUE, echo = TRUE}
+#Check smoking status
+smokingstatus<- output$n_smoking_status_by_ctime
+# Calculate total population of individuals at each year
+row_sums <- rowSums(output$n_smoking_status_by_ctime)
+# Convert to proportions
+output$n_smoking_status_by_ctime_proportion <- output$n_smoking_status_by_ctime / row_sums
+# Create dataframe
+output$n_smoking_status_by_ctime_proportion <- as.data.frame(output$n_smoking_status_by_ctime_proportion)
+# Add a model year column
+output$n_smoking_status_by_ctime_proportion$Year <- 1:nrow(output$n_smoking_status_by_ctime_proportion)
+# Reshape data
+smokingstatus <- pivot_longer(output$n_smoking_status_by_ctime_proportion,
+                        cols = c("V1", "V2", "V3"),
+                        names_to = "Status",
+                        values_to = "Proportion")
+#Label data to prep for plotting
+smokingstatus$Status <- recode(smokingstatus$SmokingStatus,
+                                V1 = "Never Smoker",
+                                V2 = "Current Smoker",
+                                V3 = "Former Smoker")
+```
+
+### Smoking calibration: Step 3- Visualize data
+
+```{r, eval = TRUE, echo = TRUE}
+
+# Reshape data
+smokingstatus <- pivot_longer(output$n_smoking_status_by_ctime_proportion,
+                        cols = c("V1", "V2", "V3"),
+                        names_to = "Status",
+                        values_to = "Proportion")
+#Label data to prep for plotting
+smokingstatus$Status <- recode(smokingstatus$SmokingStatus,
+                                V1 = "Never Smoker",
+                                V2 = "Current Smoker",
+                                V3 = "Former Smoker")
+
+ggplot(smokingstatus, aes(x = Year, y = Proportion, color = Status)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Smoking Status Trends Over Time",
+       x = "Year",
+       y = "Proportion (%)",
+       color = "Smoking Status") +
+  theme_minimal()
+
+```
