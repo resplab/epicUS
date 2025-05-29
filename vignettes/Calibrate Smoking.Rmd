@@ -27,6 +27,7 @@ Never smokers: 65.3%
 Here, we load the necessary libraries. We also set the default simulation settings and specify the time horizon for the simulation (25 years).
 
 ```{r, eval = TRUE, echo = TRUE, message=FALSE}
+
 library(epicUS)
 library(tidyverse)
 library(ggplot2)
@@ -46,14 +47,25 @@ input$values$global_parameters$time_horizon <- time_horizon
 
 ```
 
-### Step 2: Modify intercept value to calibrate proportion of non-smokers and former smokeres in the model
+### Step 2: Modify intercept value to calibrate proportion of non-smokers and former smokers in the model
 
 EPIC's existing calibration function (from EPIC Canada) accurately matched the overall smoking rates from the 2018 Summary Health Statistics: National Health Interview Survey (NHIS), however, it underestimated the proportions of never and former smokers. To address this, we modified the intercept in the logistic regression equation that determines the probability of being a never smoker. Increasing the intercept to 4.85 improved alignment with the target distribution by increasing the proportion of former smokers.
 
-
 ```{r, eval = TRUE, echo = TRUE}
+
+# Modify smoking rates
 input$values$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.85, sex = 0, age = -0.06, age2 = 0,
                                                                                  sex_age = 0,sex_age2 = 0, year = -0.02)))
+```
+
+### Step 3: Modify intercept value to calibrate number of pack-years smoked in current and former smokers
+
+EPIC's existing calibration function (from EPIC Canada) underpredicted the pack-years of adults who ever smoked to that reported in the Population Assessment of Tobacco and Health (PATH) Study (https://pmc.ncbi.nlm.nih.gov/articles/PMC11601830/). To address this, we modified the intercept in the logistic regression equation that determines  pack-years of smoking at the time of creation. Increasing the intercept to 30 improved alignment with to data from PATH.
+
+```{r, eval = TRUE, echo = TRUE}
+
+# Modify pack years
+input$values$smoking$pack_years_0_betas <- t(as.matrix(c(intercept = 30, sex = -4, age = 0, year = -0.6, current_smoker = 10)))
 ```
 
 ### Step 4: Run EPIC
@@ -141,6 +153,19 @@ ggplot(smokingstatus_reshaped, aes(x = Year, y = Proportion, color = Status)) +
 
 ### Step 7: Observe trend in pack years per person
 
+This figure serves to assess the face validity of the simulated trajectory of average pack-years per smoker over time. 
+Due to the absence of nationally representative longitudinal data on cumulative smoking exposure (pack-years) in the United States, we rely on trends in smoking intensity to estimate impact on pack-years.
+
+Evidence from Cornelius et al. (2022) published in the CDC’s Morbidity and Mortality Weekly Report (DOI: 10.15585/mmwr.mm7111a1) highlights a sustained decline in cigarette consumption among daily smokers between 2005 and 2020. During this period:
+
+The proportion of adults reporting consumption of 20–29 cigarettes/day decreased from 34.9% to 27.9%
+Those smoking ≥30 cigarettes/day declined from 12.7% to 6.4%
+Conversely, the percentage smoking 1–9 cigarettes/day increased from 16.4% to 25.0%
+Those smoking 10–19 cigarettes/day rose from 36.0% to 40.7%
+
+These data reflect a broader shift toward lower daily cigarette consumption, suggesting that, on average, smokers are now consuming approximately half to one pack per day. In light of this, a projected decline in cumulative pack-year exposure is both expected and reasonable.
+The observed decrease in average pack-years per smoker in the model is therefore aligned with empirically documented reductions in smoking intensity, supporting the face validity of the simulated trend.
+
 ```{r, eval = TRUE, echo = TRUE}
 
 # Calculate total pack years by year
@@ -179,7 +204,7 @@ ggplot(pack_year_per_person, aes(x = Year, y = AvgPackYearsPerSmoker)) +
   geom_point(size = 3, color = "#66c2ff", stroke = 0.8) +   # Light blue
   scale_y_continuous(
     labels = scales::comma_format(accuracy = 1),
-    limits = c(0, NA)
+    limits = c(0, 40)
   ) +
   scale_x_continuous(breaks = seq(2015, 2040, by = 5)) +
   labs(
