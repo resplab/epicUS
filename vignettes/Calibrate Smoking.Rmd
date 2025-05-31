@@ -6,18 +6,16 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+### Overview
 
 This document outlines the steps taken to calibrate the model to align with U.S.-based validation targets for smoking behavior using a 25 year time horizon.
 
-Validation Targes:
+Validation Target:
 Smoking Rates: Summary Health Statistics, National Health Interview Survey (NHIS), 2018
-
-### Overview
 
 This section outlines the steps taken to calibrate smoking behavior and COPD prevalence in the model to align with U.S.-based validation targets.
 
 Smoking Behavior Validation Targets (NHIS 2018):
-
 Current smokers: 13.8%
 Former smokers: 20.9%
 Never smokers: 65.3%
@@ -60,7 +58,7 @@ input$values$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c
 
 ### Step 3: Modify intercept value to calibrate number of pack-years smoked in current and former smokers
 
-EPIC's existing calibration function (from EPIC Canada) underpredicted the pack-years of adults who ever smoked to that reported in the Population Assessment of Tobacco and Health (PATH) Study (https://pmc.ncbi.nlm.nih.gov/articles/PMC11601830/). To address this, we modified the intercept in the logistic regression equation that determines  pack-years of smoking at the time of creation. Increasing the intercept to 30 improved alignment with to data from PATH.
+EPIC's existing calibration function (from EPIC Canada) underpredicted the pack-years of adults who ever smoked to that reported in the Population Assessment of Tobacco and Health (PATH) Study (https://pmc.ncbi.nlm.nih.gov/articles/PMC11601830/). Data provided in 2018-2019 by the PATH Study estimated an average of 32.9 pack-years among adults who ever smoked (https://pmc.ncbi.nlm.nih.gov/articles/PMC11601830/).To address this, we modified the intercept in the logistic regression equation that determines  pack-years of smoking at the time of creation. Increasing the intercept to 30 improved alignment with to data from PATH.
 
 ```{r, eval = TRUE, echo = TRUE}
 
@@ -68,7 +66,22 @@ EPIC's existing calibration function (from EPIC Canada) underpredicted the pack-
 input$values$smoking$pack_years_0_betas <- t(as.matrix(c(intercept = 30, sex = -4, age = 0, year = -0.6, current_smoker = 10)))
 ```
 
-### Step 4: Run EPIC
+
+### Step 4: Modify mortality ratios for age groups
+
+The mortality rates currently used in EPIC Canada did not include mortality ratios for individuals under the age of 60. More recent data from Cho et al. 2024 (DOI: 10.1056/EVIDoa2300272; Table 2) provide age-specific mortality hazard ratios, stratified by sex. As EPIC does not model mortality by sex, we used the midpoint of the reported male and female estimates for each age group. For the mortality ratio for individuals over the age of 80, we retained estimates from Gillert et al. 2012 (DOI: 10.1001/archinternmed.2012.1397), as Cho et al.2024 did not report data for this population.
+
+```{r, eval = TRUE, echo = TRUE}
+
+# Modify mortality ratios for current smokers vs. non smokers
+input$smoking$mortality_factor_current <- t(as.matrix(c(age40to49 = 2.33, age50to59 = 3.02, age60to69 = 2.44, age70to79 = 2.44, age80p = 1.66)))
+
+# Modify mortality ratios for former smokers vs. non smokers
+input$smoking$mortality_factor_former <- t(as.matrix(c(age40to49 = 1.31, age50to59 = 1.85, age60to69 = 1.91, age70to79 = 1.91, age80p = 1.27)))
+  
+```
+
+### Step 5: Run EPIC
 
 ```{r, eval = TRUE, echo = TRUE}
 
@@ -78,7 +91,7 @@ terminate_session()
 
 ```
 
-### Step 5: Create data tables 
+### Step 6: Create data tables 
 
 ```{r, eval = TRUE, echo = TRUE}
 
@@ -96,13 +109,13 @@ smokingstatus_proportions$Year <- 2015:2040
 
 # Display summary of smoking status 
 kable(
-  head(smokingstatus_proportions[, c("Year", "Never Smoker", "Current Smoker", "Former Smoker")]),
+  smokingstatus_proportions[, c("Year", "Never Smoker", "Current Smoker", "Former Smoker")],
   caption = "Proportion of Smoking Status Over Time",
   digits = 3
-)
+  )
 ```
 
-### Step 6: Visualize data
+### Step 7: Visualize data
 
 ```{r,smokingstatus_reshaped, fig.width = 8, fig.height = 6, echo = TRUE}
 
@@ -112,14 +125,14 @@ smokingstatus_reshaped<- pivot_longer(
   cols = c("Never Smoker", "Current Smoker", "Former Smoker"),
   names_to = "Status",
   values_to = "Proportion"
-)
+  )
 
 # Define colors
 poster_colors <- c(
-  "Never Smoker" = "#003f5c",      # deep navy
-  "Current Smoker" = "#ffa600",    # coral orange
-  "Former Smoker" = "#66c2ff"      # light blue
-)
+  "Never Smoker" = "#003f5c",      
+  "Current Smoker" = "#ffa600",   
+  "Former Smoker" = "#66c2ff"      
+  )
 
 # Plot smoking status trends
 ggplot(smokingstatus_reshaped, aes(x = Year, y = Proportion, color = Status)) +
@@ -134,7 +147,7 @@ ggplot(smokingstatus_reshaped, aes(x = Year, y = Proportion, color = Status)) +
     x = "Year",
     y = "Proportion of Population",
     color = "Smoking Status"
-  ) +
+    ) +
   theme_minimal(base_size = 14) +
   theme(
     plot.title = element_text(face = "bold", size = 18, hjust = 0.5),
@@ -147,11 +160,11 @@ ggplot(smokingstatus_reshaped, aes(x = Year, y = Proportion, color = Status)) +
     legend.title = element_text(face = "bold"),
     legend.text = element_text(size = 12, margin = margin(b = 4)),
     legend.key.height = unit(1.2, "lines")
-  )
+    )
 
 ```
 
-### Step 7: Observe trend in pack years per person
+### Step 8: Observe trend in pack years per person
 
 This figure serves to assess the face validity of the simulated trajectory of average pack-years per smoker over time. 
 Due to the absence of nationally representative longitudinal data on cumulative smoking exposure (pack-years) in the United States, we rely on trends in smoking intensity to estimate impact on pack-years.
@@ -190,29 +203,29 @@ pack_years_total_and_smoking_history <- merge(pack_years_total, smoking_history,
 pack_year_per_person <- data.frame(
   Year = pack_years_total_and_smoking_history$Year,
   AvgPackYearsPerSmoker = pack_years_total_and_smoking_history$packyears / pack_years_total_and_smoking_history$n_smokers
-)
+  )
 
 #
 ```
 
-### Step 8: Visualize trend in pack years per person
+### Step 9: Visualize trend in pack years per person
 
 ```{r,pack_years_per_person, fig.width = 8, fig.height = 6, echo = TRUE}
 
 ggplot(pack_year_per_person, aes(x = Year, y = AvgPackYearsPerSmoker)) +
-  geom_line(linewidth = 1.5, color = "#003f5c") +           # Deep navy
-  geom_point(size = 3, color = "#66c2ff", stroke = 0.8) +   # Light blue
+  geom_line(linewidth = 1.5, color = "#003f5c") +           
+  geom_point(size = 3, color = "#66c2ff", stroke = 0.8) +  
   scale_y_continuous(
     labels = scales::comma_format(accuracy = 1),
     limits = c(0, 40)
-  ) +
+    ) +
   scale_x_continuous(breaks = seq(2015, 2040, by = 5)) +
   labs(
     title = "Average Pack-Years per Smoker Over Time",
     subtitle = "Estimated smoking exposure per smoker from 2015–2040",
     x = "Year",
     y = "Average Pack-Years"
-  ) +
+    ) +
   theme_minimal(base_size = 14) +
   theme(
     plot.title = element_text(face = "bold", size = 18, hjust = 0.5, margin = margin(b = 8)),
@@ -222,7 +235,7 @@ ggplot(pack_year_per_person, aes(x = Year, y = AvgPackYearsPerSmoker)) +
     axis.line = element_line(color = "black", linewidth = 0.8),
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank()
-  )
+    )
 ```
 
 ### 
