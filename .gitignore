@@ -3,7 +3,7 @@
 .RData
 *.csv
 *.xlsx
-*.md
+#*.md
 ./*.Rmd
 *.tiff
 inst/doc
