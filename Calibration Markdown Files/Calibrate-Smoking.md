@@ -59,8 +59,7 @@ increasing the proportion of former smokers.
 
 ``` r
 # Modify smoking rates
-input$values$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.85, sex = 0, age = -0.06, age2 = 0,
-                                                                                 sex_age = 0,sex_age2 = 0, year = -0.02)))
+input$values$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.85, sex = 0, age = -0.06, age2 = 0,sex_age = 0,sex_age2 = 0, year = -0.02)))
 ```
 
 ### Step 3: Modify intercept value to calibrate number of pack-years smoked in current and former smokers
@@ -95,10 +94,10 @@ not report data for this population.
 
 ``` r
 # Modify mortality ratios for current smokers vs. non smokers
-input$smoking$mortality_factor_current <- t(as.matrix(c(age40to49 = 2.33, age50to59 = 3.02, age60to69 = 2.44, age70to79 = 2.44, age80p = 1.66)))
+input$values$smoking$mortality_factor_current <- t(as.matrix(c(age40to49 = 2.33, age50to59 = 3.02, age60to69 = 2.44, age70to79 = 2.44, age80p = 1.66)))
 
 # Modify mortality ratios for former smokers vs. non smokers
-input$smoking$mortality_factor_former <- t(as.matrix(c(age40to49 = 1.31, age50to59 = 1.85, age60to69 = 1.91, age70to79 = 1.91, age80p = 1.27)))
+input$values$smoking$mortality_factor_former <- t(as.matrix(c(age40to49 = 1.31, age50to59 = 1.85, age60to69 = 1.91, age70to79 = 1.91, age80p = 1.27)))
 ```
 
 ### Step 5: Run EPIC
@@ -143,32 +142,32 @@ kable(
 
 | Year | Never Smoker | Current Smoker | Former Smoker |
 |-----:|-------------:|---------------:|--------------:|
-| 2015 |        0.639 |          0.152 |         0.208 |
-| 2016 |        0.644 |          0.142 |         0.214 |
-| 2017 |        0.648 |          0.135 |         0.216 |
-| 2018 |        0.653 |          0.129 |         0.218 |
-| 2019 |        0.656 |          0.124 |         0.220 |
-| 2020 |        0.660 |          0.120 |         0.220 |
-| 2021 |        0.663 |          0.115 |         0.221 |
-| 2022 |        0.667 |          0.112 |         0.221 |
-| 2023 |        0.669 |          0.109 |         0.222 |
-| 2024 |        0.672 |          0.106 |         0.222 |
-| 2025 |        0.675 |          0.104 |         0.222 |
-| 2026 |        0.677 |          0.102 |         0.221 |
-| 2027 |        0.679 |          0.100 |         0.221 |
-| 2028 |        0.681 |          0.098 |         0.221 |
-| 2029 |        0.683 |          0.097 |         0.220 |
-| 2030 |        0.685 |          0.095 |         0.220 |
-| 2031 |        0.687 |          0.094 |         0.219 |
-| 2032 |        0.688 |          0.093 |         0.219 |
-| 2033 |        0.690 |          0.092 |         0.218 |
-| 2034 |        0.691 |          0.091 |         0.218 |
-| 2035 |        0.693 |          0.090 |         0.217 |
-| 2036 |        0.694 |          0.090 |         0.217 |
-| 2037 |        0.695 |          0.089 |         0.216 |
-| 2038 |        0.696 |          0.088 |         0.216 |
-| 2039 |        0.697 |          0.088 |         0.216 |
-| 2040 |        0.698 |          0.087 |         0.215 |
+| 2015 |        0.638 |          0.152 |         0.210 |
+| 2016 |        0.645 |          0.141 |         0.214 |
+| 2017 |        0.651 |          0.133 |         0.216 |
+| 2018 |        0.657 |          0.127 |         0.217 |
+| 2019 |        0.662 |          0.121 |         0.217 |
+| 2020 |        0.667 |          0.116 |         0.217 |
+| 2021 |        0.672 |          0.112 |         0.216 |
+| 2022 |        0.676 |          0.108 |         0.215 |
+| 2023 |        0.681 |          0.105 |         0.214 |
+| 2024 |        0.685 |          0.102 |         0.213 |
+| 2025 |        0.688 |          0.100 |         0.212 |
+| 2026 |        0.692 |          0.097 |         0.211 |
+| 2027 |        0.695 |          0.095 |         0.210 |
+| 2028 |        0.698 |          0.094 |         0.209 |
+| 2029 |        0.700 |          0.092 |         0.208 |
+| 2030 |        0.703 |          0.091 |         0.206 |
+| 2031 |        0.705 |          0.090 |         0.205 |
+| 2032 |        0.707 |          0.088 |         0.204 |
+| 2033 |        0.709 |          0.087 |         0.203 |
+| 2034 |        0.711 |          0.087 |         0.202 |
+| 2035 |        0.713 |          0.086 |         0.201 |
+| 2036 |        0.715 |          0.085 |         0.201 |
+| 2037 |        0.716 |          0.084 |         0.200 |
+| 2038 |        0.718 |          0.083 |         0.199 |
+| 2039 |        0.719 |          0.082 |         0.199 |
+| 2040 |        0.720 |          0.082 |         0.198 |
 
 Proportion of Smoking Status Over Time
 
@@ -219,7 +218,7 @@ ggplot(smokingstatus_reshaped, aes(x = Year, y = Proportion, color = Status)) +
     )
 ```
 
-![](Calibrate-Smoking_files/figure-gfm/smokingstatus_reshaped-1.png)<!-- -->
+![](/home/kevin/EpicUSrecalibration/vignettes/Calibrate-Smoking_files/figure-gfm/smokingstatus_reshaped-1.png)<!-- -->
 
 ### Step 8: Observe trend in pack years per person
 
@@ -305,6 +304,6 @@ ggplot(pack_year_per_person, aes(x = Year, y = AvgPackYearsPerSmoker)) +
     )
 ```
 
-![](Calibrate-Smoking_files/figure-gfm/pack_years_per_person-1.png)<!-- -->
+![](/home/kevin/EpicUSrecalibration/vignettes/Calibrate-Smoking_files/figure-gfm/pack_years_per_person-1.png)<!-- -->
 
 ### 
