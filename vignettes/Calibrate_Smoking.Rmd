@@ -52,8 +52,8 @@ EPIC's existing calibration function (from EPIC Canada) accurately matched the o
 ```{r, eval = TRUE, echo = TRUE}
 
 # Modify smoking rates
-input$values$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.85, sex = 0, age = -0.06, age2 = 0,
-                                                                                 sex_age = 0,sex_age2 = 0, year = -0.02)))
+input$values$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.85, sex = 0, age = -0.06, age2 = 0,sex_age = 0,sex_age2 = 0, year = -0.02)))
+
 ```
 
 ### Step 3: Modify intercept value to calibrate number of pack-years smoked in current and former smokers
@@ -74,10 +74,10 @@ The mortality rates currently used in EPIC Canada did not include mortality rati
 ```{r, eval = TRUE, echo = TRUE}
 
 # Modify mortality ratios for current smokers vs. non smokers
-input$smoking$mortality_factor_current <- t(as.matrix(c(age40to49 = 2.33, age50to59 = 3.02, age60to69 = 2.44, age70to79 = 2.44, age80p = 1.66)))
+input$values$smoking$mortality_factor_current <- t(as.matrix(c(age40to49 = 2.33, age50to59 = 3.02, age60to69 = 2.44, age70to79 = 2.44, age80p = 1.66)))
 
 # Modify mortality ratios for former smokers vs. non smokers
-input$smoking$mortality_factor_former <- t(as.matrix(c(age40to49 = 1.31, age50to59 = 1.85, age60to69 = 1.91, age70to79 = 1.91, age80p = 1.27)))
+input$values$smoking$mortality_factor_former <- t(as.matrix(c(age40to49 = 1.31, age50to59 = 1.85, age60to69 = 1.91, age70to79 = 1.91, age80p = 1.27)))
   
 ```
 

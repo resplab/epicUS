@@ -1,0 +1,119 @@
+---
+title: "Calibrate COPD Exacerbations"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Cablirate COPD Exacerbations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This document outlines the steps taken to calibrate the model to align with U.S.-based validation targets for COPD exacerbation using a 25 year time horizon.
+
+Validation Targets:
+TORCH and UPLIFT: Placebo arms
+UPLIFT: LAMA arm
+FLAME: ICS+ LABA and LABA+LAMA arms
+IMPACT: ICS+LAMA+LABA arm
+
+```{r, eval = TRUE, echo = TRUE}
+library(knitr)
+
+copd_trials <- data.frame(
+  Trial = c("TORCH", "UPLIFT", "UPLIFT", "FLAME", "FLAME", "IMPACT"),
+  Treatment_Arm = c(
+    "Placebo",
+    "Placebo",
+    "Tiotropium (LAMA)",
+    "LABA+LAMA",
+    "LABA+ICS",
+    "ICS+LAMA+LABA"
+    ),
+  Overall_Exacerbation_Rate = c(1.13, 0.85, 0.73, 0.98, 1.19, 0.91),
+  Severe_Exacerbation_Rate = c(0.19, NA, NA, 0.15, 0.17, 0.13)
+  )
+
+kable(copd_trials,
+      caption = "Annual Exacerbation Rates (Overall and Severe) in COPD Trials",
+      digits = 2,
+      align = "l") 
+  
+```
+
+### Step 1: Load libraries and setup
+
+Here, we load the necessary libraries. We also set the default simulation settings and specify the time horizon for the simulation (25 years).
+
+```{r, eval = TRUE, echo = TRUE, message=FALSE}
+
+library(epicUS)
+library(tidyverse)
+library(ggplot2)
+library(scales)
+library(dplyr)
+
+# Load EPIC general settings
+settings <- get_default_settings()
+settings$record_mode <- 0
+settings$n_base_agents <- 1e6
+init_session(settings = settings)
+
+input <- get_input()
+time_horizon <- 26
+input$values$global_parameters$time_horizon <- time_horizon
+
+```
+
+### Smoking calibration: Step 1- Log hazard reductions for annual COPD exacerbation rates by treatment class
+
+Estimates are based on the best available evidence from a large network meta-analysis
+(Lee et al., 2019, PLOS Medicine; doi:10.1371/journal.pmed.1002958) comparing inhaled therapies using placebo as a common comparator.
+
+Odds ratios (ORs) from the NMA were transformed to approximate rate ratios (RRs) using the formula:
+RR ≈ OR / (1 - P₀ + P₀ × OR)
+with P₀ = 0.62, based on the proportion of patients with ≥1 exacerbation per year in the placebo arm of the TORCH trial 
+
+```{r, eval = TRUE, echo = TRUE}
+
+# Medication log-hazard regression matrix for rate reduction in exacerbations
+input_help$medication$medication_ln_hr_exac <- "Rate reduction in exacerbations due to treatment (RRs converted from ORs in Lee et al. 2019 NMA using P0 = 0.62)"
+
+input$values$medication$medication_ln_hr_exac <- c(
+  None = 0,
+  SABA = 0,  # No data
+  LABA = log(0.88^input$values$medication$medication_adherence),         # OR = 0.86 → RR ≈ 0.88
+  SABA_LABA = log(0.88^input$values$medication$medication_adherence),
+  LAMA = log(0.80^input$values$medication$medication_adherence),         # OR = 0.77 → RR ≈ 0.80
+  LAMA_SABA = log(0.80^input$values$medication$medication_adherence),
+  LAMA_LABA = log(0.74^input$values$medication$medication_adherence),    # OR = 0.70 → RR ≈ 0.74
+  LAMA_LABA_SABA = log(0.74^input$values$medication$medication_adherence),
+  ICS = log(0.86^input$values$medication$medication_adherence),          # OR = 0.84 → RR ≈ 0.86
+  ICS_SABA = log(0.86^input$values$medication$medication_adherence),
+  ICS_LABA = log(0.77^input$values$medication$medication_adherence),     # OR = 0.74 → RR ≈ 0.77
+  ICS_LABA_SABA = log(0.77^input$values$medication$medication_adherence),
+  ICS_LAMA = log(0.77^input$values$medication$medication_adherence),     # assumed equal to ICS/LABA
+  ICS_LAMA_SABA = log(0.77^input$values$medication$medication_adherence),
+  ICS_LAMA_LABA = log(0.63^input$values$medication$medication_adherence),# OR = 0.57 → RR ≈ 0.63
+  ICS_LAMA_LABA_SABA = log(0.63^input$values$medication$medication_adherence)
+  )
+
+```
+
+
+### Smoking calibration: Step 1- Modify intercept value to calibrate proportion of non-smokers and former smokeres in the model
+
+EPIC's existing calibration function (from EPIC Canada) overestimaed the number of COPD exacerbations leading to hospitalization. To address this, we modified the intercept in the logistic regression equation that determines the probability of having an exacerbation. The intercept was decreased to 0.9 to improve alignment with the validation target estimate
+
+
+```{r, eval = TRUE, echo = TRUE}
+library(epicUS)
+input$values$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 0.9, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.3 , gold2 = -0.3 , gold3 = 0.08 , gold4 = -0.35 , diagnosis_effect = 0)))
+```
+
+
