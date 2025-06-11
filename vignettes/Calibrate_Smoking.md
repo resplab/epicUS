@@ -47,12 +47,12 @@ million smokers aged 45 and over. The AAPC was calculated using the
 formula: AAPC = ((Value 2023 / Value 2017) ^ (1/6)) - 1. This results in
 an approximate AAPC of −1.9% per year.
 
-In summary the following validation targets were used: 
-Current smokers (2018): 13.2% 
-Former smokers (2018): 29.3% 
-Never smokers (2018): 57.5%
-Current smokers (2023): 9.7% 
-AAPC: -1.9% per year
+**Summary of validation targets:**  
+- **Current smokers (2018):** 13.2%  
+- **Former smokers (2018):** 29.3%  
+- **Never smokers (2018):** 57.5%  
+- **Current smokers (2023):** 9.7%  
+- **Average Annual Percent Change (AAPC):** –1.9% per year
 
 ### Step 1: Load libraries and setup
 
