@@ -38,7 +38,7 @@ estimated smoking prevalence of 9.7% (12.97 million of 134.3 million).
 
 To estimate the average annual percent change (AAPC) in exclusive
 cigarette smoking among U.S. adults aged 45 and over from 2017 to 2023,
-data from the same MMWR report (Vol. 74, No. 7) were used. In 2017, the
+data from the same MMWR report (Vol. 74, No.7) were used. In 2017, the
 number of exclusive cigarette smokers was estimated at 11.0 million for
 adults aged 45–64 and 3.57 million for those aged 65 and older, totaling
 14.57 million. By 2023, these figures had declined to 8.77 million and
@@ -47,9 +47,12 @@ million smokers aged 45 and over. The AAPC was calculated using the
 formula: AAPC = ((Value 2023 / Value 2017) ^ (1/6)) - 1. This results in
 an approximate AAPC of −1.9% per year.
 
-In summary the following validation targets were used: Current smokers
-(2018): 13.2% Former smokers (2018): 29.3% Never smokers (2018): 57.5%
-Current smokers (2023): 9.7% AAPC: -1.9% per year
+In summary the following validation targets were used: 
+Current smokers (2018): 13.2% 
+Former smokers (2018): 29.3% 
+Never smokers (2018): 57.5%
+Current smokers (2023): 9.7% 
+AAPC: -1.9% per year
 
 ### Step 1: Load libraries and setup
 
@@ -127,9 +130,8 @@ the pack-years of adults who ever smoked to that reported in the
 Population Assessment of Tobacco and Health (PATH) Study
 (<https://pmc.ncbi.nlm.nih.gov/articles/PMC11601830/>). Data provided in
 2018-2019 by the PATH Study estimated an average of 32.9 pack-years
-among adults who ever smoked
-(<https://pmc.ncbi.nlm.nih.gov/articles/PMC11601830/>). To address this,
-the intercept in the logistic regression equation that determines
+among adults who ever smoked (<https://pmc.ncbi.nlm.nih.gov/articles/PMC11601830/>). 
+To address this, the intercept in the logistic regression equation that determines
 pack-years of smoking at the time of creation was modified. Increasing
 the intercept to 30 improved alignment with to data from PATH.
 
