@@ -10,15 +10,22 @@ vignette: >
 
 This document outlines the steps taken to calibrate the model to align with U.S.-based validation targets for smoking behavior using a 25 year time horizon.
 
-Validation Target:
-Smoking Rates: Summary Health Statistics, National Health Interview Survey (NHIS), 2018
+To validate the model, we used smoking behaviour data points from two time periods (2018 and 2023) from the U.S. National Health Interview Survey 
 
-This section outlines the steps taken to calibrate smoking behavior and COPD prevalence in the model to align with U.S.-based validation targets.
+Data from the 2018 U.S. National Health Interview Survey (Table A-12b) was used to calculate the proportion of current, former, and non-smokers among adults aged 45 and over. We summed the population counts for age groups 45–64, 65–74, and 75+ to obtain the total (n=134,448), with 13.2% identified as current smokers (n=17,797), 29.3% as former smokers (n=39,351), and 57.2% as non-smokers (n=76,873). While EPIC models individuals aged 40 and older, data were not available in 40+ groupings; thus, using 45 and over was considered an appropriate validation target.
 
-Smoking Behavior Validation Targets (NHIS 2018):
-Current smokers: 13.8%
-Former smokers: 20.9%
-Never smokers: 65.3%
+To estimate the number and proportion of current exclusive cigarette smokers among U.S. adults aged 45 and over in 2023, we used a MMWR report using National Health Interview Survey data (DOI: 10.15585/mmwr.mm7407a3). The estimated number of smokers in 2023 was 8.77 million for adults aged 45–64 and 4.20 million for those aged 65 and older. Using the reported smoking prevalence for each group—11.2% for ages 45–64 and 7.5% for ages 65+—we back-calculated the population denominators by dividing the number of smokers by their respective prevalence estimates. This yielded an estimated population of 78.3 million adults aged 45–64 and 56.0 million aged 65+, resulting in a combined total of 134.3 million U.S. adults aged 45 and over. Similar to previously, due to the absence of data in the 40+ grouping, the estimated prevalence of cigarette smoking in ages 40 and older was assumed to be 9.7% (12.97 million of 134.3 million). 
+
+To estimate the average annual percent change (AAPC) in exclusive cigarette smoking among U.S. adults aged 45 and over from 2017 to 2023, we used data reported in the 2025 MMWR (Vol. 74, No. 7). In 2017, the estimated number of exclusive cigarette smokers was 11.0 million for adults aged 45–64 and 3.57 million for those aged 65 and older, totaling 14.57 million. By 2023, these figures declined to 8.77 million and 4.20 million, respectively, yielding a combined total of 12.97 million smokers aged 45 and over. Using these totals, we calculated the AAPC over the 6-year period with the formula: 
+AAPC = ((Value 2023 / Value 2017) ^ (1/6)) - 1. 
+This results in an approximate AAPC of −1.9% per year. 
+
+In summary the following validation targets were used:
+Current smokers (2018): 13.2%
+Former smokers (2018): 29.3%
+Never smokers (2018): 57.5%
+Current smokers (2023): 9.7%
+AAPC: -1.9% per year
 
 ### Step 1: Load libraries and setup
 
@@ -47,16 +54,39 @@ input$values$global_parameters$time_horizon <- time_horizon
 
 ### Step 2: Modify intercept value to calibrate proportion of non-smokers and former smokers in the model
 
-EPIC's existing calibration function (from EPIC Canada) accurately matched the overall smoking rates from the 2018 Summary Health Statistics: National Health Interview Survey (NHIS), however, it underestimated the proportions of never and former smokers. To address this, we modified the intercept in the logistic regression equation that determines the probability of being a never smoker. Increasing the intercept to 4.85 improved alignment with the target distribution by increasing the proportion of former smokers.
+EPIC's existing calibration function (from EPIC Canada) accurately matched the overall smoking rates from the 2018 Summary Health Statistics: National Health Interview Survey (NHIS), however, it underestimated the proportions of never and former smokers. To address this, we modified intercepts in the logistic regression equation that determines the probability of being a never smoker and the probability of being a smoker at time of creation.
 
 ```{r, eval = TRUE, echo = TRUE}
 
 # Modify smoking rates
-input$values$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.85, sex = 0, age = -0.06, age2 = 0,sex_age = 0,sex_age2 = 0, year = -0.02)))
+input$values$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.35, sex = 0, age = -0.06, age2 = 0,sex_age = 0,sex_age2 = 0, year = -0.02)))
+input$values$smoking$logit_p_current_smoker_0_betas <- t(as.matrix(c(Intercept = -0.05, sex = -1, age = -0.02, age2 = 0, sex_age = 0, sex_age2 = 0, year = -0.02)))  #intercept -1.8 when age = -0.02
 
 ```
 
-### Step 3: Modify intercept value to calibrate number of pack-years smoked in current and former smokers
+### Step 3: Modify rate of annual rate of decline in proportion of current smokers
+
+To align the model with validation targets for the proportion of current smokers in 2018 and 2023, the intercept of the log-hazard function for smoking cessation was adjusted to modify the rate of decline in smoking prevalence.
+
+```{r, eval = TRUE, echo = TRUE}
+
+# Modify rate of decline
+input$values$smoking$ln_h_ces_betas <- c(intercept = -3.35,  sex = 0, age = 0.02, age2 = 0, calendar_time = -0.01, diagnosis = log(1.38))
+
+```
+
+### Step 4: Lower minimum prevalence of smoking 
+
+The U.S. Healthy People initiative aims to reduce adult smoking prevalence to 5%. To reflect this national policy goal and ensure face validity of long-term projections, the minimum threshold for smoking prevalence in the model was adjusted to 5%.
+
+```{r, eval = TRUE, echo = TRUE}
+
+# Modify lower bound prevalence of current smokers
+input$values$smoking$minimum_smoking_prevalence <- 0.05
+
+```
+
+### Step 5: Modify intercept value to calibrate number of pack-years smoked in current and former smokers
 
 EPIC's existing calibration function (from EPIC Canada) underpredicted the pack-years of adults who ever smoked to that reported in the Population Assessment of Tobacco and Health (PATH) Study (https://pmc.ncbi.nlm.nih.gov/articles/PMC11601830/). Data provided in 2018-2019 by the PATH Study estimated an average of 32.9 pack-years among adults who ever smoked (https://pmc.ncbi.nlm.nih.gov/articles/PMC11601830/).To address this, we modified the intercept in the logistic regression equation that determines  pack-years of smoking at the time of creation. Increasing the intercept to 30 improved alignment with to data from PATH.
 
@@ -66,8 +96,7 @@ EPIC's existing calibration function (from EPIC Canada) underpredicted the pack-
 input$values$smoking$pack_years_0_betas <- t(as.matrix(c(intercept = 30, sex = -4, age = 0, year = -0.6, current_smoker = 10)))
 ```
 
-
-### Step 4: Modify mortality ratios for age groups
+### Step 6: Modify mortality ratios for age groups
 
 The mortality rates currently used in EPIC Canada did not include mortality ratios for individuals under the age of 60. More recent data from Cho et al. 2024 (DOI: 10.1056/EVIDoa2300272; Table 2) provide age-specific mortality hazard ratios, stratified by sex. As EPIC does not model mortality by sex, we used the midpoint of the reported male and female estimates for each age group. For the mortality ratio for individuals over the age of 80, we retained estimates from Gillert et al. 2012 (DOI: 10.1001/archinternmed.2012.1397), as Cho et al.2024 did not report data for this population.
 
@@ -81,7 +110,7 @@ input$values$smoking$mortality_factor_former <- t(as.matrix(c(age40to49 = 1.31, 
   
 ```
 
-### Step 5: Run EPIC
+### Step 7: Run EPIC
 
 ```{r, eval = TRUE, echo = TRUE}
 
@@ -91,7 +120,7 @@ terminate_session()
 
 ```
 
-### Step 6: Create data tables 
+### Step 8: Create data tables 
 
 ```{r, eval = TRUE, echo = TRUE}
 
@@ -115,7 +144,7 @@ kable(
   )
 ```
 
-### Step 7: Visualize data
+### Step 9: Visualize data
 
 ```{r,smokingstatus_reshaped, fig.width = 8, fig.height = 6, echo = TRUE}
 
@@ -164,7 +193,7 @@ ggplot(smokingstatus_reshaped, aes(x = Year, y = Proportion, color = Status)) +
 
 ```
 
-### Step 8: Observe trend in pack years per person
+### Step 10: Observe trend in pack years per person
 
 This figure serves to assess the face validity of the simulated trajectory of average pack-years per smoker over time. 
 Due to the absence of nationally representative longitudinal data on cumulative smoking exposure (pack-years) in the United States, we rely on trends in smoking intensity to estimate impact on pack-years.
@@ -208,7 +237,7 @@ pack_year_per_person <- data.frame(
 #
 ```
 
-### Step 9: Visualize trend in pack years per person
+### Step 11: Visualize trend in pack years per person
 
 ```{r,pack_years_per_person, fig.width = 8, fig.height = 6, echo = TRUE}
 
