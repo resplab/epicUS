@@ -36,23 +36,25 @@ adults aged 45 and over. As with the 2018 data, the absence of a 40+ age
 grouping required the use of 45 and over as a surrogate, resulting in an
 estimated smoking prevalence of 9.7% (12.97 million of 134.3 million).
 
-To estimate the average annual percent change (AAPC) in exclusive
-cigarette smoking among U.S. adults aged 45 and over from 2017 to 2023,
-data from the same MMWR report (Vol. 74, No.7) were used. In 2017, the
+To project the future decline in the prevalence of cigarette smoking
+among U.S. adults aged 40 and over after 2023, historical data from the
+2025 MMWR report (DOI: 10.15585/mmwr.mm7407a3) was used. In 2017, the
 number of exclusive cigarette smokers was estimated at 11.0 million for
 adults aged 45–64 and 3.57 million for those aged 65 and older, totaling
-14.57 million. By 2023, these figures had declined to 8.77 million and
-4.20 million, respectively, resulting in a combined total of 12.97
-million smokers aged 45 and over. The AAPC was calculated using the
-formula: AAPC = ((Value 2023 / Value 2017) ^ (1/6)) - 1. This results in
-an approximate AAPC of −1.9% per year.
+14.57 million. By 2023, these figures declined to 8.77 million and 4.20
+million, respectively, resulting in a combined total of 12.97 million
+smokers aged 45 and over. The AAPC was calculated using the formula:
+AAPC = ((Value 2023 / Value 2017) ^ (1/6)) - 1. This resulted in an
+estimated AAPC of –1.9% per year. This historical trend was then applied
+to model the projected year-over-year decline in smoking prevalence
+beyond 2023.
 
 **Summary of validation targets:**  
 - **Current smokers (2018):** 13.2%  
 - **Former smokers (2018):** 29.3%  
 - **Never smokers (2018):** 57.5%  
 - **Current smokers (2023):** 9.7%  
-- **Average Annual Percent Change (AAPC):** –1.9% per year
+- **AAPC after 2023:** –1.9% per year
 
 ### Step 1: Load libraries and setup
 
@@ -130,8 +132,9 @@ the pack-years of adults who ever smoked to that reported in the
 Population Assessment of Tobacco and Health (PATH) Study
 (<https://pmc.ncbi.nlm.nih.gov/articles/PMC11601830/>). Data provided in
 2018-2019 by the PATH Study estimated an average of 32.9 pack-years
-among adults who ever smoked (<https://pmc.ncbi.nlm.nih.gov/articles/PMC11601830/>). 
-To address this, the intercept in the logistic regression equation that determines
+among adults who ever smoked
+(<https://pmc.ncbi.nlm.nih.gov/articles/PMC11601830/>). To address this,
+the intercept in the logistic regression equation that determines
 pack-years of smoking at the time of creation was modified. Increasing
 the intercept to 30 improved alignment with to data from PATH.
 
@@ -202,32 +205,32 @@ kable(
 
 | Year | Never Smoker | Current Smoker | Former Smoker |
 |-----:|-------------:|---------------:|--------------:|
-| 2015 |        0.554 |          0.163 |         0.284 |
-| 2016 |        0.562 |          0.147 |         0.291 |
-| 2017 |        0.570 |          0.135 |         0.295 |
-| 2018 |        0.577 |          0.126 |         0.297 |
-| 2019 |        0.584 |          0.118 |         0.299 |
-| 2020 |        0.590 |          0.111 |         0.299 |
-| 2021 |        0.596 |          0.106 |         0.298 |
-| 2022 |        0.602 |          0.101 |         0.297 |
-| 2023 |        0.607 |          0.097 |         0.296 |
-| 2024 |        0.613 |          0.093 |         0.294 |
-| 2025 |        0.617 |          0.090 |         0.292 |
-| 2026 |        0.622 |          0.088 |         0.290 |
-| 2027 |        0.626 |          0.086 |         0.288 |
-| 2028 |        0.630 |          0.084 |         0.286 |
-| 2029 |        0.634 |          0.083 |         0.284 |
-| 2030 |        0.637 |          0.081 |         0.282 |
-| 2031 |        0.640 |          0.080 |         0.280 |
-| 2032 |        0.643 |          0.079 |         0.278 |
-| 2033 |        0.646 |          0.078 |         0.276 |
-| 2034 |        0.649 |          0.076 |         0.275 |
-| 2035 |        0.652 |          0.075 |         0.273 |
-| 2036 |        0.654 |          0.075 |         0.271 |
-| 2037 |        0.656 |          0.074 |         0.270 |
-| 2038 |        0.658 |          0.073 |         0.269 |
-| 2039 |        0.660 |          0.072 |         0.268 |
-| 2040 |        0.662 |          0.072 |         0.267 |
+| 2015 |        0.552 |          0.163 |         0.285 |
+| 2016 |        0.561 |          0.147 |         0.293 |
+| 2017 |        0.568 |          0.135 |         0.296 |
+| 2018 |        0.576 |          0.126 |         0.298 |
+| 2019 |        0.583 |          0.118 |         0.300 |
+| 2020 |        0.589 |          0.111 |         0.300 |
+| 2021 |        0.595 |          0.106 |         0.299 |
+| 2022 |        0.601 |          0.101 |         0.298 |
+| 2023 |        0.606 |          0.097 |         0.297 |
+| 2024 |        0.612 |          0.093 |         0.295 |
+| 2025 |        0.616 |          0.091 |         0.293 |
+| 2026 |        0.621 |          0.088 |         0.291 |
+| 2027 |        0.625 |          0.086 |         0.289 |
+| 2028 |        0.629 |          0.084 |         0.287 |
+| 2029 |        0.633 |          0.082 |         0.285 |
+| 2030 |        0.636 |          0.081 |         0.283 |
+| 2031 |        0.639 |          0.080 |         0.281 |
+| 2032 |        0.643 |          0.078 |         0.279 |
+| 2033 |        0.646 |          0.077 |         0.277 |
+| 2034 |        0.648 |          0.076 |         0.276 |
+| 2035 |        0.651 |          0.075 |         0.274 |
+| 2036 |        0.653 |          0.074 |         0.272 |
+| 2037 |        0.656 |          0.073 |         0.271 |
+| 2038 |        0.658 |          0.072 |         0.270 |
+| 2039 |        0.659 |          0.072 |         0.269 |
+| 2040 |        0.661 |          0.071 |         0.268 |
 
 Proportion of Smoking Status Over Time
 
