@@ -11,18 +11,16 @@ vignette: >
 
 This document outlines the calibration process undertaken to align the model’s outputs with U.S.-based validation targets for COPD prevalence, using NHANES data in which COPD was defined according to the Lower Limit of Normal (LLN) definition. The calibration was conducted over a 25-year simulation time horizon.
 
-**Validation Reference:**
+**Validation Reference:**  
 Tilert et al. 2013 (DOI: 10.1186/1465-9921-14-103)
 
-**Target Prevalence Rates from NHANES (Ages 40–79 years):**
+**Validation Target (Age-Specific Prevalence):**  
+- **40–59 years:** 8.1%  
+- **60–79 years:** 14.4%  
 
-**Age-specific prevalence:**
-40–59 years: 8.1%
-60–79 years: 14.4%
-
-**Sex-specific prevalence:**
-Males: 12.0%
-Females: 8.6%
+**Validation Target (Sex-Specific Prevalence):**  
+- **Males:** 12.0%  
+- **Females:** 8.6%
 
 It is important to note that the EPIC model simulates individuals aged 40 and older, including those ≥80 years, whereas Tilert et al. 2013 included only individuals aged 40–79. 
 
