@@ -9,20 +9,18 @@ using NHANES data in which COPD was defined according to the Lower Limit
 of Normal (LLN) definition. The calibration was conducted over a 25-year
 simulation time horizon.
 
-Validation Reference: Tilert et al. 2013 (DOI: 10.1186/1465-9921-14-103)
+**Validation Reference:** Tilert et al. 2013 (DOI:
+10.1186/1465-9921-14-103)
 
-Target Prevalence Rates from NHANES (Ages 40–79 years):
+**Target Prevalence Rates from NHANES (Ages 40–79 years):**
 
-Age-specific prevalence: 40–59 years: 8.1% 60–79 years: 14.4%
+**Age-specific prevalence:** 40–59 years: 8.1% 60–79 years: 14.4%
 
-Sex-specific prevalence: Males: 12.0% Females: 8.6%
+**Sex-specific prevalence:** Males: 12.0% Females: 8.6%
 
 It is important to note that the EPIC model simulates individuals aged
 40 and older, including those ≥80 years, whereas Tilert et al. 2013
-included only individuals aged 40–79. As a result, modeled estimates of
-overall prevalence may be marginally higher than those reported by
-Tilert et al. 2013 particularly due to increased COPD prevalence at
-older ages.
+included only individuals aged 40–79.
 
 Given this limitation, the calibration emphasized preserving the
 sex-specific prevalence ratio observed in Tilert et al. 2013 (1.4:1;
@@ -30,6 +28,20 @@ sex-specific prevalence ratio observed in Tilert et al. 2013 (1.4:1;
 deemed adequately calibrated if this ratio was maintained, even if
 absolute prevalence values by sex differed slightly due to inclusion of
 older age groups.
+
+**Evolution of LLN Reference Equations and Impact on COPD Prevalence
+Estimation**
+
+Reference equations used to define the LLN for spirometry to diagnose
+COPD have evolved over time, moving from race-specific models toward
+more inclusive, race-neutral approaches. Tilert et al. 2013 defined COPD
+using LLN values derived from the Hankinson equation, a race-specific
+model widely used in earlier guidelines. In contrast, current guidelines
+recommend using the Global Lung Function Initiative (GLI) race-neutral
+reference equations. A recent analysis by Cadham et al. 2024 (DOI:
+10.1186/s12931-024-02841-y) compared COPD prevalence estimates based on
+the Hankinson and GLI race-neutral equations and found no significant
+differences between the two approaches.
 
 ### Step 1: Load libraries and setup
 
@@ -103,6 +115,12 @@ COPDprevalence_ctime_age<-output$n_COPD_by_ctime_age
 COPDprevalence_ctime_age<-as.data.frame(output$n_COPD_by_ctime_age)
 totalpopulation<-output$n_alive_by_ctime_age
 
+# Overall prevalence of COPD
+
+alive_age_all <- rowSums(output$n_alive_by_ctime_age[1:26, 40:111])
+COPD_age_all <- rowSums (output$n_COPD_by_ctime_age[1:26, 40:111])
+prevalenceCOPD_age_all <- COPD_age_all / alive_age_all
+
 # Prevalence by age 40-59 
 
 alive_age_40to59 <- rowSums(output$n_alive_by_ctime_age[1:26, 40:59])
@@ -125,6 +143,7 @@ prevalenceCOPD_age_over80 <- COPD_age_over80 / alive_age_over80
 
 COPD_prevalence_summary <- data.frame(
   Year = 2015:2040,
+  Prevalence_all = prevalenceCOPD_age_all,
   Prevalence_40to59 = prevalenceCOPD_age_40to59,
   Prevalence_60to79 = prevalenceCOPD_age_60to79,
   Prevalence_over80 = prevalenceCOPD_age_over80
@@ -135,50 +154,62 @@ kable(COPD_prevalence_summary,
       digits = 3)
 ```
 
-| Year | Prevalence_40to59 | Prevalence_60to79 | Prevalence_over80 |
-|-----:|------------------:|------------------:|------------------:|
-| 2015 |             0.086 |             0.147 |             0.241 |
-| 2016 |             0.085 |             0.146 |             0.237 |
-| 2017 |             0.085 |             0.145 |             0.233 |
-| 2018 |             0.085 |             0.144 |             0.230 |
-| 2019 |             0.084 |             0.144 |             0.228 |
-| 2020 |             0.084 |             0.143 |             0.225 |
-| 2021 |             0.084 |             0.143 |             0.223 |
-| 2022 |             0.083 |             0.143 |             0.221 |
-| 2023 |             0.083 |             0.143 |             0.218 |
-| 2024 |             0.082 |             0.143 |             0.216 |
-| 2025 |             0.082 |             0.142 |             0.214 |
-| 2026 |             0.082 |             0.143 |             0.213 |
-| 2027 |             0.081 |             0.143 |             0.210 |
-| 2028 |             0.081 |             0.143 |             0.209 |
-| 2029 |             0.081 |             0.143 |             0.207 |
-| 2030 |             0.081 |             0.143 |             0.205 |
-| 2031 |             0.080 |             0.143 |             0.205 |
-| 2032 |             0.080 |             0.144 |             0.204 |
-| 2033 |             0.079 |             0.144 |             0.204 |
-| 2034 |             0.079 |             0.144 |             0.202 |
-| 2035 |             0.078 |             0.144 |             0.201 |
-| 2036 |             0.077 |             0.144 |             0.199 |
-| 2037 |             0.077 |             0.143 |             0.197 |
-| 2038 |             0.076 |             0.143 |             0.196 |
-| 2039 |             0.076 |             0.143 |             0.195 |
-| 2040 |             0.075 |             0.142 |             0.194 |
+| Year | Prevalence_all | Prevalence_40to59 | Prevalence_60to79 | Prevalence_over80 |
+|-----:|---------------:|------------------:|------------------:|------------------:|
+| 2015 |          0.120 |             0.085 |             0.145 |             0.241 |
+| 2016 |          0.119 |             0.085 |             0.144 |             0.236 |
+| 2017 |          0.118 |             0.085 |             0.144 |             0.232 |
+| 2018 |          0.118 |             0.085 |             0.143 |             0.227 |
+| 2019 |          0.118 |             0.084 |             0.143 |             0.224 |
+| 2020 |          0.118 |             0.084 |             0.143 |             0.221 |
+| 2021 |          0.117 |             0.084 |             0.142 |             0.219 |
+| 2022 |          0.117 |             0.083 |             0.142 |             0.216 |
+| 2023 |          0.117 |             0.083 |             0.142 |             0.215 |
+| 2024 |          0.117 |             0.083 |             0.142 |             0.213 |
+| 2025 |          0.117 |             0.082 |             0.142 |             0.211 |
+| 2026 |          0.117 |             0.082 |             0.142 |             0.209 |
+| 2027 |          0.117 |             0.081 |             0.142 |             0.208 |
+| 2028 |          0.117 |             0.081 |             0.142 |             0.206 |
+| 2029 |          0.117 |             0.081 |             0.142 |             0.205 |
+| 2030 |          0.117 |             0.081 |             0.143 |             0.203 |
+| 2031 |          0.117 |             0.080 |             0.143 |             0.202 |
+| 2032 |          0.117 |             0.080 |             0.143 |             0.202 |
+| 2033 |          0.116 |             0.079 |             0.143 |             0.201 |
+| 2034 |          0.116 |             0.078 |             0.143 |             0.199 |
+| 2035 |          0.116 |             0.078 |             0.144 |             0.198 |
+| 2036 |          0.116 |             0.077 |             0.144 |             0.197 |
+| 2037 |          0.116 |             0.077 |             0.144 |             0.195 |
+| 2038 |          0.115 |             0.076 |             0.144 |             0.195 |
+| 2039 |          0.115 |             0.076 |             0.143 |             0.195 |
+| 2040 |          0.115 |             0.075 |             0.142 |             0.195 |
 
 COPD Prevalence by Age Group Over Time
 
 ### Step 5: Visualize data by age category
 
-Visualize COPD prevalence from age 40 to 59
+COPD prevalence is projected to decline moderately between 2025 and
+2050, as reported by Boers et al. 2023 (DOI:
+10.1001/jamanetworkopen.2023.46598). A similar trend is observed in EPIC
+model projections of overall COPD prevalence. However, a limitation of
+EPIC include underestimating the size of the population aged 80 and
+older. As COPD prevalence increases with age, this results in a
+overestimation of overall COPD prevalence in the simulated population.
+
+**COPD prevalence all age groups**
+
+![](./Figures/prevalenceall.png)
+
+**COPD prevalence from age 40 to 59**
 
 ![](./Figures/prevalenceof40to59.png)
 
-Visualize COPD prevalence from age 60 to 79
+**COPD prevalence from age 60 to 79**
 
 ![](./Figures/prevalenceof60to79.png)
 
-Visualize COPD prevalence from age 80+
+**COPD prevalence from age 80+**
 
-![](./Figures/prevalenceofover80.png)
+![](./Figures/prevalenceover80.png)
 
 ### Step 6: Create data tables by sex to check if gender distribution matches Tilert et al 2013 (<doi:10.1186/1465-9921-14-103>))
 
@@ -205,31 +236,31 @@ kable(prevalenceCOPD_sex,
 
 |  Male | Female | Year |
 |------:|-------:|-----:|
-| 0.144 |  0.097 | 2015 |
-| 0.142 |  0.097 | 2016 |
-| 0.141 |  0.097 | 2017 |
-| 0.140 |  0.098 | 2018 |
-| 0.139 |  0.098 | 2019 |
+| 0.143 |  0.097 | 2015 |
+| 0.141 |  0.097 | 2016 |
+| 0.140 |  0.097 | 2017 |
+| 0.139 |  0.097 | 2018 |
+| 0.139 |  0.097 | 2019 |
 | 0.138 |  0.098 | 2020 |
-| 0.138 |  0.098 | 2021 |
+| 0.137 |  0.098 | 2021 |
 | 0.137 |  0.099 | 2022 |
-| 0.137 |  0.100 | 2023 |
-| 0.137 |  0.100 | 2024 |
-| 0.136 |  0.100 | 2025 |
-| 0.136 |  0.101 | 2026 |
+| 0.136 |  0.099 | 2023 |
+| 0.136 |  0.100 | 2024 |
+| 0.135 |  0.100 | 2025 |
+| 0.135 |  0.101 | 2026 |
 | 0.135 |  0.101 | 2027 |
-| 0.135 |  0.101 | 2028 |
+| 0.134 |  0.101 | 2028 |
 | 0.134 |  0.102 | 2029 |
-| 0.134 |  0.102 | 2030 |
-| 0.134 |  0.102 | 2031 |
-| 0.133 |  0.102 | 2032 |
-| 0.133 |  0.102 | 2033 |
-| 0.132 |  0.103 | 2034 |
-| 0.132 |  0.103 | 2035 |
-| 0.131 |  0.102 | 2036 |
-| 0.131 |  0.102 | 2037 |
-| 0.130 |  0.102 | 2038 |
-| 0.129 |  0.102 | 2039 |
+| 0.133 |  0.102 | 2030 |
+| 0.133 |  0.102 | 2031 |
+| 0.132 |  0.102 | 2032 |
+| 0.132 |  0.102 | 2033 |
+| 0.131 |  0.103 | 2034 |
+| 0.131 |  0.103 | 2035 |
+| 0.131 |  0.103 | 2036 |
+| 0.130 |  0.103 | 2037 |
+| 0.130 |  0.103 | 2038 |
+| 0.129 |  0.103 | 2039 |
 | 0.129 |  0.102 | 2040 |
 
 COPD Prevalence by Sex Over Time
