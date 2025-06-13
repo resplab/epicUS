@@ -209,7 +209,7 @@ overestimation of overall COPD prevalence in the simulated population.
 
 **COPD prevalence from age 80+**
 
-![](./Figures/prevalenceover80.png)
+![](./Figures/prevalenceofover80.png)
 
 ### Step 6: Create data tables by sex to check if gender distribution matches Tilert et al 2013 (<doi:10.1186/1465-9921-14-103>))
 
