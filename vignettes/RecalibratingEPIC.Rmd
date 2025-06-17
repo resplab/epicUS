@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(epicR)
+library(epicUS)
 ```
 
 ### Previous Calibration
@@ -37,7 +37,7 @@ inputs$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 1.7, female = 0, 
 validate_exacerbation(5e4, inputs)
 ```
 
-The following recalibrations were assesses and Recalibration 5 was implemented in `epicR v0.35.0`
+The following recalibrations were assesses and Recalibration 5 was implemented in `epicUS v0.35.0`
 
 ### Recalibration 1:
 

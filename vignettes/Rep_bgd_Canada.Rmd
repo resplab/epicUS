@@ -24,8 +24,8 @@ First, we set the intercept of the exacerbation equation to a high value, effect
 
 
 ```{r, eval = TRUE, echo = TRUE}
-library(epicR)
-packageVersion("epicR")
+library(epicUS)
+packageVersion("epicUS")
 input<-get_input()
 input$values$exacerbation$logit_p_death_by_sex <- cbind(
   male = c(intercept = -13000, age = log(1.05), mild = 0, moderate = 0, severe = 7.4,
@@ -57,10 +57,10 @@ input$values$agent$ln_h_bgd_betas <- t(as.matrix(c(intercept = 0, y = 0, y2 = 0,
 
 Initially we run the model for 1 year and get the events matrix. This matrix logs all the events
 that individuals go through thoughout the model. We will use this matrix to calculate death 
-probabilities produced by epicR
+probabilities produced by epicUS
 
 ```{r, eval = TRUE, echo = TRUE}
-library(epicR)
+library(epicUS)
 settings <- get_default_settings()
 settings$record_mode <- 2
 settings$n_base_agents <- 3.5e5
@@ -216,7 +216,7 @@ library(ggplot2)
 library(dplyr)
 
 combined_data_long <- bind_rows(
-  death_prob_filtered %>% mutate(Source = "epicR"),
+  death_prob_filtered %>% mutate(Source = "epicUS"),
   Canadalifetables_filtered %>% mutate(Source = "Canada Life Tables")
 ) %>%
   pivot_longer(cols = c("Male", "Female"), names_to = "Sex", values_to = "Death_Probability") %>%
@@ -226,7 +226,7 @@ ggplot(combined_data_long, aes(x = Age, y = Death_Probability, fill = Source)) +
   geom_col(position = "dodge", width = 1) +  
   facet_wrap(~Sex) +
   labs(
-    title = "Comparison of epicR Death Probability vs. Canada Life Tables (time_horizon =1)",
+    title = "Comparison of epicUS Death Probability vs. Canada Life Tables (time_horizon =1)",
     x = "Age",
     y = "Death Probability",
     fill = "Source:"
@@ -271,14 +271,14 @@ library(tidyr)
 library(dplyr)
 
 combined_data_long5 <- bind_rows(
-  death_prob5_filtered %>% mutate(Source = "epicR"),
+  death_prob5_filtered %>% mutate(Source = "epicUS"),
   Canadalifetables_filtered %>% mutate(Source = "Canada Life Tables")
 ) %>%
   pivot_longer(cols = c("Male", "Female"), names_to = "Sex", values_to = "Death_Probability") %>%
   filter(Age > 40)  
 
 
-final_EPIC_death5<- filter(combined_data_long5, Source == "epicR")
+final_EPIC_death5<- filter(combined_data_long5, Source == "epicUS")
 final_Canada_death<- filter(combined_data_long5, Source == "Canada Life Tables")
 
 # Add Death_Probability to Canadalifetables_filtered
@@ -296,7 +296,7 @@ for (year in unique(combined_data_long5$Year)) {
   geom_col(position = "dodge", width = 1) +  
   facet_wrap(~Sex) +
   labs(
-    title = "Comparison of epicR Death Probability vs. Canada Life Tables (time_horizon = 6)",
+    title = "Comparison of epicUS Death Probability vs. Canada Life Tables (time_horizon = 6)",
     x = "Age",
     y = "Death Probability",
     fill = "Source:"
@@ -395,7 +395,7 @@ death_prob_smoking_filtered <- death_prob_smoking_clean[death_prob_smoking_clean
 Canadalifetables_filtered <- Canadalifetables_df[Canadalifetables_df$Age %in% common_ages, ]
 
 combined_data_long_smoking <- bind_rows(
-  death_prob_smoking_filtered %>% mutate(Source = "epicR"),
+  death_prob_smoking_filtered %>% mutate(Source = "epicUS"),
   Canadalifetables_filtered %>% mutate(Source = "Canada Life Tables")
 ) %>%
   pivot_longer(cols = c("Male", "Female"), names_to = "Sex", values_to = "Death_Probability") %>%
@@ -405,7 +405,7 @@ ggplot(combined_data_long_smoking, aes(x = Age, y = Death_Probability, fill = So
   geom_col(position = "dodge", width = 1) +  
   facet_wrap(~Sex) +
   labs(
-    title = "Comparison of epicR Death Probability vs. Canada Life Tables (time_horizon =1)",
+    title = "Comparison of epicUS Death Probability vs. Canada Life Tables (time_horizon =1)",
     x = "Age",
     y = "Death Probability",
     fill = "Source:"
