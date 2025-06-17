@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-This document is a guide to basics of running a simulation with the Evaluation Platform in COPD (EPIC) using epicR. 
+This document is a guide to basics of running a simulation with the Evaluation Platform in COPD (EPIC) using epicUS. 
 
 EPIC is a discrete-event simulation model for COPD, and models the entire pathway of care, from disease incidence, to diagnosis, treatment, and outcomes. 
 
@@ -27,7 +27,7 @@ Let's go over an example.
 
 First, we need to load the model: 
 ```{r setup}
-library(epicR)
+library(epicUS)
 ```
 
 EPIC is a session-based model, which means at beginning and end of our run, we need to open and terminate a session. When a session is initialized, required memory resources are allocated to the model. 
@@ -109,7 +109,7 @@ In the events data frame, each type of event has a code corresponding to the tab
 
 By default, EPIC is an open population model that captures population trends such as growth, immigration, and emigration. We can change inputs to run a closed-cohort analysis, if need be: 
 ```{r}
-library(epicR)
+library(epicUS)
 input <- get_input(closed_cohort = 1)$values
 init_session()
 run(input=input)

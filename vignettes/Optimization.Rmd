@@ -40,7 +40,7 @@ input$values$global_parameters$time_horizon <- time_horizon
 
 ### Step 2: Define the RMSE Calculation Function  
 
-The calculate_rmse_optim function calculates the RMSE for each iteration of parameter optimization. Within this function:
+The `calculate_rmse_optim` function calculates the RMSE for each iteration of parameter optimization. Within this function:
 
 1) We assign the first three values of the parameter vector (params[1:3]) to l_inc_betas, which represents parameters for the longevity equation.
 2) The next four values (params[4:7]) are assigned to the ln_h_bgd_betas vector, which is part of the incidence equation.
