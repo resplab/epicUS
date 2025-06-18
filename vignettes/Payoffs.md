@@ -53,8 +53,6 @@ avoid double-adjusting for adherence
 | LAMA+LABA | 420 | 5.35 | 2,247.0 |
 | SABA | 31 | 12.00 | 372.0 |
 
-Estimated Annual COPD Inhaler Costs by Drug Class
-
 ## Step 2: Estimating COPD-related background costs by GOLD stage
 
 COPD-related background costs were estimated using data from Wallace et
@@ -70,8 +68,6 @@ Medical Costs** (2016 Costs USD).
 | GOLD II | 6,978 | 4,449 | 144 | 1,101 | 1,284 |
 | GOLD III | 10,751 | 6,277 | 193 | 2,000 | 2,281 |
 | GOLD IV | 18,070 | 12,139 | 534 | 2,479 | 2,918 |
-
-COPD-related Background Costs by GOLD Stage
 
 ## Step 3: Estimating exacerbation costs by severity
 
@@ -93,8 +89,6 @@ The following references were used:
 | Moderate | No hospitalization (Bogart et al. 2020) | 2,107 |
 | Severe | Inpatient hospitalization (Bogart et al. 2020) | 22,729 |
 | Very Severe | ICU + intubation (Dalal et al. 2011) | 44,909 |
-
-Per-Event COPD Exacerbation Costs by Severity
 
 ## Step 4: Estimating costs for smoking cessation
 
@@ -132,6 +126,8 @@ of smoking cessation pharmacotherapy was calculated as:
 
 **Average cost**: \$120.15
 
+Smoking Cessation Therapy Use and Cost Estimates
+
 | Pharmacotherapy        | Reweighted Proportion (%) | Cost (USD) |
 |:-----------------------|:--------------------------|-----------:|
 | Nicotine Patch         | 35.6                      |      71.00 |
@@ -140,8 +136,6 @@ of smoking cessation pharmacotherapy was calculated as:
 | Varenicline            | 17.5                      |     402.00 |
 | Bupropion              | 11.6                      |      25.00 |
 | Average (weighted)     | –                         |     120.15 |
-
-Smoking Cessation Therapy Use and Cost Estimates
 
 ## Step 5: Estimating costs for GP visit and diagnostic spirometry
 
