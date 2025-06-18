@@ -126,8 +126,6 @@ of smoking cessation pharmacotherapy was calculated as:
 
 **Average cost**: \$120.15
 
-Smoking Cessation Therapy Use and Cost Estimates
-
 | Pharmacotherapy        | Reweighted Proportion (%) | Cost (USD) |
 |:-----------------------|:--------------------------|-----------:|
 | Nicotine Patch         | 35.6                      |      71.00 |
