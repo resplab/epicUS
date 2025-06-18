@@ -22,14 +22,14 @@ components were used:
 
 #### Dispense frequency per year
 
-**Mannino et al. 2022:**
+**Mannino et al. 2022:**
 
 - ICS + LAMA + LABA: 6.1  
 - ICS-containing regimens: 5.3  
 - LAMA-containing regimens: 5.2  
 - LABA-containing regimens: 5.5
 
-**Bengtson et al. 2018:**
+**Bengtson et al. 2018:**
 
 - SABA: 12.0
 
@@ -82,9 +82,9 @@ per-event direct medical costs.
 
 The following references were used:
 
-- **Dalal et al., 2011** (DOI: 10.1016/j.rmed.2010.09.003) — 2008 Costs
+- **Dalal et al. 2011** (DOI: 10.1016/j.rmed.2010.09.003) — 2008 Costs
   USD  
-- **Bogart et al., 2020** (DOI: 10.37765/ajmc.2020.43157) — 2017 Costs
+- **Bogart et al. 2020** (DOI: 10.37765/ajmc.2020.43157) — 2017 Costs
   USD
 
 | Exacerbation Severity | Definition | Cost (USD) |
@@ -116,7 +116,7 @@ attempting to quit were as follows:
 - **Varenicline**: (9.6 / 55.0) × 100 ≈ 17.5%  
 - **Bupropion**: (6.4 / 55.0) × 100 ≈ 11.6%
 
-### Estimated 3-Month cost of smoking cessation therapy
+### Estimated 3-month cost of smoking cessation therapy
 
 Cost estimates were derived from GoodRx (2025 Costs USD) for 3 months of
 smoking cessation therapy:

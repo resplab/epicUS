@@ -131,7 +131,7 @@ According to the MMWR study (DOI: 10.15585/mmwr.mm7329a1) the most commonly used
 - **Varenicline**: (9.6 / 55.0) × 100 ≈ 17.5%  
 - **Bupropion**: (6.4 / 55.0) × 100 ≈ 11.6%  
 
-### Estimated 3-Month cost of smoking cessation therapy
+### Estimated 3-month cost of smoking cessation therapy
 
 Cost estimates were derived from GoodRx (2025 Costs USD) for 3 months of smoking cessation therapy:
 
