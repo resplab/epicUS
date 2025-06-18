@@ -20,7 +20,7 @@ components were used:
       - **Mannino et al., 2022** (DOI: 10.1016/j.rmed.2022.106807)
       - **Bengtson et al., 2018** (DOI: 10.1177/1753466618772750)
 
-#### Dispense frequency per Year
+#### Dispense frequency per year
 
 **Mannino et al. 2022:**
 
