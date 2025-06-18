@@ -1,140 +1,147 @@
 ---
-title: "Costs_and_resource_utilization"
+title: "Costs and Resource Utilization"
 output: html_document
 ---
 
-### Overview
+# Overview
 
-This document outlines the steps taken to calibrate the model to modify costs to the US setting
+This document outlines the steps taken determine input values for the payoff module. 
 
-### Step 1: Calculating yearly costs of COPD medication
+## Step 1: Calculating yearly costs of COPD medication
 
-We utilized prescription fill data outlined in Mannino et al 2022 (DOI: 10.1016/j.rmed.2022.106807) for all COPD drug data except for SABA for which we used Bengtson et al 2018 (DOI:10.1177/1753466618772750). The studies estimated the following dispenses per patient per year
+To estimate the yearly cost of COPD medication the following was used:
 
-ICS/LAMA/LABA: 6.1 
-ICS containing regimens: 5.3
-LAMA containing regimens: 5.2
-LABA containing regimens: 5.5
-SABA: 1.0
+1. **Average monthly GoodRx cash prices**
+-  Average of the most common inhalers within each drug class (2025 Costs USD)  
+2. **Real-world prescription fill frequency per year** from published sources. 
+- Mannino et al. 2022 (DOI: 10.1016/j.rmed.2022.106807). 
+- Bengtson et al. 2018 (DOI: 10.1177/1753466618772750).
 
-To calculate the costs we used the average drug costs for each category of drugs
+Note: The real-world prescription fill data inherently reflects non-adherence,thus the adherence parameter in EPIC will be set to 1 to avoid double-adjusting for adherence
 
-ICS/LAMA/LABA:
-ICS:
-LAMA LABA:
+```{r, eval = TRUE, echo = FALSE}
 
-As this study utilizes real world data adherence factors have originally been considered thus we will not need to account or multiply against a adherence ratio.
+library(knitr)
 
-```{r, eval = TRUE, echo = TRUE}
+drug_costs <- data.frame(
+  class = c("ICS + LAMA + LABA", "ICS-containing", "LAMA-containing", "LABA-containing", "SABA"),
+  monthly_cost = c(653, 227, 334, 420, 31),
+  dispenses_per_year = c(6.1, 5.3, 5.2, 5.5, 12)
+)
 
-#COPD medication cost
-input$values$medication$medication_costs <- c(None=0,SABA=133.8*input$values$medication$medication_adherence, LABA=0, SABA_LABA=0, LAMA=3050.4*input$values$medication$medication_adherence, LAMA_SABA=0, LAMA_LABA=5150.4*input$values$medication$medication_adherence, LAMA_LAMA_SABA=0, ICS=0, ICS_SABA=0, ICS_LABA=0, ICS_LABA_SABA=0, ICS_LAMA=0, ICS_LAMA_SABA=0, ICS_LAMA_LABA=7913.6*input$values$medication$medication_adherence, ICS_LAMA_LABA_SABA=0)
+drug_costs$annual_cost <- round(drug_costs$monthly_cost * drug_costs$dispenses_per_year, 2)
 
-```
-
-### Step 2: Estimating COPD-Related Background Costs by GOLD Stage
-
-COPD-related background costs were estimated using data from Wallace et al 2019 (DOI: 10.18553/jmcp.2019.25.2.205) Table 3, specifically the row labeled "COPD-related costs, all patients." Background costs were calculated by subtracting the costs of **inpatient care**, **emergency room (ER) visits**, and **pharmacy** from the **total COPD-related medical costs**. 
-
-**Formula:**
-
-\[
-\text{Background Cost} = \text{Total COPD Medical Cost} - (\text{Inpatient} + \text{ER} + \text{Pharmacy})
-\]
-
-**Results (2016 Costs USD):**
-
-| GOLD Stage    | Total COPD Cost | Inpatient | ER Visits | Pharmacy | **Background Cost** |
-|---------------|----------------:|----------:|----------:|---------:|--------------------:|
-| GOLD I        | \$5,945          | \$3,853   | \$186     | \$592    | **\$1,314**         |
-| GOLD II       | \$6,978          | \$4,449   | \$144     | \$1,101  | **\$1,284**         |
-| GOLD III      | \$10,751         | \$6,277   | \$193     | \$2,000  | **\$2,281**         |
-| GOLD IV       | \$18,070         | \$12,139  | \$534     | \$2,479  | **\$2,918**         |
-
-```{r, eval = TRUE, echo = TRUE}
-
-#Background COPD cost by GOLD stage
-input$values$cost$bg_cost_by_stage=t(as.matrix(c(N=0, I=1738.28*1.0528, II=1698.59*1.0528, III=3017.52*1.0528, IV=3860.2*1.0528)))
+kable(drug_costs,
+      col.names = c("Drug Class", "GoodRx Monthly Cost (USD)", "Dispenses/Year", "Estimated Annual Cost (USD)"),
+      format.args = list(big.mark = ","),
+      caption = "Estimated Annual COPD Inhaler Costs by Drug Class")
 
 ```
 
-### Step 3: Estimating exacerbation costs by severity
+## Step 2: Estimating COPD-related background costs by GOLD stage
 
-The exacerbation module assigns costs to events based on severity: **moderate**, **severe**, and **very severe**. These estimates were derived from U.S.-based healthcare cost studies and reflect per-event medical costs.
+COPD-related background costs were estimated using data from Wallace et al 2019 (DOI: 10.18553/jmcp.2019.25.2.205) Table 3, specifically the row labeled "COPD-related costs, all patients". Background costs were calculated by subtracting the costs of **inpatient care**, **emergency room (ER) visits**, and **pharmacy** from the **total COPD-related medical costs** (2016 Costs USD). 
 
-**Mild Exacerbations**  
-Defined as exacerbations requiring emergency department visit (Dalal et al. 2011; DOI:10.1016/j.rmed.2010.09.003) 
-**Cost:** $606 (2008 Costs USD)
+```{r, eval = TRUE, echo = FALSE}
 
-**Moderate Exacerbations**  
-Defined as exacerbations without hospitalization (Bogart et al. 2020; DOI: 10.37765/ajmc.2020.43157)  
-**Cost:** $2107 (2017 Costs USD)
+copd_background_costs <- data.frame(
+  `GOLD Stage` = c("GOLD I", "GOLD II", "GOLD III", "GOLD IV"),
+  `Total COPD Cost` = c(5945, 6978, 10751, 18070),
+  `Inpatient` = c(3853, 4449, 6277, 12139),
+  `ER Visits` = c(186, 144, 193, 534),
+  `Pharmacy` = c(592, 1101, 2000, 2479),
+  `Background Cost` = c(1314, 1284, 2281, 2918)
+)
 
-**Severe Exacerbations**  
-Defined as exacerbations requiring inpatient hospitalization (Bogart et al. 2020; DOI: 10.37765/ajmc.2020.43157)  
-**Cost:** $22,729 (2017 Costs USD)
-
-**Very Severe Exacerbations**  
-Defined as exacerbations requiring ICU admission and intubation (Dalal et al. 2011; DOI:10.1016/j.rmed.2010.09.003)  
-**Estimated cost:** $44,909 (2008 Costs USD)
-
-```{r, eval = TRUE, echo = TRUE}
-
-#Background COPD cost by GOLD stage
-input$values$cost$exac_dcost=t(as.matrix(c(mild=59.71*1.0528,moderate=942.23*1.0528,severe=10546.6*1.0528, verysevere=30228.64*1.0528)))
+kable(copd_background_costs,
+      col.names = c("GOLD Stage", "Total COPD Cost", "Inpatient", "ER Visits", "Pharmacy", "Background Cost"),
+      format.args = list(big.mark = ","),
+      caption = "COPD-related Background Costs by GOLD Stage")
 
 ```
 
-### Step 4: Estimating costs for smoking cessation 
+## Step 3: Estimating exacerbation costs by severity
 
-According to the MMWR study (DOI: 10.15585/mmwr.mm7329a1) the most commonly used pharmacotherapies included the following and was used in people that wanted to quit (2025 Costs USD)
+The exacerbation module assigns costs to events based on severity: **mild**, **moderate**, **severe**, and **very severe**. These estimates were derived from U.S.-based healthcare cost studies and represent per-event direct medical costs.
 
-Nicotine patch = 19.6%
-Nicotine gum/lozenge = 18.4%
-Nicotine spray/inhaler = 1.0%
-Varenicline = 9.6%
-Bupropion = 6.4%
+The following references were used:
 
-Reweighted to assume 100%
+- **Dalal et al., 2011** (DOI: 10.1016/j.rmed.2010.09.003) — cost data in 2008 USD  
+- **Bogart et al., 2020** (DOI: 10.37765/ajmc.2020.43157) — cost data in 2017 USD
 
-Nicotine patch	(19.6 / 55.0) × 100 ≈ 35.6%
-Nicotine gum/lozenge	(18.4 / 55.0) × 100 ≈ 33.5%
-Nicotine spray/inhaler	(1.0 / 55.0) × 100 ≈ 1.8%
-Varenicline	(9.6 / 55.0) × 100 ≈ 17.5%
-Bupropion	(6.4 / 55.0) × 100 ≈ 11.6%
+```{r, eval = TRUE, echo = FALSE}
 
-The cost of the smoking cessation therapies were determined as follows, cost data was obtained from GoodRx.
+exacerbation_costs <- data.frame(
+  `Exacerbation Severity` = c("Mild", "Moderate", "Severe", "Very Severe"),
+  `Definition` = c(
+    "ED visit (Dalal et al. 2011)",
+    "No hospitalization (Bogart et al. 2020)",
+    "Inpatient hospitalization (Bogart et al. 2020)",
+    "ICU + intubation (Dalal et al. 2011)"
+  ),
+  `Cost (USD)` = c(606, 2107, 22729, 44909)
+)
 
-Nicotine patch: $71 
-Nicotine gum/lozenge: $35
-Nicotine Spray: $550
-Varenicline: $402
-Bupropion: $25
-
-Using these weights we then derive an average cost of smoking cessation for 3 months of $120.15
-
-```{r, eval = TRUE, echo = TRUE}
-
-input$cost$cost_smoking_cessation <- 120.15
+kable(exacerbation_costs,
+      col.names = c("Exacerbation Severity", "Definition", "Cost (USD)"),
+      format.args = list(big.mark = ","),
+      caption = "Per-Event COPD Exacerbation Costs by Severity")
 
 ```
 
-### Step 4: Estimating costs for GP visit and diagnostic spirometry 
+## Step 4: Estimating costs for smoking cessation 
 
-**GP visits**  
+According to the MMWR study (DOI: 10.15585/mmwr.mm7329a1) the most commonly used smoking cessation pharmacotherapies among individuals attempting to quit were as follows:
+
+- **Nicotine patch**: 19.6%  
+- **Nicotine gum/lozenge**: 18.4%  
+- **Nicotine spray/inhaler**: 1.0%  
+- **Varenicline**: 9.6%  
+- **Bupropion**: 6.4%  
+
+### Reweighted to Assume 100% Uptake:
+
+- **Nicotine patch**: (19.6 / 55.0) × 100 ≈ **35.6%**  
+- **Nicotine gum/lozenge**: (18.4 / 55.0) × 100 ≈ **33.5%**  
+- **Nicotine spray/inhaler**: (1.0 / 55.0) × 100 ≈ **1.8%**  
+- **Varenicline**: (9.6 / 55.0) × 100 ≈ **17.5%**  
+- **Bupropion**: (6.4 / 55.0) × 100 ≈ **11.6%**  
+
+### Estimated 3-Month Cost of Smoking Cessation Therapy
+
+Cost estimates were derived from GoodRx (2025 Costs USD) for 3 months of smoking cessation therapy:
+
+- **Nicotine patch**: \$71  
+- **Nicotine gum/lozenge**: \$35  
+- **Nicotine spray/inhaler**: \$550  
+- **Varenicline**: \$402  
+- **Bupropion**: \$25  
+
+Using the reweighted proportions, the weighted average cost for 3 months of smoking cessation pharmacotherapy was calculated as:
+
+**Average cost: \$120.15**
+
+```{r, eval = TRUE, echo = FALSE}
+
+smoking_cessation <- data.frame(
+  Pharmacotherapy = c("Nicotine Patch", "Nicotine Gum/Lozenge", "Nicotine Spray/Inhaler", 
+                      "Varenicline", "Bupropion", "Average (weighted)"),
+  Reweighted_Proportion = c(35.6, 33.5, 1.8, 17.5, 11.6, "--"),
+  Cost = c(71, 35, 550, 402, 25, 120.15)
+)
+
+kable(smoking_cessation,
+      col.names = c("Pharmacotherapy", "Reweighted Proportion (%)", "Cost "),
+      format.args = list(big.mark = ",", nsmall = 2),
+      caption = "Smoking Cessation Therapy Use and Cost Estimates")
+
+```
+
+## Step 5: Estimating costs for GP visit and diagnostic spirometry 
+
+**GP visits**.  
 Medicare pays providers approximately $89 and $125 for a 99214 visit in a typical outpatient setting (Source: https://college.acaai.org/wp-content/uploads/2024/07/2025-Proposed-RVUs-and-Reimbursement-for-Allergy.pdf). A midpoint of $107 was used (2025 cost)
 
-**Spirometry**  
+**Spirometry**. 
 CMS CPT code 94060 was used which equates to $41 (2025 Costs USD)
-
-```{r, eval = TRUE, echo = TRUE}
-
-#Cost of diagnostic spirometry
-input$cost$cost_outpatient_diagnosis <- 41
-
-#Cost of GP visits
-input$cost$cost_gp_visit <- 107
-
-```
-
 
