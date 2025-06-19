@@ -9,48 +9,47 @@ This document outlines the steps taken to determine input values for the payoff 
 
 ## Step 1: Estimating annual COPD medication costs
 
-To estimate the annual cost of COPD medications, the following two components were used:
+Annual COPD medication costs were estimated using two components:
 
-1. **Average monthly GoodRx prices**  
-   - Based on the average price of the most commonly prescribed inhalers within each drug class  
-   - All prices reflect 2025 USD
+1. **Inhaler unit cost by drug class**  
+   - Prices were obtained from published literature and (DOI: 10.1513/AnnalsATS.202008-1082RL). Prices of SABA and LAMA were           estimated from Figure 2A as these prices were not reported in the text.
+   - It was assumed that one inhaler is used per month per drug class, resulting in 12 inhalers annually.  
+   - Annual cost per drug class (2018 Costs USD) was calculated as:  
+     `Annual Cost = Inhaler Unit Price × 12`
 
-2. **Real-world annual prescription fill frequency**  
-   - Derived from the following published sources:
+2. **Real-world dispensing frequency based on proportion of days covered (PDC)**  
+   - PDC estimates were used to adjust the annual inhaler count per drug class.  
+   - Sources for PDC data include:
      - **Mannino et al., 2022** (DOI: 10.1016/j.rmed.2022.106807)
-     - **Bengtson et al., 2018** (DOI: 10.1177/1753466618772750)
+     - **Slade et al., 2021** (DOI: 10.1186/s12890-021-01612-5)
+     - **Bengtson et al., 2018** (DOI: 10.1177/1753466618772750) 
 
+#### Dispense frequency per year (adjusted via PDC)
 
-#### Dispense frequency per year
+**Mannino et al., 2022:**  
+- **ICS + LAMA + LABA**: PDC = 0.66  
+  → Estimated number of inhalers per year: `0.66 × 12 = 7.92`
 
-**Mannino et al. 2022:**
+**Slade et al., 2021:**  
+- **LAMA + LABA**: PDC = 0.44  
+  → Estimated number of inhalers per year: `0.44 × 12 = 5.28`  
+- **LAMA**: PDC = 0.37  
+  → Estimated number of inhalers per year: `0.37 × 12 = 4.44`
 
-- ICS + LAMA + LABA: 6.1  
-- ICS-containing regimens: 5.3  
-- LAMA-containing regimens: 5.2  
-- LABA-containing regimens: 5.5  
+**Bengtson et al., 2018:**  
+- **SABA**: The study reported an average of 1 fill per month  
+  → Estimated number of inhalers per year: `12`
 
-**Bengtson et al. 2018:**
-
-- SABA: 12.0  
-
-#### Assumptions for combination therapies
-
-For combination therapies not explicitly categorized, the midpoint of class dispensing frequencies was used:
-
-- ICS + LABA: 5.4  
-- LAMA + LABA: 5.35
-
-Note: The real-world prescription fill data inherently reflects non-adherence,thus the adherence parameter in EPIC will be set to 1 to avoid double-adjusting for adherence
+**Note:** Real-world prescription fill data inherently accounts for non-adherence. Therefore, the adherence parameter in EPIC will be set to 1 to avoid double-counting non-adherence effects.
 
 ```{r, eval = TRUE, echo = FALSE}
 
 library(knitr)
 
 drug_costs <- data.frame(
-  class = c("ICS + LAMA + LABA", "ICS+LABA", "LAMA", "LAMA+LABA", "SABA"),
-  monthly_cost = c(653, 227, 334, 420, 31),
-  dispenses_per_year = c(6.1, 5.4, 5.2, 5.35, 12)
+  class <- c("ICS + LAMA + LABA", "LAMA", "LAMA+LABA", "SABA"),
+  monthly_cost <- c(296.11, 210, 218.05, 36),
+  dispenses_per_year = c(7.92, 4.44, 5.28, 12)
 )
 
 drug_costs$annual_cost <- round(drug_costs$monthly_cost * drug_costs$dispenses_per_year, 2)
@@ -90,8 +89,8 @@ The exacerbation module assigns costs to events based on severity: **Mild**, **M
 
 The following references were used:
 
-- **Dalal et al., 2011** (DOI: 10.1016/j.rmed.2010.09.003) — 2008 Costs USD  
-- **Bogart et al., 2020** (DOI: 10.37765/ajmc.2020.43157) — 2017 Costs USD
+- **Dalal et al. 2011** (DOI: 10.1016/j.rmed.2010.09.003) — 2008 Costs USD  
+- **Bogart et al. 2020** (DOI: 10.37765/ajmc.2020.43157) — 2017 Costs USD
 
 ```{r, eval = TRUE, echo = FALSE}
 

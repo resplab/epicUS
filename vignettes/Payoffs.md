@@ -8,50 +8,52 @@ payoff module.
 
 ## Step 1: Estimating annual COPD medication costs
 
-To estimate the annual cost of COPD medications, the following two
-components were used:
+Annual COPD medication costs were estimated using two components:
 
-1.  **Average monthly GoodRx prices**
-    - Based on the average price of the most commonly prescribed
-      inhalers within each drug class  
-    - All prices reflect 2025 USD
-2.  **Real-world annual prescription fill frequency**
-    - Derived from the following published sources:
+1.  **Inhaler unit cost by drug class**
+    - Prices were obtained from published literature and (DOI:
+      10.1513/AnnalsATS.202008-1082RL). Prices of SABA and LAMA were
+      estimated from Figure 2A as these prices were not reported in the
+      text.
+    - It was assumed that one inhaler is used per month per drug class,
+      resulting in 12 inhalers annually.  
+    - Annual cost per drug class (2018 Costs USD) was calculated as:  
+      `Annual Cost = Inhaler Unit Price × 12`
+2.  **Real-world dispensing frequency based on proportion of days
+    covered (PDC)**
+    - PDC estimates were used to adjust the annual inhaler count per
+      drug class.  
+    - Sources for PDC data include:
       - **Mannino et al., 2022** (DOI: 10.1016/j.rmed.2022.106807)
+      - **Slade et al., 2021** (DOI: 10.1186/s12890-021-01612-5)
       - **Bengtson et al., 2018** (DOI: 10.1177/1753466618772750)
 
-#### Dispense frequency per year
+#### Dispense frequency per year (adjusted via PDC)
 
-**Mannino et al. 2022:**
+**Mannino et al., 2022:**  
+- **ICS + LAMA + LABA**: PDC = 0.66  
+→ Estimated number of inhalers per year: `0.66 × 12 = 7.92`
 
-- ICS + LAMA + LABA: 6.1  
-- ICS-containing regimens: 5.3  
-- LAMA-containing regimens: 5.2  
-- LABA-containing regimens: 5.5
+**Slade et al., 2021:**  
+- **LAMA + LABA**: PDC = 0.44  
+→ Estimated number of inhalers per year: `0.44 × 12 = 5.28`  
+- **LAMA**: PDC = 0.37  
+→ Estimated number of inhalers per year: `0.37 × 12 = 4.44`
 
-**Bengtson et al. 2018:**
+**Bengtson et al., 2018:**  
+- **SABA**: The study reported an average of 1 fill per month  
+→ Estimated number of inhalers per year: `12`
 
-- SABA: 12.0
-
-#### Assumptions for combination therapies
-
-For combination therapies not explicitly categorized, the midpoint of
-class dispensing frequencies was used:
-
-- ICS + LABA: 5.4  
-- LAMA + LABA: 5.35
-
-Note: The real-world prescription fill data inherently reflects
-non-adherence,thus the adherence parameter in EPIC will be set to 1 to
-avoid double-adjusting for adherence
+**Note:** Real-world prescription fill data inherently accounts for
+non-adherence. Therefore, the adherence parameter in EPIC will be set to
+1 to avoid double-counting non-adherence effects.
 
 | Drug Class | Monthly Cost (USD) | Dispenses/Year | Estimated Annual Cost (USD) |
 |:---|---:|---:|---:|
-| ICS + LAMA + LABA | 653 | 6.10 | 3,983.3 |
-| ICS+LABA | 227 | 5.40 | 1,225.8 |
-| LAMA | 334 | 5.20 | 1,736.8 |
-| LAMA+LABA | 420 | 5.35 | 2,247.0 |
-| SABA | 31 | 12.00 | 372.0 |
+| ICS + LAMA + LABA | 296.11 | 7.92 | 2,345.19 |
+| LAMA | 210.00 | 4.44 | 932.40 |
+| LAMA+LABA | 218.05 | 5.28 | 1,151.30 |
+| SABA | 36.00 | 12.00 | 432.00 |
 
 ## Step 2: Estimating COPD-related background costs by GOLD stage
 
@@ -78,9 +80,9 @@ per-event direct medical costs.
 
 The following references were used:
 
-- **Dalal et al. 2011** (DOI: 10.1016/j.rmed.2010.09.003) — 2008 Costs
+- **Dalal et al. 2011** (DOI: 10.1016/j.rmed.2010.09.003) — 2008 Costs
   USD  
-- **Bogart et al. 2020** (DOI: 10.37765/ajmc.2020.43157) — 2017 Costs
+- **Bogart et al. 2020** (DOI: 10.37765/ajmc.2020.43157) — 2017 Costs
   USD
 
 | Exacerbation Severity | Definition | Cost (USD) |
@@ -143,5 +145,5 @@ in a typical outpatient setting (Source:
 <https://college.acaai.org/wp-content/uploads/2024/07/2025-Proposed-RVUs-and-Reimbursement-for-Allergy.pdf>).
 A midpoint of \$107 was used (2025 cost)
 
-**Spirometry**. CMS CPT code 94060 was used which equates to \$41 (2025
-Costs USD)
+**Spirometry**. 
+CMS CPT code 94060 was used which equates to \$41 (2025 Costs USD)
