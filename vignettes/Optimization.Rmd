@@ -26,8 +26,8 @@ Here, we load the necessary libraries. We also set the default simulation settin
 library(epicUS)
 library(tidyverse)
 
-USSimulation <- read_csv("../data-raw/USSimulation.csv")
-
+USSimulation <- read_csv(system.file("USSimulation.csv", package = "epicUS")
+                         
 settings <- get_default_settings()
 settings$record_mode <- 0
 settings$n_base_agents <- settings$n_base_agents
@@ -195,7 +195,7 @@ library(dplyr)
 library(tidyr)
 
 
-USSimulation <- read_csv("../data-raw/USSimulation.csv")
+USSimulation <- read_csv(system.file("USSimulation.csv", package = "epicUS"))
 
 settings <- get_default_settings()
 settings$record_mode <- 0
