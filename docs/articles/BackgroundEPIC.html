@@ -55,6 +55,9 @@
       <a href="../articles/GettingStarted.html">Getting Started with EPIC</a>
     </li>
     <li>
+      <a href="../articles/Optimization.html">Optimization</a>
+    </li>
+    <li>
       <a href="../articles/RecalibratingEPIC.html">RecalibratingEPIC</a>
     </li>
     <li>
@@ -65,9 +68,6 @@
     </li>
     <li>
       <a href="../articles/UsingEPICinR.html">Using EPIC in R</a>
-    </li>
-    <li>
-      <a href="../articles/ZOptimization.html">Optimization</a>
     </li>
   </ul>
 </li>
@@ -137,7 +137,37 @@ community-dwelling Canadians.</p>
 <p>As with any real population, the simulated population is constantly
 changing. We define a change in a simulated individual as an
 <strong>event</strong>.</p>
-<style type="text/css"></style>
+<style type="text/css">.event-table table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 1em;
+        font-family: Arial, sans-serif;
+        text-align: left;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        border-bottom: none;
+    }
+
+    .event-table table th {
+        background-color: #f3f4f5;
+        font-weight: bold;
+        border-bottom: 3px solid #333;
+        padding: 10px;
+    }
+
+    .event-table table td {
+        padding: 8px;
+    }
+
+    .event-table table tr:nth-child(even) {
+        background-color: #f3f4f5;
+    }
+
+    .event-table table tr:nth-child(odd) {
+        background-color: #ffffff;
+    }</style>
 <p>We combined 12 different studies to look at 7 different aspects of
 COPD:</p>
 <ol style="list-style-type: decimal">
@@ -157,8 +187,55 @@ COPD:</p>
 <a href="https://pophealthmetrics.biomedcentral.com/track/pdf/10.1186/s12963-015-0057-x" class="external-link">POHEM</a>,
 which is the dynamic microsimulation model we described previously. This
 is basically the background data for the simulation.</p>
-<style type="text/css"></style>
-<script src=""></script>
+<style type="text/css">.custom-table-container-dropdown table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.custom-table-container-dropdown table th {
+    background-color: #f3f4f5;
+    font-weight: bold;
+    border-bottom: 3px solid #333;
+    padding: 10px;
+    text-align: left;
+}
+
+.custom-table-container-dropdown table td {
+    padding: 8px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.custom-collapse {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    display: none;
+}
+
+.custom-collapse.show {
+    display: block;
+}</style>
+<script src="/tmp/Rtmpzh8lRK/temp_libpath11a6e23240d593/epicUS/html/section-2/toggle-buttons.js"></script>
 </div>
 <div class="section level3">
 <h3 id="occurence">COPD Occurence Module<a class="anchor" aria-label="anchor" href="#occurence"></a>
@@ -166,7 +243,54 @@ is basically the background data for the simulation.</p>
 <p>We used data from the Canadian Cohort of Obstructive Lung Disease
 (COLD) to assign a binary COPD status to individuals upon their
 creation.</p>
-<style type="text/css"></style>
+<style type="text/css">.custom-table-container-dropdown table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.custom-table-container-dropdown table th {
+    background-color: #f3f4f5;
+    font-weight: bold;
+    border-bottom: 3px solid #333;
+    padding: 10px;
+    text-align: left;
+}
+
+.custom-table-container-dropdown table td {
+    padding: 8px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.custom-collapse {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    display: none;
+}
+
+.custom-collapse.show {
+    display: block;
+}</style>
 </div>
 <div class="section level3">
 <h3 id="lungfunction">Lung Function Module<a class="anchor" aria-label="anchor" href="#lungfunction"></a>
@@ -177,7 +301,54 @@ rate of FEV₁ decline are assigned. The 3 components of this module are
 the initial FEV₁ value for preexisting (prevalent) COPD cases, initial
 FEV₁ values for incident COPD cases, and the slope of decline in FEV₁
 over time.</p>
-<style type="text/css"></style>
+<style type="text/css">.custom-table-container-dropdown table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.custom-table-container-dropdown table th {
+    background-color: #f3f4f5;
+    font-weight: bold;
+    border-bottom: 3px solid #333;
+    padding: 10px;
+    text-align: left;
+}
+
+.custom-table-container-dropdown table td {
+    padding: 8px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.custom-collapse {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    display: none;
+}
+
+.custom-collapse.show {
+    display: block;
+}</style>
 </div>
 <div class="section level3">
 <h3 id="exacerbation">Exacerbation Module<a class="anchor" aria-label="anchor" href="#exacerbation"></a>
@@ -190,7 +361,54 @@ shortness of breath, wheezing, coughing up mucus, etc.</p>
 <div class="section level4">
 <h4 id="exacerbation-severity">Exacerbation Severity<a class="anchor" aria-label="anchor" href="#exacerbation-severity"></a>
 </h4>
-<style type="text/css"></style>
+<style type="text/css">.custom-table-container-dropdown table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.custom-table-container-dropdown table th {
+    background-color: #f3f4f5;
+    font-weight: bold;
+    border-bottom: 3px solid #333;
+    padding: 10px;
+    text-align: left;
+}
+
+.custom-table-container-dropdown table td {
+    padding: 8px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.custom-collapse {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    display: none;
+}
+
+.custom-collapse.show {
+    display: block;
+}</style>
 <p><strong>hazard</strong>: instantaneous exacerbation rate</p>
 </div>
 </div>
@@ -202,7 +420,54 @@ not from COPD. More formally:</p>
 <p><strong>COPD-related mortality</strong>: Death due to a severe or
 very severe COPD exacerbation.<br><strong>Background mortality</strong>: Death from all other causes
 (excluding COPD).</p>
-<style type="text/css"></style>
+<style type="text/css">.custom-table-container-dropdown table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.custom-table-container-dropdown table th {
+    background-color: #f3f4f5;
+    font-weight: bold;
+    border-bottom: 3px solid #333;
+    padding: 10px;
+    text-align: left;
+}
+
+.custom-table-container-dropdown table td {
+    padding: 8px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.custom-collapse {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    display: none;
+}
+
+.custom-collapse.show {
+    display: block;
+}</style>
 </div>
 <div class="section level3">
 <h3 id="payoff">Payoff Module<a class="anchor" aria-label="anchor" href="#payoff"></a>
@@ -212,11 +477,105 @@ healthcare system. Additionally, having COPD can reduce quality of life,
 which depends on the severity of the diagnosis and number of
 exacerbations. We define cost and utility, below, and divided each into
 2 categories:</p>
-<style type="text/css"></style>
+<style type="text/css">.custom-table-container-dropdown table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.custom-table-container-dropdown table th {
+    background-color: #f3f4f5;
+    font-weight: bold;
+    border-bottom: 3px solid #333;
+    padding: 10px;
+    text-align: left;
+}
+
+.custom-table-container-dropdown table td {
+    padding: 8px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.custom-collapse {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    display: none;
+}
+
+.custom-collapse.show {
+    display: block;
+}</style>
 <div class="section level4">
 <h4 id="module-summary">Module Summary<a class="anchor" aria-label="anchor" href="#module-summary"></a>
 </h4>
-<style type="text/css"></style>
+<style type="text/css">.custom-table-container-dropdown table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.custom-table-container-dropdown table th {
+    background-color: #f3f4f5;
+    font-weight: bold;
+    border-bottom: 3px solid #333;
+    padding: 10px;
+    text-align: left;
+}
+
+.custom-table-container-dropdown table td {
+    padding: 8px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.custom-collapse {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    display: none;
+}
+
+.custom-collapse.show {
+    display: block;
+}</style>
 </div>
 </div>
 <div class="section level3">
@@ -226,7 +585,54 @@ exacerbations. We define cost and utility, below, and divided each into
 progression of COPD. Smoking status (e.g., smoker, former smoker,
 non-smoker) is incorporated into the model to account for its effect on
 the individual’s health trajectory.</p>
-<style type="text/css"></style>
+<style type="text/css">.custom-table-container-dropdown table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: Arial, sans-serif;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.custom-table-container-dropdown table th {
+    background-color: #f3f4f5;
+    font-weight: bold;
+    border-bottom: 3px solid #333;
+    padding: 10px;
+    text-align: left;
+}
+
+.custom-table-container-dropdown table td {
+    padding: 8px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.custom-collapse {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    display: none;
+}
+
+.custom-collapse.show {
+    display: block;
+}</style>
 </div>
 </div>
   </div>
