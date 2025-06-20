@@ -5,7 +5,7 @@
 <!-- badges: end -->
 
 # epicUS
-R package for Evaluation Platform in COPD (EPIC). Please refer to the published papers for more information: 
+R package for Evaluation Platform in COPD (EPIC) - US version. Please refer to the published papers for more information: 
 
 Sadatsafavi, M., Ghanbarian, S., Adibi, A., Johnson, K., Mark FitzGerald, J., Flanagan, W., … Sin, D. (2019). Development and Validation of the Evaluation Platform in COPD (EPIC): A Population-Based Outcomes Model of COPD for Canada. Medical Decision Making. [https://doi.org/10.1177/0272989X18824098](https://doi.org/10.1177/0272989X18824098)
 
