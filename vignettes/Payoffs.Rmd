@@ -12,7 +12,7 @@ This document outlines the steps taken to determine input values for the payoff 
 Annual COPD medication costs were estimated using two components:
 
 1. **Inhaler unit cost by drug class**  
-   - Prices were obtained from published literature and (DOI: 10.1513/AnnalsATS.202008-1082RL). Prices of SABA and LAMA were           estimated from Figure 2A as these prices were not reported in the text.
+   - Prices were obtained from published literature and (DOI: 10.1513/AnnalsATS.202008-1082RL). Prices of SABA and LAMA were digitized from Figure 2A as these prices were not reported in the text.
    - It was assumed that one inhaler is used per month per drug class, resulting in 12 inhalers annually.  
    - Annual cost per drug class (2018 Costs USD) was calculated as:  
      `Annual Cost = Inhaler Unit Price × 12`
@@ -48,7 +48,7 @@ library(knitr)
 
 drug_costs <- data.frame(
   class <- c("ICS + LAMA + LABA", "LAMA", "LAMA+LABA", "SABA"),
-  monthly_cost <- c(296.11, 210, 218.05, 36),
+  monthly_cost <- c(296.11, 208.10, 218.05, 32.2),
   dispenses_per_year = c(7.92, 4.44, 5.28, 12)
 )
 
@@ -97,74 +97,86 @@ The following references were used:
 exacerbation_costs <- data.frame(
   `Exacerbation Severity` = c("Mild", "Moderate", "Severe", "Very Severe"),
   `Definition` = c(
-    "ED visit (Dalal et al. 2011)",
-    "No hospitalization (Bogart et al. 2020)",
-    "Inpatient hospitalization (Bogart et al. 2020)",
-    "ICU + intubation (Dalal et al. 2011)"
+    "ED visit",
+    "No hospitalization",
+    "Inpatient hospitalization",
+    "ICU + intubation"
   ),
-  `Cost (USD)` = c(606, 2107, 22729, 44909)
+  `Cost (USD)` = c(606, 2107, 22729, 44909),
+  `Source` = c(
+    "Dalal et al. 2011",
+    "Bogart et al. 2020",
+    "Bogart et al. 2020",
+    "Dalal et al. 2011"
+  )
 )
 
 kable(exacerbation_costs,
-      col.names = c("Exacerbation Severity", "Definition", "Cost (USD)"),
+      col.names = c("Exacerbation Severity", "Definition", "Cost (USD)", "Source"),
       format.args = list(big.mark = ","),
       caption = "Per-Event COPD Exacerbation Costs by Severity")
-
 ```
 
 ## Step 4: Estimating costs for smoking cessation 
 
-According to the MMWR study (DOI: 10.15585/mmwr.mm7329a1) the most commonly used smoking cessation pharmacotherapies among individuals attempting to quit were as follows:
+## Estimating the Cost of Smoking Cessation Therapy
+
+To estimate the population-level cost of smoking cessation therapy, the distribution of commonly used pharmacologic and behavioral therapies was obtained from the MMWR study (DOI: 10.15585/mmwr.mm7329a1). The reported usage among individuals attempting to quit included:
 
 - **Nicotine patch**: 19.6%  
 - **Nicotine gum/lozenge**: 18.4%  
 - **Nicotine spray/inhaler**: 1.0%  
 - **Varenicline**: 9.6%  
 - **Bupropion**: 6.4%  
+- **Behavioral counseling**: 7.3%  
 
-### Reweighted to assume 100% uptake:
+### Reweighted to Assume 100% Uptake
 
-- **Nicotine patch**: (19.6 / 55.0) × 100 ≈ 35.6%  
-- **Nicotine gum/lozenge**: (18.4 / 55.0) × 100 ≈ 33.5%  
-- **Nicotine spray/inhaler**: (1.0 / 55.0) × 100 ≈ 1.8%  
-- **Varenicline**: (9.6 / 55.0) × 100 ≈ 17.5%  
-- **Bupropion**: (6.4 / 55.0) × 100 ≈ 11.6%  
+To standardize the distribution across therapies, reweighting was performed using the total of all therapies (62.3%):
 
-### Estimated 3-month cost of smoking cessation therapy
+- **Nicotine patch**: (19.6 / 62.3) × 100 ≈ **31.5%**  
+- **Nicotine gum/lozenge**: (18.4 / 62.3) × 100 ≈ **29.5%**  
+- **Nicotine spray/inhaler**: (1.0 / 62.3) × 100 ≈ **1.6%**  
+- **Varenicline**: (9.6 / 62.3) × 100 ≈ **15.4%**  
+- **Bupropion**: (6.4 / 62.3) × 100 ≈ **10.3%**  
+- **Behavioral counseling**: (7.3 / 62.3) × 100 ≈ **11.7%**  
 
-Cost estimates were derived from GoodRx (2025 Costs USD) for 3 months of smoking cessation therapy:
+### Estimated 3-Month Cost of Smoking Cessation Therapy
 
-- **Nicotine patch**: \$71  
-- **Nicotine gum/lozenge**: \$35  
-- **Nicotine spray/inhaler**: \$550  
-- **Varenicline**: \$402  
-- **Bupropion**: \$25  
+Cost estimates were based on 2025 GoodRx prices for a 3-month course of pharmacotherapy.  
+For behavioral counseling, Medicare reimburses up to 8 sessions per year, which was assumed to be the number of sessions used.  
+The per-session cost was based on **2015 CPT codes**:
+
+- **99406**: \$14.37 for sessions <10 minutes  
+- **99407**: \$27.67 for sessions >10 minutes  
+
+A midpoint value of **\$21.02** per session was applied, totaling **\$168.16** for 8 sessions.
 
 Using the reweighted proportions, the weighted average cost for 3 months of smoking cessation pharmacotherapy was calculated as:
 
-**Average cost**: \$120.15
+**Average cost**: \$125.65
 
 ```{r, eval = TRUE, echo = FALSE}
 
 smoking_cessation <- data.frame(
-  Pharmacotherapy = c("Nicotine Patch", "Nicotine Gum/Lozenge", "Nicotine Spray/Inhaler", 
-                      "Varenicline", "Bupropion", "Average (weighted)"),
-  Reweighted_Proportion = c(35.6, 33.5, 1.8, 17.5, 11.6, "--"),
-  Cost = c(71, 35, 550, 402, 25, 120.15)
+  Therapy = c("Nicotine Patch", "Nicotine Gum/Lozenge", "Nicotine Spray/Inhaler", 
+              "Varenicline", "Bupropion", "Behavioral Counseling", "Average (weighted)"),
+  `Reweighted Proportion (%)` = c(31.5, 29.5, 1.6, 15.4, 10.3, 11.7, "--"),
+  `Cost (USD)` = c(71, 35, 550, 402, 25, 168.16, 125.65)
 )
 
 kable(smoking_cessation,
-      col.names = c("Pharmacotherapy", "Reweighted Proportion (%)", "Cost (USD) "),
+      col.names = c("Therapy", "Reweighted Proportion (%)", "Cost (USD)"),
       format.args = list(big.mark = ",", nsmall = 2),
-      caption = "Smoking Cessation Therapy Use and Cost Estimates")
+      caption = "Smoking Cessation Therapy Use and Cost Estimates (3-Month Duration)")
 
 ```
 
-## Step 5: Estimating costs for GP visit and diagnostic spirometry 
+## Step 5: Estimating costs for GP visits and diagnostic spirometry 
 
 **GP visits**.  
-Medicare pays providers approximately $89 and $125 for a 99214 visit in a typical outpatient setting (Source: https://college.acaai.org/wp-content/uploads/2024/07/2025-Proposed-RVUs-and-Reimbursement-for-Allergy.pdf). A midpoint of $107 was used (2025 cost)
+CPT code 99214 is a standard outpatient GP visit, the midpoint between facility and non facility visit reimbursement amounts was used which equates $94.15 (2015 Costs USD)
 
 **Spirometry**. 
-CMS CPT code 94060 was used which equates to $41 (2025 Costs USD)
+CPT code 94060 was used which equates to $61.81 (2015 Costs USD)
 
