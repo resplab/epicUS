@@ -121,7 +121,7 @@ kable(exacerbation_costs,
 
 ## Estimating the Cost of Smoking Cessation Therapy
 
-To estimate the population-level cost of smoking cessation therapy, the distribution of commonly used pharmacologic and behavioral therapies was obtained from the MMWR study (DOI: 10.15585/mmwr.mm7329a1). The reported usage among individuals attempting to quit included:
+To estimate the cost of smoking cessation therapy, the distribution of commonly used pharmacologic and behavioral therapies was obtained from the MMWR study (DOI: 10.15585/mmwr.mm7329a1). The reported usage among individuals attempting to quit included:
 
 - **Nicotine patch**: 19.6%  
 - **Nicotine gum/lozenge**: 18.4%  
