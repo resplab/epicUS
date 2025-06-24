@@ -3,6 +3,7 @@
 name: R-CMD-check
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
