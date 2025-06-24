@@ -49,3 +49,7 @@ jobs:
           clean: false
           branch: gh-pages
           folder: docs
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
