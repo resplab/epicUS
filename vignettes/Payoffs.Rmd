@@ -1,6 +1,10 @@
 ---
 title: "Payoffs"
 output: html_document
+vignette: >
+  %\VignetteIndexEntry{Payoffs}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 # Overview
