@@ -16,7 +16,7 @@ This document outlines the steps taken to determine input values for the payoff 
 Annual COPD medication costs were estimated using two components:
 
 1. **Inhaler unit cost by drug class**  
-   - Prices were obtained from published literature and (DOI: 10.1513/AnnalsATS.202008-1082RL). Prices of SABA and LAMA were digitized from Figure 2A as these prices were not reported in the text.
+   - Prices were obtained from published literature (DOI: 10.1513/AnnalsATS.202008-1082RL). Prices of SABA and LAMA were digitized from Figure 2A as these prices were not reported in the text.
    - It was assumed that one inhaler is used per month per drug class, resulting in 12 inhalers annually.  
    - Annual cost per drug class (2018 Costs USD) was calculated as:  
      `Annual Cost = Inhaler Unit Price × 12`
@@ -58,7 +58,7 @@ kable(drug_costs,
 
 # Set adherence parameter
 
- input$medication$medication_adherence <- 0.49
+input$medication$medication_adherence <- 0.49
 
 ```
 
@@ -88,7 +88,7 @@ kable(copd_background_costs,
 
 The exacerbation module assigns per-event direct medical costs based on severity: **Mild**, **Moderate**, **Severe**, and **Very Severe**. These cost estimates were derived from U.S.-based healthcare utilization studies.
 
-- **Mild Exacerbation**: Defined as an increase in bronchodilator use that does not result in a healthcare encounter. It is assumed that half of the number of available doses in a SABA  inhaler is used per event.
+- **Mild Exacerbation**: Defined as an increase in bronchodilator use that does not result in a healthcare encounter. It is assumed that half of the number of available doses in a SABA  inhaler is used per event. Cost of SABA inhaler is obtained from the published literature (DOI: 10.1513/AnnalsATS.202008-1082RL).
 - **Moderate Exacerbation**: Involves a visit to a healthcare facility (e.g., physician office or emergency department) without resulting in hospital admission.
 - **Severe Exacerbation**: Defined as an inpatient hospital admission
 - **Very Severe Exacerbation**: Defined as ICU admission
