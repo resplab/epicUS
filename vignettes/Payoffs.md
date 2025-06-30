@@ -24,21 +24,24 @@ Annual COPD medication costs were estimated using two components:
     - PDC estimates were used to determine adherence to inhaler
       therapies
     - Sources for PDC data include:
-      - **Mannino et al., 2022** (DOI: 10.1016/j.rmed.2022.106807)
-      - **Slade et al., 2021** (DOI: 10.1186/s12890-021-01612-5)
-      - **Bengtson et al., 2018** (DOI: 10.1177/1753466618772750)
+      - **Mannino et al. 2022** (DOI: 10.1016/j.rmed.2022.106807)
+      - **Slade et al. 2021** (DOI: 10.1186/s12890-021-01612-5)
+      - **Bengtson et al. 2018** (DOI: 10.1177/1753466618772750)
 
 #### Dispense frequency per year (adjusted via PDC)
 
-**Mannino et al., 2022:**  
+**Mannino et al. 2022:**  
 - **ICS + LAMA + LABA**: PDC = 0.66
 
-**Slade et al., 2021:**  
+**Slade et al. 2021:**  
 - **LAMA + LABA**: PDC = 0.44  
 - **LAMA**: PDC = 0.37
 
+**Bengtson et al. 2018** - **SABA**: The study reported an average of 1
+fill per month
+
 **Adherence:** Adherence was determined to be an average of the PDC
-reported between the studies= 0.49
+reported between the studies that assessed non-SABA inhalers= 0.49.
 
 | Drug Class | Monthly Cost (USD) | Dispenses/Year | Estimated Annual Cost (USD) |
 |:---|---:|---:|---:|
