@@ -56,10 +56,6 @@ kable(drug_costs,
       format.args = list(big.mark = ","),
       caption = "Estimated Annual COPD Inhaler Costs by Drug Class")
 
-# Set adherence parameter
-
-input$medication$medication_adherence <- 0.49
-
 ```
 
 ## Step 2: Estimating COPD-related background costs by GOLD stage
