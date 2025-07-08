@@ -58,10 +58,11 @@ input$values$global_parameters$time_horizon <- time_horizon
                                                                 current_smoking = 0, year = 0, asthma = 0),
                                                        female = c(intercept = -4.47202, age = 0.027359   , age2 = 0, pack_years = 0.030399   ,
                                                                   current_smoking = 0, year = 0, asthma = 0))
-  #COPD exacberbations
-  input$values$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 2.0, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.25 , gold2 = -0.10 , gold3 = -0.3 , gold4 = -0.65 , diagnosis_effect = 0)))
+   #COPD exacberbations
+  input$values$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 2.0, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.15 , gold2 = -0.06 , gold3 = -0.35 , gold4 = -0.75 , diagnosis_effect = 0)))
   #input$values$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 2.0, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.25 , gold2 = -0.15 , gold3 = -0.3 , gold4 = -0.75 , diagnosis_effect = 0)))
-  input$values$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -2.109, intercept2 = 2.502, intercept3 = 4.408, female = -0.764, age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
+  input$values$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -2.809, intercept2 = 2.402, intercept3 = 5.808, female = -0.764, age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
+  #input$values$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -2.109, intercept2 = 2.502, intercept3 = 4.408, female = -0.764, age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
 
   #Adherence to medication
   input$values$medication$medication_adherence <- 0.5
