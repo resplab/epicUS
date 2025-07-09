@@ -118,10 +118,17 @@ get_input <- function(age0 = 40,
   input$agent$height_weight_rho <- 0
   input_ref$agent$height_weight_rho <- ""
 
-  input$agent$p_prevalence_age <- c(rep(0, 40), c(473.9, 462.7, 463, 469.3, 489.9, 486.3, 482.7, 479, 483.7, 509, 542.8, 557.7,
-                                                  561.4, 549.7, 555.3, 544.6, 531.6, 523.9, 510.2, 494.1, 486.5, 465.6, 442.8, 424.6, 414.9, 404.3, 394.4, 391.5, 387.3, 330.9,
-                                                  304.5, 292.2, 277.4, 255.1, 241.1, 223.2, 211.4, 198.8, 185.6, 178, 166.7, 155.2, 149.1, 140.6, 131.9, 119.7, 105.8, 95.4,
-                                                  83.4, 73.2, 62.4, 52.3, 42.7, 34.7, 27, 19.9, 13.2, 8.8, 5.9, 3.8, 6.8), rep(0, 10))
+  input$agent$p_prevalence_age <- c(
+    rep(0, 40),
+    3974.207, 3849.420, 3907.624, 4083.603, 4317.303, 4370.889, 4141.473, 4055.026,
+    4059.493, 4134.729, 4382.781, 4462.439, 4458.057, 4447.571, 4500.647, 4538.426,
+    4383.906, 4355.992, 4305.620, 4149.572, 4113.021, 3942.013, 3790.340, 3640.760,
+    3526.596, 3442.274, 3335.226, 3296.079, 3430.360, 2527.153, 2486.735, 2414.508,
+    2464.193, 2141.679, 1950.011, 1836.257, 1718.782, 1636.558, 1498.697, 1420.533,
+    1350.403, 1200.285, 1148.211, 1081.259, 1013.571, 954.754, 843.278, 771.721,
+    687.162, 594.409, 520.830, 438.629, 359.436, 292.695, 232.294, 173.061, 122.361,
+    92.105, 61.601, 43.288, 75.472, rep(0, 10)
+    )
 
   input_help$agent$p_prevalence_age <- "Age pyramid at baseline (taken from CanSim.052-0005.xlsm for year 2015)"
   input$agent$p_prevalence_age <- input$agent$p_prevalence_age/sum(input$agent$p_prevalence_age)
@@ -584,26 +591,51 @@ get_input <- function(age0 = 40,
   input$medication$medication_adherence <- 0.7
   input_ref$medication$medication_adherence <- ""
 
-  # Adapted to US setting (July 9, 2025)
+  # Adapted to US setting (July 9, 2025)- temporarily disabled
   # medication log-hazard regression matrix for rate reduction in exacerbations
   input_help$medication$medication_ln_hr_exac <- "Rate reduction in exacerbations due to treatment"
   input$medication$medication_ln_hr_exac<-c(input$medication$medication_ln_hr_exac<-c(None=0,
-                                            SABA=0,
-                                            LABA=log((1-0.12)^input$medication$medication_adherence), # RR = 0.88
-                                            SABA_LABA=log((1-0.12)^input$medication$medication_adherence),
-                                            LAMA=log((1-0.20)^input$medication$medication_adherence),  # RR = 0.80
-                                            LAMA_SABA=log((1-0.20)^input$medication$medication_adherence),
-                                            LAMA_LABA=log((1-0.26)^input$medication$medication_adherence), # RR = 0.74
-                                            LAMA_LABA_SABA=log((1-0.26)^input$medication$medication_adherence),
-                                            ICS=log((1-0.14)^input$medication$medication_adherence), # RR = 0.86
-                                            ICS_SABA=log((1-0.14)^input$medication$medication_adherence),
-                                            ICS_LABA=log((1-0.23)^input$medication$medication_adherence), # RR = 0.77
-                                            ICS_LABA_SABA=log((1-0.23)^input$medication$medication_adherence),
-                                            ICS_LAMA=log((1-0.23)^input$medication$medication_adherence),  # assumed equal to ICS/LABA
-                                            ICS_LAMA_SABA=log((1-0.23)^input$medication$medication_adherence),
-                                            ICS_LAMA_LABA=log((1-0.37)^input$medication$medication_adherence), # RR = 0.63
-                                            ICS_LAMA_LABA_SABA=log((1-0.37)^input$medication$medication_adherence)))
-  input_ref$medication$medication_ln_hr_exac <- "doi:10.1371/journal.pmed.1002958"
+                                                                                      SABA=0,
+                                                                                      LABA=log((1-0.20)^input$medication$medication_adherence),
+                                                                                      SABA_LABA=log((1-0.20)^input$medication$medication_adherence),
+                                                                                      LAMA=log((1-0.22)^input$medication$medication_adherence),
+                                                                                      LAMA_SABA=log((1-0.22)^input$medication$medication_adherence),
+                                                                                      LAMA_LABA=log((1-0.23)^input$medication$medication_adherence),
+                                                                                      LAMA_LABA_SABA=log((1-0.23)^input$medication$medication_adherence),
+                                                                                      ICS=log((1-0.19)^input$medication$medication_adherence),
+                                                                                      ICS_SABA=log((1-0.19)^input$medication$medication_adherence),
+                                                                                      ICS_LABA=log((1-0.25)^input$medication$medication_adherence),
+                                                                                      ICS_LABA_SABA=log((1-0.25)^input$medication$medication_adherence),
+                                                                                      ICS_LAMA=log((1-0.25)^input$medication$medication_adherence),
+                                                                                      ICS_LAMA_SABA=log((1-0.25)^input$medication$medication_adherence),
+                                                                                      ICS_LAMA_LABA=log((1-0.34)^input$medication$medication_adherence),
+                                                                                      ICS_LAMA_LABA_SABA=log((1-0.34)^input$medication$medication_adherence)))
+  input_ref$medication$medication_ln_hr_exac <- "ICS/LABA: Annual Rate Ratio of Comibation Therapy (Salmeterol and Fluticasone Propionate) vs. Placebo from TORCH (doi: 10.1056/NEJMoa063070),
+                                                 ICS: Annual Rate Ratio between Fluticasone vs. Placebo from TRISTAN Trial (doi:10.1016/S0140-6736(03)12459-2),
+                                                 LABA: Annual Rate Ratio between Salmeterol vs. Placebo from TRISTAN Trial (doi:10.1016/S0140-6736(03)12459-2),
+                                                 LAMA-Zhou et al. 2017, LAMA/LABA-UPLIFT 2008, ICS/LAMA/LABA-KRONOS 2018"
+
+
+  # input$medication$medication_ln_hr_exac <- c(
+  #   None = 0,
+  #   SABA = 0,
+  #   LABA = log((1 - 0.12)^input$medication$medication_adherence),          # RR = 0.88
+  #   SABA_LABA = log((1 - 0.12)^input$medication$medication_adherence),
+  #   LAMA = log((1 - 0.20)^input$medication$medication_adherence),          # RR = 0.80
+  #   LAMA_SABA = log((1 - 0.20)^input$medication$medication_adherence),
+  #   LAMA_LABA = log((1 - 0.26)^input$medication$medication_adherence),     # RR = 0.74
+  #   LAMA_LABA_SABA = log((1 - 0.26)^input$medication$medication_adherence),
+  #   ICS = log((1 - 0.14)^input$medication$medication_adherence),           # RR = 0.86
+  #   ICS_SABA = log((1 - 0.14)^input$medication$medication_adherence),
+  #   ICS_LABA = log((1 - 0.23)^input$medication$medication_adherence),      # RR = 0.77
+  #   ICS_LABA_SABA = log((1 - 0.23)^input$medication$medication_adherence),
+  #   ICS_LAMA = log((1 - 0.23)^input$medication$medication_adherence),      # assumed equal to ICS/LABA
+  #   ICS_LAMA_SABA = log((1 - 0.23)^input$medication$medication_adherence),
+  #   ICS_LAMA_LABA = log((1 - 0.37)^input$medication$medication_adherence), # RR = 0.63
+  #   ICS_LAMA_LABA_SABA = log((1 - 0.37)^input$medication$medication_adherence)
+  # )
+  # input_ref$medication$medication_ln_hr_exac <- "doi:10.1371/journal.pmed.1002958"
+
 
   # cost of medications
 
