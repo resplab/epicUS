@@ -63,7 +63,7 @@ kable(drug_costs,
 
 ## Step 2: Estimating COPD-related background costs by GOLD stage
 
-COPD-related background costs were estimated using data from Wallace et al 2019 (DOI: 10.18553/jmcp.2019.25.2.205) Table 3, specifically the row labeled "COPD-related costs, all patients". Background costs were calculated by subtracting the costs of **Inpatient Care**, **Emergency Room (ER) Visits**, and **Pharmacy** from the **Total COPD-related Medical Costs** (2016 Costs USD) as these costs are determined separately. 
+COPD-related background costs were estimated using data from Wallace et al 2019 (DOI: 10.18553/jmcp.2019.25.2.205) Table 3, specifically the row labeled "COPD-related costs, all patients". Background costs were calculated by subtracting the costs of **Inpatient Care**, **Emergency Room (ER) Visits**, and **Pharmacy** from the **Total COPD-related Medical Costs** (2016 Costs USD) as these costs are determined separately.
 
 ```{r, eval = TRUE, echo = FALSE}
 
@@ -87,7 +87,7 @@ kable(copd_background_costs,
 
 The exacerbation module assigns per-event direct medical costs based on severity: **Mild**, **Moderate**, **Severe**, and **Very Severe**. These cost estimates were derived from U.S.-based healthcare utilization studies.
 
-- **Mild Exacerbation**: Defined as an increase in bronchodilator use that does not result in a healthcare encounter. It is assumed that half of the number of available doses in a SABA  inhaler is used per event. Cost of SABA inhaler is obtained from the published literature (DOI: 10.1513/AnnalsATS.202008-1082RL).
+- **Mild Exacerbation**: Defined as an increase in bronchodilator use that does not result in a healthcare encounter. It is assumed that half of the number of available doses in a SABA inhaler is used per event. Cost of SABA inhaler is obtained from the published literature (DOI: 10.1513/AnnalsATS.202008-1082RL).
 - **Moderate Exacerbation**: Involves a visit to a healthcare facility (e.g., physician office or emergency department) without resulting in hospital admission.
 - **Severe Exacerbation**: Defined as an inpatient hospital admission
 - **Very Severe Exacerbation**: Defined as ICU admission
@@ -185,4 +185,8 @@ CPT code 99214 is a standard outpatient GP visit, the midpoint between facility 
 
 **Spirometry**. 
 CPT code 94060 was used which equates to $61.81 (2015 Costs USD)
+
+## Step 6: Estimating number of GP visits 
+
+
 
