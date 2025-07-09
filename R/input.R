@@ -218,41 +218,32 @@ get_input <- function(age0 = 40,
 
   ### smoking;
 
+  # Adapted to US setting (July 9, 2025)
   input_help$smoking$logit_p_current_smoker_0_betas <- "Probability of being a current smoker at the time of creation"
-  input$smoking$logit_p_current_smoker_0_betas <- t(as.matrix(c(Intercept = -0.2, sex = -1, age = -0.02, age2 = 0, sex_age = 0,
-                                                                sex_age2 = 0, year = -0.02)))  #intercept -1.8 when age = -0.02
+  input$smoking$logit_p_current_smoker_0_betas <- t(as.matrix(c(Intercept = -0.05, sex = -1, age = -0.02, age2 = 0, sex_age = 0, sex_age2 = 0, year = -0.02)))
   input_ref$smoking$logit_p_current_smoker_0_betas <- ""
-
+  # Adapted to US setting (July 9, 2025)
   input_help$smoking$logit_p_never_smoker_con_not_current_0_betas <- "Probability of being a never-smoker conditional on not being current smoker, at the time of creation"
-  input$smoking$logit_p_never_smoker_con_not_current_0_betas <- t(as.matrix(c(intercept = 3.7, sex = 0, age = -0.06, age2 = 0, sex_age = 0,
-                                                                              sex_age2 = 0, year = -0.02)))
+  input$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.35, sex = 0, age = -0.06, age2 = 0, sex_age = 0,sex_age2 = 0, year = -0.02)))
   input_ref$smoking$logit_p_never_smoker_con_not_current_0_betas <- ""
 
-
+  # Adapted to US setting (July 9, 2025)
   input_help$smoking$minimum_smoking_prevalence <- "Minimum Smoking Prevalence"
-  input$smoking$minimum_smoking_prevalence <- 0.10
+  input$smoking$minimum_smoking_prevalence <- 0.05
   input_ref$smoking$minimum_smoking_prevalence <- ""
 
-
-  #input_help$smoking$mortality_factor_current <- "Mortality ratio for current smokers vs. non-smokers"
-  #input$smoking$mortality_factor_current <- 1.83  #1.83
-  #input_ref$smoking$mortality_factor_current <- "Meta-analysis. doi:10.1001/archinternmed.2012.1397"
-
-  #input_help$smoking$mortality_factor_former <- "Mortality ratio for former smokers vs. non-smokers"
-  #input$smoking$mortality_factor_former <- 1.34  #1.34
-  #input_ref$smoking$mortality_factor_former <- "Meta-analysis. doi:10.1001/archinternmed.2012.1397"
-
+  # Adapted to US setting (July 9, 2025)
   input_help$smoking$mortality_factor_current  <- "Mortality ratio for current  smokers vs. non-smokers by sex and age group"
-  input$smoking$mortality_factor_current <- t(as.matrix(c(age40to49 = 1, age50to59 = 1, age60to69 = 1.94  , age70to79 = 1.86, age80p = 1.66 )))
-  input_ref$smoking$mortality_factor_current <- "Meta-analysis. doi:10.1001/archinternmed.2012.1397"
-
+  input$smoking$mortality_factor_current <- t(as.matrix(c(age40to49 = 2.33, age50to59 = 3.02, age60to69 = 2.44, age70to79 = 2.44, age80p = 1.66)))
+  input_ref$smoking$mortality_factor_current <- "Meta-analysis: doi:10.1001/archinternmed.2012.1397 and doi: 10.1056/EVIDoa2300272"
+  # Adapted to US setting (July 9, 2025)
   input_help$smoking$mortality_factor_former  <- "Mortality ratio for current  smokers vs. non-smokers by sex and age group"
-  input$smoking$mortality_factor_former<- t(as.matrix(c(age40to49 = 1, age50to59 = 1, age60to69 = 1.54  , age70to79 = 1.36, age80p = 1.27 )))
-  input_ref$smoking$mortality_factor_former <- "Meta-analysis. doi:10.1001/archinternmed.2012.1397"
+  input$smoking$mortality_factor_former <- t(as.matrix(c(age40to49 = 1.31, age50to59 = 1.85, age60to69 = 1.91, age70to79 = 1.91, age80p = 1.27)))
+  input_ref$smoking$mortality_factor_former <- "Meta-analysis: doi:10.1001/archinternmed.2012.1397 and doi: 10.1056/EVIDoa2300272"
 
-
+  # Adapted to US setting (July 9, 2025)
   input_help$smoking$pack_years_0_betas <- "Regression equations for determining the pack-years of smoking at the time of creation (for elogit_p_never_smoker_con_current_0_betas smokers)"
-  input$smoking$pack_years_0_betas <- t(as.matrix(c(intercept = 22, sex = -4, age = 0, year = -0.6, current_smoker = 10)))
+  input$smoking$pack_years_0_betas <- t(as.matrix(c(intercept = 30, sex = -4, age = 0, year = -0.6, current_smoker = 10)))
   input_ref$smoking$pack_years_0_betas <- ""
 
 
@@ -265,9 +256,9 @@ get_input <- function(age0 = 40,
   input$smoking$ln_h_inc_betas <- c(intercept = -4, sex = -0.15, age = -0.02, age2 = 0, calendar_time = -0.01)
   input_ref$smoking$ln_h_inc_betas <- ""
 
-
+  # Adapted to US setting (July 9, 2025)
   input_help$smoking$ln_h_ces_betas <- "Log-hazard of smoking cessation"
-  input$smoking$ln_h_ces_betas <- c(intercept = -3.7,  sex = 0, age = 0.02, age2 = 0, calendar_time = -0.01, diagnosis = log(1.38))
+  input$smoking$ln_h_ces_betas <- c(intercept = -3.35,  sex = 0, age = 0.02, age2 = 0, calendar_time = -0.01, diagnosis = log(1.38))
   input_ref$smoking$ln_h_ces_betas <- "Diagnosis coefficient from Wu et al. BMC Public Health 2006"
 
   input_help$smoking$smoking_ces_coefficient <- "Coefficient for the decay rate of smoking cessaton treatment, default is 100"
@@ -280,11 +271,14 @@ get_input <- function(age0 = 40,
 
 
   ## COPD
+
+  # Adapted to US setting (July 9, 2025)
   input_help$COPD$logit_p_COPD_betas_by_sex <- "Logit of the probability of having COPD (FEV1/FVC<0.7) at time of creation (separately by sex)"
-  input$COPD$logit_p_COPD_betas_by_sex <- cbind(male = c(intercept = -4.522189  , age = 0.033070   , age2 = 0, pack_years = 0.025049   ,
-                                                         current_smoking = 0, year = 0, asthma = 0),
-                                                female = c(intercept = -4.074861   , age = 0.027359   , age2 = 0, pack_years = 0.030399   ,
-                                                           current_smoking = 0, year = 0, asthma = 0))
+  input$COPD$logit_p_COPD_betas_by_sex <- cbind(male = c(intercept = -4.34190, age = 0.033070, age2 = 0, pack_years = 0.025049   ,
+                                                                current_smoking = 0, year = 0, asthma = 0),
+                                                       female = c(intercept = -4.47202, age = 0.027359   , age2 = 0, pack_years = 0.030399   ,
+                                                                  current_smoking = 0, year = 0, asthma = 0))
+
   input_ref$COPD$logit_p_COPD_betas_by_sex <- "CanCold - Shahzad's Derivation. Last Updated on 2017-09-19, ne wmodel with no currnet smoker term"
 
 
@@ -366,18 +360,18 @@ get_input <- function(age0 = 40,
 
   ## Exacerbation;
 
+  # Adapted to US setting (July 9, 2025)
   input_help$exacerbation$ln_rate_betas = "Regression coefficients for the random-effects log-hazard model of exacerbation (of any severity)"
-  input$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 1.4, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.3 , gold2 = -0.3 , gold3 = 0.08 , gold4 = -0.35 , diagnosis_effect = 0)))
+  input$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 2.0, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.15 , gold2 = -0.06 , gold3 = -0.35 , gold4 = -0.75 , diagnosis_effect = 0)))
   input_ref$exacerbation$ln_rate_betas = "Rates from DOI: 10.2147/COPD.S13826, adjusted to account for diganosis bias. Adjusted on 2018-10-02 to match manuscript. Recalibrated on 2022-11-04, see validate_exacerbations()"
 
   input_help$exacerbation$ln_rate_intercept_sd = "SD of the random intercept for log-hazard of exacerbation"
   input$exacerbation$ln_rate_intercept_sd = sqrt(0.55)
   input_ref$exacerbation$ln_rate_intercept_sd = ""
 
-
+  # Adapted to US setting (July 9, 2025)
   input_help$exacerbation$logit_severity_betas = "Regression coefficients for the proportional odds model of exacerbation severity"
-  input$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -3.609, intercept2 = 2.202, intercept3 = 5.208, female = -0.764,
-                                                          age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
+  input$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -2.809, intercept2 = 2.402, intercept3 = 5.808, female = -0.764, age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
   input_ref$exacerbation$logit_severity_betas = "Shahzad's regression on MACRO with adjusted intercepts to match severity levels reported by Hoogendoorn et al. Last updated on manuscript submission"
 
 
@@ -590,36 +584,36 @@ get_input <- function(age0 = 40,
   input$medication$medication_adherence <- 0.7
   input_ref$medication$medication_adherence <- ""
 
+  # Adapted to US setting (July 9, 2025)
   # medication log-hazard regression matrix for rate reduction in exacerbations
   input_help$medication$medication_ln_hr_exac <- "Rate reduction in exacerbations due to treatment"
   input$medication$medication_ln_hr_exac<-c(input$medication$medication_ln_hr_exac<-c(None=0,
                                             SABA=0,
-                                            LABA=log((1-0.20)^input$medication$medication_adherence),
-                                            SABA_LABA=log((1-0.20)^input$medication$medication_adherence),
-                                            LAMA=log((1-0.22)^input$medication$medication_adherence),
-                                            LAMA_SABA=log((1-0.22)^input$medication$medication_adherence),
-                                            LAMA_LABA=log((1-0.23)^input$medication$medication_adherence),
-                                            LAMA_LABA_SABA=log((1-0.23)^input$medication$medication_adherence),
-                                            ICS=log((1-0.19)^input$medication$medication_adherence),
-                                            ICS_SABA=log((1-0.19)^input$medication$medication_adherence),
-                                            ICS_LABA=log((1-0.25)^input$medication$medication_adherence),
-                                            ICS_LABA_SABA=log((1-0.25)^input$medication$medication_adherence),
-                                            ICS_LAMA=log((1-0.25)^input$medication$medication_adherence),
-                                            ICS_LAMA_SABA=log((1-0.25)^input$medication$medication_adherence),
-                                            ICS_LAMA_LABA=log((1-0.34)^input$medication$medication_adherence),
-                                            ICS_LAMA_LABA_SABA=log((1-0.34)^input$medication$medication_adherence)))
-  input_ref$medication$medication_ln_hr_exac <- "ICS/LABA: Annual Rate Ratio of Comibation Therapy (Salmeterol and Fluticasone Propionate) vs. Placebo from TORCH (doi: 10.1056/NEJMoa063070),
-                                                 ICS: Annual Rate Ratio between Fluticasone vs. Placebo from TRISTAN Trial (doi:10.1016/S0140-6736(03)12459-2),
-                                                 LABA: Annual Rate Ratio between Salmeterol vs. Placebo from TRISTAN Trial (doi:10.1016/S0140-6736(03)12459-2),
-                                                 LAMA-Zhou et al. 2017, LAMA/LABA-UPLIFT 2008, ICS/LAMA/LABA-KRONOS 2018"
+                                            LABA=log((1-0.12)^input$medication$medication_adherence), # RR = 0.88
+                                            SABA_LABA=log((1-0.12)^input$medication$medication_adherence),
+                                            LAMA=log((1-0.20)^input$medication$medication_adherence),  # RR = 0.80
+                                            LAMA_SABA=log((1-0.20)^input$medication$medication_adherence),
+                                            LAMA_LABA=log((1-0.26)^input$medication$medication_adherence), # RR = 0.74
+                                            LAMA_LABA_SABA=log((1-0.26)^input$medication$medication_adherence),
+                                            ICS=log((1-0.14)^input$medication$medication_adherence), # RR = 0.86
+                                            ICS_SABA=log((1-0.14)^input$medication$medication_adherence),
+                                            ICS_LABA=log((1-0.23)^input$medication$medication_adherence), # RR = 0.77
+                                            ICS_LABA_SABA=log((1-0.23)^input$medication$medication_adherence),
+                                            ICS_LAMA=log((1-0.23)^input$medication$medication_adherence),  # assumed equal to ICS/LABA
+                                            ICS_LAMA_SABA=log((1-0.23)^input$medication$medication_adherence),
+                                            ICS_LAMA_LABA=log((1-0.37)^input$medication$medication_adherence), # RR = 0.63
+                                            ICS_LAMA_LABA_SABA=log((1-0.37)^input$medication$medication_adherence)))
+  input_ref$medication$medication_ln_hr_exac <- "doi:10.1371/journal.pmed.1002958"
 
   # cost of medications
+
+  # Adapted to US setting (July 9, 2025)
   input_help$medication$medication_costs <- "Costs of treatment"
-  input$medication$medication_costs <-c(None=0,SABA=75.96*input$medication$medication_adherence, LABA=0, SABA_LABA=0,
-                                        LAMA=504.66*input$medication$medication_adherence, LAMA_SABA=0,
-                                        LAMA_LABA=923.06*input$medication$medication_adherence, LAMA_LAMA_SABA=0,
+  input$medication$medication_costs <-c(None=0,SABA=386.40*input$medication$medication_adherence, LABA=0, SABA_LABA=0,
+                                        LAMA=2497.20*input$medication$medication_adherence, LAMA_SABA=0,
+                                        LAMA_LABA=2616.60*input$medication$medication_adherence, LAMA_LAMA_SABA=0,
                                         ICS=0, ICS_SABA=0, ICS_LABA=0, ICS_LABA_SABA=0, ICS_LAMA=0, ICS_LAMA_SABA=0,
-                                        ICS_LAMA_LABA=1631.81*input$medication$medication_adherence, ICS_LAMA_LABA_SABA=0)
+                                        ICS_LAMA_LABA=3553.32*input$medication$medication_adherence, ICS_LAMA_LABA_SABA=0)
   input_ref$medication$medication_costs <- "BC administrative data"
 
   # utility from medications
@@ -673,25 +667,31 @@ get_input <- function(age0 = 40,
 
 
   ##cost and utility
-  input$cost$bg_cost_by_stage=t(as.matrix(c(N=0, I=135*1.0528, II=330*1.0528, III=864*1.0528, IV=1178*1.0528)))
+
+  # Adapted to US setting (July 9, 2025)
+  input$cost$bg_cost_by_stage=t(as.matrix(c(N=0, I=1314*1.0528, II=1284*1.0528, III=2281*1.0528, IV=2918*1.0528)))
   input_help$cost$bg_cost_by_stage="Annual direct (NON-TREATMENT) maintenance costs for non-COPD and COPD by GOLD grades"
   #  input$cost$ind_bg_cost_by_stage=t(as.matrix(c(N=0, I=40, II=80, III=134, IV=134))) #TODO Not implemented in C yet.
-  #  input_help$cost$ind_bg_cost_by_stage="Annual inddirect costs for non-COPD, and COPD by GOLD grades"
-  input$cost$exac_dcost=t(as.matrix(c(mild=29*1.0528,moderate=726*1.0528,severe=9212*1.0528, verysevere=20170*1.0528)))
+  #  input_help$cost$ind_bg_cost_by_stage="Annual indirect costs for non-COPD, and COPD by GOLD grades"
+
+  # Adapted to US setting (July 9, 2025)
+  input$cost$exac_dcost=t(as.matrix(c(mild=16.1*1.0528,moderate=2107*1.0528,severe=22729*1.0528, verysevere=44909*1.0528)))
   input_help$cost$exac_dcost="Incremental direct costs of exacerbations by severity levels"
 
   input$cost$cost_case_detection <- input$diagnosis$case_detection_methods[3,"None"]
   input_help$cost$cost_case_detection <- "Cost of case detection"
 
-  input$cost$cost_outpatient_diagnosis <- 61.18
+  # Adapted to US setting (July 9, 2025)
+  input$cost$cost_outpatient_diagnosis <- 61.81
   input_help$cost$cost_outpatient_diagnosis <- "Cost of diagnostic spirometry"
 
-  input$cost$cost_gp_visit <- 35.27
+  # Adapted to US setting (July 9, 2025)
+  input$cost$cost_gp_visit <- 94.15
   input_help$cost$cost_gp_visit <- "Cost of GP visit"
 
-  input$cost$cost_smoking_cessation <- 368.76
+  # Adapted to US setting (July 9, 2025)
+  input$cost$cost_smoking_cessation <- 125.65
   input_help$cost$cost_smoking_cessation <- "Cost of 12 weeks Nicotine Replacement Therapy from Mullen BMJ Tobacco Control 2014"
-
 
   #input$cost$doctor_visit_by_type<-t(as.matrix(c(50,150)))
 
