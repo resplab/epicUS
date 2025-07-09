@@ -185,8 +185,3 @@ CPT code 99214 is a standard outpatient GP visit, the midpoint between facility 
 
 **Spirometry**. 
 CPT code 94060 was used which equates to $61.81 (2015 Costs USD)
-
-## Step 6: Estimating number of GP visits 
-
-
-
