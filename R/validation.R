@@ -74,6 +74,8 @@ sanity_check <- function() {
 #' This function validates the population simulation by comparing the EPIC model population
 #' outputs with US population data over a set time horizon. It generate 3 plots for
 #' the following age groups : 40-59, 60-79, 80+
+#' @importFrom readr read_csv
+#' @importFrom dplyr %>% mutate group_by summarise arrange left_join
 #'
 #' @return plots showing population projections vs actual values for 40-59, 60-79, 80+ age groups
 #' @export
@@ -1015,7 +1017,7 @@ validate_exacerbation <- function(base_agents=1e4, input=NULL) {
   Exac_per_GOLD[1:3, 1] <- c("total", "gold1", "gold2+")
   Exac_per_GOLD[1:3, 2] <- c(total_rate,
                              round(x=GOLD_counts_all/Follow_up_GOLD_all_2level,
-                                   digit = 2))
+                                   digits = 2))
   Exac_per_GOLD[1:3, 3] <- c(0.39, 0.28, 0.53)
 
   df <- as.data.frame(Exac_per_GOLD)
@@ -1053,7 +1055,7 @@ validate_exacerbation <- function(base_agents=1e4, input=NULL) {
   Exac_per_GOLD_diagnosed[1:4, 1] <- c("gold1", "gold2", "gold3", "gold4")
   Exac_per_GOLD_diagnosed[1:4, 2] <- round(
     x=as.data.frame(table(exac_events_diagnosed[, "gold"]))[, 2]/
-      Follow_up_GOLD_diagnosed, digit = 2)
+      Follow_up_GOLD_diagnosed, digits = 2)
   Exac_per_GOLD_diagnosed[1:4, 3] <- c(0.82, 1.17, 1.61, 2.10)
 
   df <- as.data.frame(Exac_per_GOLD_diagnosed)
@@ -1078,7 +1080,7 @@ validate_exacerbation <- function(base_agents=1e4, input=NULL) {
   Exac_per_GOLD_diagnosed[1:4, 1] <- c("gold1", "gold2", "gold3", "gold4")
   Exac_per_GOLD_diagnosed[1:4, 2] <- round(
     x=as.data.frame(table(mod_sev_exac_events_diagnosed[, "gold"]))[, 2]/
-      Follow_up_GOLD_diagnosed, digit = 2)
+      Follow_up_GOLD_diagnosed, digits = 2)
   Exac_per_GOLD_diagnosed[1:4, 3] <- c(0.58, 0.91, 1.41, 1.69)
 
   df <- as.data.frame(Exac_per_GOLD_diagnosed)
@@ -1103,7 +1105,7 @@ validate_exacerbation <- function(base_agents=1e4, input=NULL) {
   Exac_per_GOLD_diagnosed[1:4, 1] <- c("gold1", "gold2", "gold3", "gold4")
   Exac_per_GOLD_diagnosed[1:4, 2] <- round(
     x=as.data.frame(table(sev_exac_events_diagnosed[, "gold"]))[, 2]/
-      Follow_up_GOLD_diagnosed, digit = 2)
+      Follow_up_GOLD_diagnosed, digits = 2)
 
   Exac_per_GOLD_diagnosed[1:4, 3] <- c(0.11, 0.16, 0.22, 0.28)
   Exac_per_GOLD_diagnosed[1:4, 4] <- c(0.10, 0.14, 0.32, 0.42)
@@ -1136,7 +1138,7 @@ validate_exacerbation <- function(base_agents=1e4, input=NULL) {
 
 
   Exac_per_GOLD_undiagnosed[1:3, 2] <- c(total_rate_undiagnosed,
-    round(x=GOLD_counts_undiagnosed/Follow_up_GOLD_undiagnosed_2level, digit = 2))
+    round(x=GOLD_counts_undiagnosed/Follow_up_GOLD_undiagnosed_2level, digits = 2))
   Exac_per_GOLD_undiagnosed[1:3, 3] <- c(0.30, 0.24, 0.40)
 
   df <- as.data.frame(Exac_per_GOLD_undiagnosed)

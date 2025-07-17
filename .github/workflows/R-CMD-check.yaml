@@ -3,6 +3,7 @@
 name: R-CMD-check
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -78,3 +79,7 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with: 
           error-on: '"error"'
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
