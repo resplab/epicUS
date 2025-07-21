@@ -81,7 +81,7 @@ validate_populationUS <- function() {
   library(tidyverse)
   library(scales)
 
-  USSimulation <- read_csv("data-raw/USSimulation.csv")
+  USSimulation <- read_csv("data-raw/USCensus.csv")
 
   settings <- get_default_settings()
   settings$record_mode <- 0
@@ -300,8 +300,171 @@ validate_population <- function(remove_COPD = 0, incidence_k = 1, savePlots = 0)
 }
 
 
+#' Returns results of validation tests for smoking module in the US population.
+#' @param intercept_k a number
+#' @param remove_COPD 0 or 1. whether to remove COPD-related mortality.
+#' @return validation test results
+#' @export
+validate_smokingUS <- function(remove_COPD = 1, intercept_k = NULL) {
+  message("Welcome to EPIC validator! Today we will see if the model make good smoking predictions")
+  petoc()
+  library(tidyverse)
+
+  settings <- default_settings
+  settings$record_mode <- record_mode["record_mode_event"]
+  settings$agent_stack_size <- 0
+  settings$n_base_agents <- 1e+05
+  settings$event_stack_size <- settings$n_base_agents * 1.7 * 30
+
+  init_session(settings = settings)
+  input <- model_input$values
+
+  message("\nBecause you have called me with remove_COPD=", remove_COPD, ", I am", c("NOT", "indeed")[remove_COPD + 1], "going to remove COPD-related mortality from my calculations")
+  if (remove_COPD) {
+    input$exacerbation$logit_p_death_by_sex <- input$exacerbation$logit_p_death_by_sex * -10000 # TODO why was this zero? Amin
+  }
+
+  if (!is.null(intercept_k))
+    input$manual$smoking$intercept_k <- intercept_k
+
+  petoc()
+
+  message("There are two validation targets: 1) the prevalence of current smokers (by sex) in 2015, and 2) the projected decline in smoking rate.\n")
+  message("Starting validation target 1: baseline prevalence of smokers.\n")
+  petoc()
+
+  # CanSim.105.0501<-read.csv(paste(data_path,'/CanSim.105.0501.csv',sep=''),header=T) Included in the package as internal data
+
+  USSmoking2018 <- read_csv("data-raw/USSmoking2018.csv")
+  tab1 <- as.numeric(USSmoking2018$value[1:3]) / 100
+  message("This is the observed percentage of current smokers in 2018 (m,f)\n")
+  barplot(tab1, names.arg = c("40-64", "65-74", "75+"), ylim = c(0, 0.4), xlab = "Age group", ylab = "Prevalence of smoking",
+          col = c("grey"))
+  title(cex.main = 0.5, "Prevalence of current smoker by sex and age group (observed)")
+  legend("topright", c("Overall"), fill = c("grey"))
+  petoc()
+
+  message("Now I will run the model using the default smoking parameters")
+  petoc()
+  message("running the model\n")
+
+  run(input = input)
+  dataS <- Cget_all_events_matrix()
+  dataS <- dataS[which(dataS[, "event"] == events["event_start"]), ]
+  age_list <- list(a1 = c(40, 64), a2 = c(65, 75), a3 = c(75, 111))
+  tab2 <- numeric(length(age_list))
+
+  for (j in 1:length(age_list)) {
+    tab2[j] <- mean(dataS[
+      dataS[, "age_at_creation"] > age_list[[j]][1] &
+        dataS[, "age_at_creation"] <= age_list[[j]][2],
+      "smoking_status"
+    ])
+  }
+
+  message("This is the model generated bar plot")
+  petoc()
+  barplot(tab2, names.arg = c("40-64", "65-74", "75+"), ylim = c(0, 0.4), xlab = "Age group", ylab = "Prevalence of smoking",
+          col = c("black"))
+  title(cex.main = 0.5, "Prevalence of current smoking at creation (simulated)")
+  legend("topright", c("Overall"), fill = c("black"))
+
+  message("This step is over; press enter to continue to step 2")
+  petoc()
+
+  message("Now we will validate the model on smoking trends")
+  petoc()
+
+  message("According to Table 2.1 of this report (see the extracted data in data folder): http://www.tobaccoreport.ca/2015/TobaccoUseinCanada_2015.pdf, the prevalence of current smoker is declining by around 3.8% per year\n")
+  petoc()
+
+  op_ex <- Cget_output_ex()
+  smoker_prev <- op_ex$n_current_smoker_by_ctime_sex/op_ex$n_alive_by_ctime_sex
+  smoker_packyears <- op_ex$sum_pack_years_by_ctime_sex/op_ex$n_alive_by_ctime_sex
+
+  plot(2015:(2015+input$global_parameters$time_horizon-1), smoker_prev[, 1], type = "l", ylim = c(0, 0.25), col = "black", xlab = "Year", ylab = "Prevalence of current smoking")
+  lines(2015:(2015+input$global_parameters$time_horizon-1), smoker_prev[, 2], type = "l", col = "grey")
+  legend("topright", c("male", "female"), lty = c(1, 1), col = c("black", "grey"))
+  title(cex.main = 0.5, "Annual prevalence of currrent smoking (simulated)")
+
+  plot(2015:(2015+input$global_parameters$time_horizon-1), smoker_packyears[, 1], type = "l", ylim = c(0, 30), col = "black", xlab = "Year", ylab = "Average Pack years")
+  lines(2015:(2015+input$global_parameters$time_horizon-1), smoker_packyears[, 2], type = "l", col = "grey")
+  legend("topright", c("male", "female"), lty = c(1, 1), col = c("black", "grey"))
+  title(cex.main = 0.5, "Average Pack-Years Per Year for 40+ Population (simulated)")
 
 
+  z <- log(rowSums(smoker_prev))
+  message("average decline in % of current_smoking rate is", 1 - exp(mean(c(z[-1], NaN) - z, na.rm = T)))
+  petoc()
+
+  #plotting overall distribution of smoking stats over time
+  smoking_status_ctime <- matrix (NA, nrow = input$global_parameters$time_horizon, ncol = 4)
+  colnames(smoking_status_ctime) <- c("Year", "Non-Smoker", "Smoker", "Former smoker")
+  smoking_status_ctime[1:(input$global_parameters$time_horizon), 1] <- c(2015:(2015 + input$global_parameters$time_horizon-1))
+  smoking_status_ctime [, 2:4] <- op_ex$n_smoking_status_by_ctime / rowSums(as.data.frame (op_ex$n_alive_by_ctime_sex)) * 100
+  df <- as.data.frame(smoking_status_ctime)
+  dfm <- reshape2::melt(df[,c("Year", "Non-Smoker", "Smoker", "Former smoker")], id.vars = 1)
+  plot_smoking_status_ctime  <- ggplot2::ggplot(dfm, aes(x = Year, y = value, color = variable)) +
+    geom_point () + geom_line() + labs(title = "Smoking Status per year") + ylab ("%") +
+    scale_colour_manual(values = c("#66CC99", "#CC6666", "#56B4E9")) + scale_y_continuous(breaks = scales::pretty_breaks(n = 12))
+
+
+
+  plot(plot_smoking_status_ctime ) #plot needs to be showing
+
+  # Plotting pack-years over time
+  dataS <- as.data.frame (Cget_all_events_matrix())
+  dataS <- subset (dataS, (event == 0 | event == 1 ))
+  data_all <- dataS
+  dataS <- subset (dataS, pack_years != 0)
+  avg_pack_years_ctime <- matrix (NA, nrow = input$global_parameters$time_horizon + 1, ncol = 4)
+  colnames(avg_pack_years_ctime) <- c("Year", "Smokers PYs", "Former Smokers PYs", "all")
+
+  avg_pack_years_ctime[1:(input$global_parameters$time_horizon + 1), 1] <- c(2015:(2015 + input$global_parameters$time_horizon))
+
+  for (i in 0:input$global_parameters$time_horizon) {
+    smokers <- subset (dataS, (floor(local_time + time_at_creation) == (i)) & smoking_status != 0)
+    prev_smokers <- subset (dataS, (floor(local_time + time_at_creation) == (i)) & smoking_status == 0)
+    all <- subset (data_all, floor(local_time + time_at_creation) == i)
+    avg_pack_years_ctime[i+1, "Smokers PYs"] <- colSums(smokers)[["pack_years"]] / dim (smokers)[1]
+    avg_pack_years_ctime[i+1, "Former Smokers PYs"] <- colSums(prev_smokers)[["pack_years"]] / dim (prev_smokers) [1]
+    avg_pack_years_ctime[i+1, "all"] <- colSums(all)[["pack_years"]] / dim (all) [1] #includes non-smokers
+
+  }
+
+  df <- as.data.frame(avg_pack_years_ctime)
+  dfm <- reshape2::melt(df[,c( "Year", "Smokers PYs", "Former Smokers PYs", "all")], id.vars = 1)
+  plot_avg_pack_years_ctime <- ggplot2::ggplot(dfm, aes(x = Year, y = value, color = variable)) +
+    geom_point () + geom_line() + labs(title = "Average pack-years per year ") + ylab ("Pack-years")
+
+  plot(plot_avg_pack_years_ctime) #plot needs to be showing
+
+  # Plotting pack-years over age
+
+  avg_pack_years_age <- matrix (NA, nrow = 110 - 40 + 1, ncol = 3)
+  colnames(avg_pack_years_age) <- c("Age", "Smokers PYs", "Former Smokers PYs")
+
+  avg_pack_years_age[1:(110 - 40 + 1), 1] <- c(40:110)
+
+  for (i in 0:(110 - 40)) {
+    smokers <- subset (dataS, (floor (local_time + age_at_creation) == (i+40)) & smoking_status != 0)
+    prev_smokers <- subset (dataS, (floor (local_time + age_at_creation) == (i+40)) & smoking_status == 0)
+    avg_pack_years_age[i+1, "Smokers PYs"] <- colSums(smokers)[["pack_years"]] / dim (smokers)[1]
+    avg_pack_years_age[i+1, "Former Smokers PYs"] <- colSums(prev_smokers)[["pack_years"]] / dim (prev_smokers) [1]
+  }
+
+  df <- as.data.frame(avg_pack_years_age)
+  dfm <- reshape2::melt(df[,c( "Age", "Smokers PYs", "Former Smokers PYs")], id.vars = 1)
+  plot_avg_pack_years_age <- ggplot2::ggplot(dfm, aes(x = Age, y = value, color = variable, ymin = 40, ymax = 100)) +
+    geom_point () + geom_line() + labs(title = "Average pack-years per age ") + ylab ("Pack-years")
+
+  plot(plot_avg_pack_years_age) #plot needs to be showing
+
+
+  message("This test is over; terminating the session")
+  petoc()
+  terminate_session()
+}
 
 #' Returns results of validation tests for smoking module.
 #' @param intercept_k a number
@@ -459,6 +622,8 @@ validate_smoking <- function(remove_COPD = 1, intercept_k = NULL) {
   petoc()
   terminate_session()
 }
+
+
 
 
 

@@ -225,9 +225,9 @@ get_input <- function(age0 = 40,
 
   ### smoking;
 
-  # Adapted to US setting (July 9, 2025)
-  input_help$smoking$logit_p_current_smoker_0_betas <- "Probability of being a current smoker at the time of creation"
-  input$smoking$logit_p_current_smoker_0_betas <- t(as.matrix(c(Intercept = -0.05, sex = -1, age = -0.02, age2 = 0, sex_age = 0, sex_age2 = 0, year = -0.02)))
+  # Adapted to US setting (July 20, 2025)
+  input_help$smoking$logit_p_current_smoker_0_betas <- "Probability of being a current smokerval at the time of creation"
+  input$smoking$logit_p_current_smoker_0_betas <- t(as.matrix(c(Intercept = -0.15, sex = -0.4, age = -0.028, age2 = 0, sex_age = 0, sex_age2 = 0, year = -0.02)))
   input_ref$smoking$logit_p_current_smoker_0_betas <- ""
   # Adapted to US setting (July 9, 2025)
   input_help$smoking$logit_p_never_smoker_con_not_current_0_betas <- "Probability of being a never-smoker conditional on not being current smoker, at the time of creation"
