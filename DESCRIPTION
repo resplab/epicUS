@@ -27,6 +27,7 @@ Imports:
     scales,
     tidyr,
     tibble,
+    tidyverse,
     dplyr,
     reshape2
 LinkingTo: Rcpp, RcppArmadillo
