@@ -281,9 +281,9 @@ get_input <- function(age0 = 40,
 
   # Adapted to US setting (July 9, 2025)
   input_help$COPD$logit_p_COPD_betas_by_sex <- "Logit of the probability of having COPD (FEV1/FVC<0.7) at time of creation (separately by sex)"
-  input$COPD$logit_p_COPD_betas_by_sex <- cbind(male = c(intercept = -4.34190, age = 0.033070, age2 = 0, pack_years = 0.025049   ,
+  input$COPD$logit_p_COPD_betas_by_sex <- cbind(male = c(intercept = -4.30190, age = 0.033070, age2 = 0, pack_years = 0.025049   ,
                                                                 current_smoking = 0, year = 0, asthma = 0),
-                                                       female = c(intercept = -4.47202, age = 0.027359   , age2 = 0, pack_years = 0.030399   ,
+                                                       female = c(intercept = -4.40202, age = 0.027359   , age2 = 0, pack_years = 0.030399   ,
                                                                   current_smoking = 0, year = 0, asthma = 0))
 
   input_ref$COPD$logit_p_COPD_betas_by_sex <- "CanCold - Shahzad's Derivation. Last Updated on 2017-09-19, ne wmodel with no currnet smoker term"
@@ -367,18 +367,18 @@ get_input <- function(age0 = 40,
 
   ## Exacerbation;
 
-  # Adapted to US setting (July 9, 2025)
+  # Adapted to US setting (July 21, 2025)
   input_help$exacerbation$ln_rate_betas = "Regression coefficients for the random-effects log-hazard model of exacerbation (of any severity)"
-  input$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 2.0, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.15 , gold2 = -0.06 , gold3 = -0.35 , gold4 = -0.75 , diagnosis_effect = 0)))
+  input$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 2.0, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.15 , gold2 = -0.10 , gold3 = -0.40 , gold4 = -0.75 , diagnosis_effect = 0)))
   input_ref$exacerbation$ln_rate_betas = "Rates from DOI: 10.2147/COPD.S13826, adjusted to account for diganosis bias. Adjusted on 2018-10-02 to match manuscript. Recalibrated on 2022-11-04, see validate_exacerbations()"
 
   input_help$exacerbation$ln_rate_intercept_sd = "SD of the random intercept for log-hazard of exacerbation"
   input$exacerbation$ln_rate_intercept_sd = sqrt(0.55)
   input_ref$exacerbation$ln_rate_intercept_sd = ""
 
-  # Adapted to US setting (July 9, 2025)
+  # Adapted to US setting (July 21, 2025)
   input_help$exacerbation$logit_severity_betas = "Regression coefficients for the proportional odds model of exacerbation severity"
-  input$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -2.809, intercept2 = 2.402, intercept3 = 5.808, female = -0.764, age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
+  input$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -2.809, intercept2 = 2.402, intercept3 = 3.808, female = -0.764, age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
   input_ref$exacerbation$logit_severity_betas = "Shahzad's regression on MACRO with adjusted intercepts to match severity levels reported by Hoogendoorn et al. Last updated on manuscript submission"
 
 
