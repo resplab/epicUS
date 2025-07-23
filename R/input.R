@@ -279,7 +279,7 @@ get_input <- function(age0 = 40,
 
   ## COPD
 
-  # Adapted to US setting (July 9, 2025)
+  # Adapted to US setting (July 22, 2025)
   input_help$COPD$logit_p_COPD_betas_by_sex <- "Logit of the probability of having COPD (FEV1/FVC<0.7) at time of creation (separately by sex)"
   input$COPD$logit_p_COPD_betas_by_sex <- cbind(male = c(intercept = -4.30190, age = 0.033070, age2 = 0, pack_years = 0.025049   ,
                                                                 current_smoking = 0, year = 0, asthma = 0),
