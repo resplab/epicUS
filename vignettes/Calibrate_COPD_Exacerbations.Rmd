@@ -1,7 +1,69 @@
 ---
-title: "Calibrate Exacerbations"
+title: "Calibrate COPD Exacerbations"
 output: html_document
 ---
+
+This document outlines the calibration process undertaken to align the model’s outputs with validation targets for COPD exacerbations, using the ACCEPT study, Hoogendorn et al 2021, and CanCOLD.
+
+## Calibration of COPD Exacerbation Rates
+
+This section outlines the internal validation process conducted to align the model's simulated COPD exacerbation rates with empirical targets drawn from key reference studies. The validation focused on both diagnosed and undiagnosed populations and was stratified by GOLD stage and exacerbation severity (total, moderate/severe, and severe only). Detailed validation targets and associated calibration code are presented below.
+
+**Validation References:**
+
+- Hoogendoorn et al. 2021 (DOI: 10.1183/09031936.00043710)
+- ACCEPT study (DOI: 10.1016/S2213-2600(19)30397-2)  
+- CanCOLD study (DOI: 10.3109/15412555.2012.665520)
+
+---
+
+### **Validation Targets**
+
+#### **Diagnosed Patients – Total Exacerbation Rate (Hoogendoorn et al. 2021)**
+
+Simulated rates were compared against those reported by Hoogendoorn et al. 2021:
+- **GOLD 1:** 0.82  
+- **GOLD 2:** 1.17  
+- **GOLD 3:** 1.61  
+- **GOLD 4:** 2.10  
+
+#### **Diagnosed Patients – Moderate and Severe Exacerbation Rates (ACCEPT Study)**
+
+The ACCEPT study provided target rates for moderate and severe exacerbations:
+- **GOLD 1:** 0.58  
+- **GOLD 2:** 0.91  
+- **GOLD 3:** 1.41  
+- **GOLD 4:** 1.69  
+
+#### **Diagnosed Patients – Severe Exacerbation Rates**
+
+Two comparator sources were used:  
+- **Hoogendoorn et al. 2021**  
+  - GOLD 1–4: 0.11, 0.16, 0.22, 0.28  
+- **ACCEPT Study**  
+  - GOLD 1–4: 0.10, 0.14, 0.32, 0.42  
+
+#### **Undiagnosed Patients – Total Exacerbation Rate (CanCOLD)**
+
+For the undiagnosed subgroup, exacerbation rates were benchmarked against CanCOLD data:
+- **Total population:** 0.30  
+- **GOLD 1:** 0.24  
+- **GOLD 2+:** 0.40  
+
+#### **Overall and GOLD-Stratified Total Exacerbation Rates (CanCOLD)**
+
+For all individuals (diagnosed and undiagnosed), total exacerbation rates per year were compared against the CanCOLD study benchmarks:
+- **Total population:** 0.39  
+- **GOLD 1:** 0.28  
+- **GOLD 2+:** 0.53  
+
+---
+
+The calibration code below performs the relevant calculations and visualizations for each validation target.
+
+### Step 1: Load libraries and setup
+
+```{r, eval = TRUE, echo = TRUE}
 
 library(tidyverse)
 library(epicUS)
@@ -12,7 +74,7 @@ library(dplyr)
 library(tidyr)
 library(reshape2)
 
-# Load US population validation targets
+# Load EPIC general settings
 USSimulation <- read_csv("data-raw/USCensus.csv")
 USlifetables <- read_csv("data-raw/USLifeTables.csv", col_names = FALSE) %>% mutate(across(everything(), as.numeric))
 
@@ -23,16 +85,18 @@ init_session(settings = settings)
 input <- get_input()
 time_horizon <- 26
 
-# Run EPIC simulation
+# Modify intercept value to calibrate proportion of COPD exacerbations
+input$values$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 2.0, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.15 , gold2 = -0.10 , gold3 = -0.40 , gold4 = -0.75 , diagnosis_effect = 0)))
+input$values$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -2.809, intercept2 = 2.402, intercept3 = 3.808, female = -0.764, age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
 
+# Load EPIC general settings
 run(input = input$values)
 op <- Cget_output()
 output_ex <- Cget_output_ex()
 
-
 all_events <- as.data.frame(Cget_all_events_matrix())
-exac_events <- subset(all_events, event == 5)
-exit_events <- subset(all_events, event == 14)
+  exac_events <- subset(all_events, event == 5)
+  exit_events <- subset(all_events, event == 14)
 
   Follow_up_GOLD <- c(0, 0, 0, 0)
   last_GOLD_transition_time <- 0
@@ -268,7 +332,4 @@ exit_events <- subset(all_events, event == 14)
 
   message("Total rate of exacerbation in undiagnosed patients (0.30 per year in CanCOLD): ",
           total_rate_undiagnosed)
-
-  }
-
-
+```
