@@ -259,7 +259,7 @@ all_events <- as.data.frame(Cget_all_events_matrix())
   print(plot)
 ```
 
-![](/home/kevin/epicUS/vignettes/Figures/exac_all.png)<!-- -->
+![](./Figures/exac_all.png)<!-- -->
 
 ``` r
   #--------------------------- total number of severe exacerbations:
@@ -304,7 +304,7 @@ all_events <- as.data.frame(Cget_all_events_matrix())
   print(plot)
 ```
 
-![](/home/kevin/epicUS/vignettes/Figures/exac_hoogendoorn.png)<!-- -->
+![](./Figures/exac_hoogendoorn.png)<!-- -->
 
 ``` r
   message("Total rate of exacerbation in diagnosed patients (1.5 per year in Hoogendoorn): ", round(nrow(exac_events_diagnosed)/sum(Follow_up_GOLD_diagnosed), 2))
@@ -338,7 +338,7 @@ all_events <- as.data.frame(Cget_all_events_matrix())
   print(plot)
 ```
 
-![](/home/kevin/epicUS/vignettes/Figures/exac_ACCEPT.png)<!-- -->
+![](./Figures//exac_ACCEPT.png)<!-- -->
 
 ``` r
   #----------------------------Diagnosed Severe------------------------------------
@@ -368,7 +368,7 @@ all_events <- as.data.frame(Cget_all_events_matrix())
   print(plot)
 ```
 
-![](/home/kevin/epicUS/vignettes/Figures/exac_both.png)<!-- -->
+![](./Figures/exac_both.png)<!-- -->
 
 ``` r
   #----------------------------Undiagnosed ------------------------------------
@@ -402,7 +402,7 @@ all_events <- as.data.frame(Cget_all_events_matrix())
   print(plot)
 ```
 
-![](/home/kevin/epicUS/vignettes/Figures/exac_CanCOLD.png)<!-- -->
+![](./Figures/exac_CanCOLD.png)<!-- -->
 
 ``` r
   message("Total rate of exacerbation in undiagnosed patients (0.30 per year in CanCOLD): ",
