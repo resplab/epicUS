@@ -71,7 +71,7 @@ rates per year were compared against the CanCOLD study benchmarks: -
 The calibration code below performs the relevant calculations and
 visualizations for each validation target.
 
-### Step 1: Load libraries and setup
+### Calibrate COPD exacerbations
 
 ``` r
 library(tidyverse)
@@ -402,7 +402,7 @@ all_events <- as.data.frame(Cget_all_events_matrix())
   print(plot)
 ```
 
-![](/home/kevin/epicUS/vignettes/vignettes/Figures/exac_CanCOLD.png)<!-- -->
+![](/home/kevin/epicUS/vignettes/Figures/exac_CanCOLD.png)<!-- -->
 
 ``` r
   message("Total rate of exacerbation in undiagnosed patients (0.30 per year in CanCOLD): ",
