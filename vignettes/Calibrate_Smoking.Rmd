@@ -68,9 +68,9 @@ in the logistic regression equation were modified.
 ```{r, eval = TRUE, echo = TRUE}
 
 # Modify smoking rates
-input$values$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.35, sex = 0, age = -0.06, age2 = 0,sex_age = 0,sex_age2 = 0, year = -0.02)))
-input$values$smoking$logit_p_current_smoker_0_betas <- t(as.matrix(c(Intercept = -0.05, sex = -1, age = -0.02, age2 = 0, sex_age = 0, sex_age2 = 0, year = -0.02)))  #intercept -1.8 when age = -0.02
-
+input$values$smoking$logit_p_current_smoker_0_betas <- t(as.matrix(c(Intercept = 0.35, sex = -0.4, age = -0.032, age2 = 0, sex_age = 0, sex_age2 = 0, year = -0.02)))
+  
+input$values$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.9, sex = 0, age = -0.06, age2 = 0, sex_age = 0,sex_age2 = 0, year = -0.02)))
 ```
 
 ### Step 3: Modify rate of annual rate of decline in proportion of current smokers

@@ -10,7 +10,7 @@ of Normal (LLN) definition. The calibration was conducted over a 25-year
 simulation time horizon.
 
 **Validation Reference:**  
-Tilert et al.2013 (DOI: 10.1186/1465-9921-14-103)
+Tilert et al. 2013 (DOI: 10.1186/1465-9921-14-103)
 
 **Validation Target (Age-Specific Prevalence):**  
 - **40–59 years:** 8.1%  
@@ -26,7 +26,7 @@ included only individuals aged 40–79.
 
 Given this limitation, the calibration emphasized preserving the
 sex-specific prevalence ratio observed in Tilert et al. 2013 (1.4:1;
-12.0% males vs.8.6% females) as the validation target. The model was
+12.0% males vs. 8.6% females) as the validation target. The model was
 deemed adequately calibrated if this ratio was maintained, even if
 absolute prevalence values by sex differed slightly due to inclusion of
 older age groups.
@@ -80,14 +80,9 @@ prevalence targets (age groups: 40–59 and 60–79 years) while maintaining
 a 1.4:1 male-to-female ratio.
 
 ``` r
-input$values$COPD$logit_p_COPD_betas_by_sex <- cbind(male = c(intercept = -4.15189, age = 0.033070,
-                                                              age2 = 0, pack_years = 0.025049,
-                                                              current_smoking = 0, year = 0, asthma =
-                                                              0), 
-                                                     female = c(intercept = -4.18486, age = 
-                                                              0.027359,age2 = 0,pack_years =
-                                                              0.030399,current_smoking = 0, year=
-                                                              0, asthma = 0))
+input$COPD$logit_p_COPD_betas_by_sex <- cbind(male = c(intercept = -4.30190, age = 0.033070, age2 = 0, pack_years = 0.025049   ,
+                                                       current_smoking = 0, year = 0, asthma = 0),
+                                              female = c(intercept = -4.40202, age = 0.027359   , age2 = 0, pack_years=0.030399,                                                         current_smoking = 0, year = 0, asthma = 0))
 ```
 
 ### Step 3: Run EPIC
@@ -158,32 +153,32 @@ kable(COPD_prevalence_summary,
 
 | Year | Prevalence_all | Prevalence_40to59 | Prevalence_60to79 | Prevalence_over80 |
 |-----:|---------------:|------------------:|------------------:|------------------:|
-| 2015 |          0.120 |             0.086 |             0.145 |             0.240 |
-| 2016 |          0.119 |             0.085 |             0.144 |             0.236 |
-| 2017 |          0.119 |             0.085 |             0.143 |             0.232 |
-| 2018 |          0.118 |             0.085 |             0.143 |             0.228 |
-| 2019 |          0.118 |             0.085 |             0.143 |             0.224 |
-| 2020 |          0.118 |             0.084 |             0.142 |             0.221 |
-| 2021 |          0.117 |             0.084 |             0.142 |             0.220 |
-| 2022 |          0.117 |             0.083 |             0.142 |             0.217 |
-| 2023 |          0.117 |             0.083 |             0.142 |             0.216 |
-| 2024 |          0.117 |             0.082 |             0.142 |             0.214 |
-| 2025 |          0.117 |             0.082 |             0.142 |             0.212 |
-| 2026 |          0.117 |             0.082 |             0.143 |             0.210 |
-| 2027 |          0.117 |             0.081 |             0.143 |             0.207 |
-| 2028 |          0.117 |             0.081 |             0.143 |             0.206 |
-| 2029 |          0.117 |             0.080 |             0.143 |             0.204 |
-| 2030 |          0.117 |             0.080 |             0.143 |             0.202 |
-| 2031 |          0.117 |             0.079 |             0.144 |             0.201 |
-| 2032 |          0.116 |             0.079 |             0.144 |             0.200 |
-| 2033 |          0.117 |             0.079 |             0.144 |             0.199 |
-| 2034 |          0.116 |             0.078 |             0.144 |             0.198 |
-| 2035 |          0.116 |             0.078 |             0.144 |             0.196 |
-| 2036 |          0.116 |             0.077 |             0.144 |             0.197 |
-| 2037 |          0.116 |             0.076 |             0.144 |             0.197 |
-| 2038 |          0.115 |             0.076 |             0.144 |             0.196 |
-| 2039 |          0.115 |             0.075 |             0.143 |             0.195 |
-| 2040 |          0.115 |             0.075 |             0.142 |             0.195 |
+| 2015 |          0.113 |             0.081 |             0.137 |             0.234 |
+| 2016 |          0.113 |             0.081 |             0.136 |             0.228 |
+| 2017 |          0.113 |             0.082 |             0.136 |             0.224 |
+| 2018 |          0.113 |             0.082 |             0.135 |             0.220 |
+| 2019 |          0.113 |             0.082 |             0.135 |             0.218 |
+| 2020 |          0.113 |             0.082 |             0.135 |             0.214 |
+| 2021 |          0.113 |             0.082 |             0.135 |             0.211 |
+| 2022 |          0.113 |             0.083 |             0.136 |             0.208 |
+| 2023 |          0.113 |             0.083 |             0.136 |             0.204 |
+| 2024 |          0.114 |             0.083 |             0.136 |             0.202 |
+| 2025 |          0.114 |             0.083 |             0.137 |             0.199 |
+| 2026 |          0.114 |             0.083 |             0.138 |             0.197 |
+| 2027 |          0.114 |             0.083 |             0.138 |             0.195 |
+| 2028 |          0.114 |             0.082 |             0.139 |             0.192 |
+| 2029 |          0.115 |             0.082 |             0.140 |             0.192 |
+| 2030 |          0.115 |             0.081 |             0.141 |             0.190 |
+| 2031 |          0.115 |             0.081 |             0.141 |             0.189 |
+| 2032 |          0.115 |             0.080 |             0.142 |             0.187 |
+| 2033 |          0.115 |             0.080 |             0.142 |             0.187 |
+| 2034 |          0.115 |             0.079 |             0.143 |             0.187 |
+| 2035 |          0.115 |             0.078 |             0.144 |             0.185 |
+| 2036 |          0.114 |             0.078 |             0.145 |             0.184 |
+| 2037 |          0.114 |             0.077 |             0.145 |             0.184 |
+| 2038 |          0.114 |             0.076 |             0.145 |             0.184 |
+| 2039 |          0.114 |             0.075 |             0.145 |             0.184 |
+| 2040 |          0.113 |             0.074 |             0.145 |             0.184 |
 
 COPD Prevalence by Age Group Over Time
 
@@ -199,19 +194,19 @@ overestimation of overall COPD prevalence in the simulated population.
 
 **COPD prevalence all age groups**
 
-![](/home/kevin/EpicUSrecalibration/vignettes/Calibrate_COPD_Prevalence_files/figure-gfm/prevalenceall-1.png)<!-- -->
+![](./Figures/prevalence_all.png)<!-- -->
 
 **COPD prevalence from age 40 to 59**
 
-![](/home/kevin/EpicUSrecalibration/vignettes/Calibrate_COPD_Prevalence_files/figure-gfm/prevalenceof40to59-1.png)<!-- -->
+![](./Figures/prevalence_40to59.png)<!-- -->
 
 **COPD prevalence from age 60 to 79**
 
-![](/home/kevin/EpicUSrecalibration/vignettes/Calibrate_COPD_Prevalence_files/figure-gfm/prevalenceof60to79-1.png)<!-- -->
+![](./Figures/prevalence_60to79.png)<!-- -->
 
 **COPD prevalence from age 80+**
 
-![](/home/kevin/EpicUSrecalibration/vignettes/Calibrate_COPD_Prevalence_files/figure-gfm/prevalenceofover80-1.png)<!-- -->
+![](./Figures/prevalence_over80.png)<!-- -->
 
 ### Step 6: Create data tables by sex to check if gender distribution matches Tilert et al 2013 (<doi:10.1186/1465-9921-14-103>))
 
@@ -238,32 +233,32 @@ kable(prevalenceCOPD_sex,
 
 |  Male | Female | Year |
 |------:|-------:|-----:|
-| 0.143 |  0.096 | 2015 |
-| 0.142 |  0.097 | 2016 |
-| 0.141 |  0.097 | 2017 |
-| 0.140 |  0.097 | 2018 |
-| 0.139 |  0.098 | 2019 |
-| 0.138 |  0.098 | 2020 |
-| 0.137 |  0.098 | 2021 |
-| 0.137 |  0.099 | 2022 |
-| 0.136 |  0.099 | 2023 |
-| 0.136 |  0.100 | 2024 |
-| 0.135 |  0.100 | 2025 |
-| 0.135 |  0.101 | 2026 |
-| 0.134 |  0.101 | 2027 |
-| 0.134 |  0.101 | 2028 |
-| 0.133 |  0.102 | 2029 |
-| 0.133 |  0.102 | 2030 |
-| 0.133 |  0.102 | 2031 |
-| 0.132 |  0.102 | 2032 |
-| 0.132 |  0.103 | 2033 |
-| 0.132 |  0.103 | 2034 |
-| 0.131 |  0.102 | 2035 |
-| 0.131 |  0.102 | 2036 |
-| 0.130 |  0.103 | 2037 |
-| 0.130 |  0.103 | 2038 |
-| 0.129 |  0.102 | 2039 |
-| 0.128 |  0.102 | 2040 |
+| 0.136 |  0.091 | 2015 |
+| 0.135 |  0.091 | 2016 |
+| 0.134 |  0.092 | 2017 |
+| 0.133 |  0.093 | 2018 |
+| 0.132 |  0.093 | 2019 |
+| 0.132 |  0.094 | 2020 |
+| 0.132 |  0.095 | 2021 |
+| 0.132 |  0.096 | 2022 |
+| 0.131 |  0.097 | 2023 |
+| 0.131 |  0.098 | 2024 |
+| 0.130 |  0.098 | 2025 |
+| 0.130 |  0.099 | 2026 |
+| 0.130 |  0.100 | 2027 |
+| 0.129 |  0.101 | 2028 |
+| 0.129 |  0.101 | 2029 |
+| 0.129 |  0.102 | 2030 |
+| 0.128 |  0.102 | 2031 |
+| 0.128 |  0.103 | 2032 |
+| 0.127 |  0.103 | 2033 |
+| 0.127 |  0.104 | 2034 |
+| 0.126 |  0.104 | 2035 |
+| 0.126 |  0.104 | 2036 |
+| 0.125 |  0.104 | 2037 |
+| 0.125 |  0.104 | 2038 |
+| 0.124 |  0.104 | 2039 |
+| 0.124 |  0.104 | 2040 |
 
 COPD Prevalence by Sex Over Time
 

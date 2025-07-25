@@ -97,8 +97,9 @@ logistic regression equation were modified.
 
 ``` r
 # Modify smoking rates
-input$values$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.35, sex = 0, age = -0.06, age2 = 0,sex_age = 0,sex_age2 = 0, year = -0.02)))
-input$values$smoking$logit_p_current_smoker_0_betas <- t(as.matrix(c(Intercept = -0.05, sex = -1, age = -0.02, age2 = 0, sex_age = 0, sex_age2 = 0, year = -0.02)))  #intercept -1.8 when age = -0.02
+input$values$smoking$logit_p_current_smoker_0_betas <- t(as.matrix(c(Intercept = 0.35, sex = -0.4, age = -0.032, age2 = 0, sex_age = 0, sex_age2 = 0, year = -0.02)))
+  
+input$values$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.9, sex = 0, age = -0.06, age2 = 0, sex_age = 0,sex_age2 = 0, year = -0.02)))
 ```
 
 ### Step 3: Modify rate of annual rate of decline in proportion of current smokers
@@ -205,32 +206,32 @@ kable(
 
 | Year | Never Smoker | Current Smoker | Former Smoker |
 |-----:|-------------:|---------------:|--------------:|
-| 2015 |        0.552 |          0.163 |         0.285 |
-| 2016 |        0.561 |          0.147 |         0.293 |
-| 2017 |        0.568 |          0.135 |         0.296 |
-| 2018 |        0.576 |          0.126 |         0.298 |
-| 2019 |        0.583 |          0.118 |         0.300 |
-| 2020 |        0.589 |          0.111 |         0.300 |
-| 2021 |        0.595 |          0.106 |         0.299 |
-| 2022 |        0.601 |          0.101 |         0.298 |
-| 2023 |        0.606 |          0.097 |         0.297 |
-| 2024 |        0.612 |          0.093 |         0.295 |
-| 2025 |        0.616 |          0.091 |         0.293 |
-| 2026 |        0.621 |          0.088 |         0.291 |
-| 2027 |        0.625 |          0.086 |         0.289 |
-| 2028 |        0.629 |          0.084 |         0.287 |
-| 2029 |        0.633 |          0.082 |         0.285 |
-| 2030 |        0.636 |          0.081 |         0.283 |
-| 2031 |        0.639 |          0.080 |         0.281 |
-| 2032 |        0.643 |          0.078 |         0.279 |
-| 2033 |        0.646 |          0.077 |         0.277 |
-| 2034 |        0.648 |          0.076 |         0.276 |
-| 2035 |        0.651 |          0.075 |         0.274 |
-| 2036 |        0.653 |          0.074 |         0.272 |
-| 2037 |        0.656 |          0.073 |         0.271 |
-| 2038 |        0.658 |          0.072 |         0.270 |
-| 2039 |        0.659 |          0.072 |         0.269 |
-| 2040 |        0.661 |          0.071 |         0.268 |
+| 2015 |        0.640 |          0.156 |         0.204 |
+| 2016 |        0.645 |          0.144 |         0.212 |
+| 2017 |        0.649 |          0.134 |         0.217 |
+| 2018 |        0.653 |          0.126 |         0.221 |
+| 2019 |        0.657 |          0.119 |         0.224 |
+| 2020 |        0.660 |          0.114 |         0.226 |
+| 2021 |        0.663 |          0.109 |         0.228 |
+| 2022 |        0.666 |          0.105 |         0.229 |
+| 2023 |        0.669 |          0.101 |         0.230 |
+| 2024 |        0.671 |          0.098 |         0.230 |
+| 2025 |        0.674 |          0.095 |         0.230 |
+| 2026 |        0.676 |          0.093 |         0.231 |
+| 2027 |        0.679 |          0.091 |         0.230 |
+| 2028 |        0.681 |          0.089 |         0.230 |
+| 2029 |        0.682 |          0.087 |         0.230 |
+| 2030 |        0.684 |          0.086 |         0.230 |
+| 2031 |        0.686 |          0.085 |         0.230 |
+| 2032 |        0.687 |          0.083 |         0.229 |
+| 2033 |        0.689 |          0.082 |         0.229 |
+| 2034 |        0.690 |          0.081 |         0.228 |
+| 2035 |        0.692 |          0.080 |         0.228 |
+| 2036 |        0.693 |          0.079 |         0.228 |
+| 2037 |        0.694 |          0.079 |         0.227 |
+| 2038 |        0.695 |          0.078 |         0.227 |
+| 2039 |        0.696 |          0.077 |         0.226 |
+| 2040 |        0.697 |          0.076 |         0.226 |
 
 Proportion of Smoking Status Over Time
 
@@ -281,7 +282,7 @@ ggplot(smokingstatus_reshaped, aes(x = Year, y = Proportion, color = Status)) +
     )
 ```
 
-![](./Figures/smokingstatus.png)
+![](./Figures/smokingstatus.png)<!-- -->
 
 ### Step 10: Observe trend in pack years per person
 
@@ -367,6 +368,6 @@ ggplot(pack_year_per_person, aes(x = Year, y = AvgPackYearsPerSmoker)) +
     )
 ```
 
-![](./Figures/pack_years_per_person.png)
+![](./Figures/pack_years_per_person.png)<!-- -->
 
 ### 
