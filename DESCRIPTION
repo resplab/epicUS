@@ -29,7 +29,8 @@ Imports:
     tibble,
     tidyverse,
     dplyr,
-    reshape2
+    reshape2,
+    knitr
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.3.2
 Suggests:
