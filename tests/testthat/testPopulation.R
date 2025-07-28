@@ -8,7 +8,7 @@ library(testthat)
 test_that("RMSE of population age groups RMSE is within a range ", {
 
 
-  USSimulation <- read_csv("../../data-raw/USSimulation.csv")
+  USSimulation <- us_census
 
   settings <- get_default_settings()
   settings$record_mode <- 0
