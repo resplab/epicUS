@@ -3,10 +3,12 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   BackgroundEPIC: BackgroundEPIC.html
-  GettingStarted: GettingStarted.html
-  Optimization: Optimization.html
-  RecalibratingEPIC: RecalibratingEPIC.html
-  Rep_bgd_Canada: Rep_bgd_Canada.html
-  Reproducing_bgd: Reproducing_bgd.html
   UsingEPICinR: UsingEPICinR.html
-last_built: 2025-06-20T18:04Z
+  GettingStarted: GettingStarted.html
+  Reproducing_bgd: Reproducing_bgd.html
+  Calibrate_Demographics: Calibrate_Demographics.html
+  Calibrate_Smoking: Calibrate_Smoking.html
+  Calibrate_COPD_Prevalence: Calibrate_COPD_Prevalence.html
+  Calibrate_COPD_Exacerbations: Calibrate_COPD_Exacerbations.html
+  Payoffs: Payoffs.html
+last_built: 2025-07-30T01:49Z

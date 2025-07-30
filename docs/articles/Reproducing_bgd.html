@@ -52,16 +52,22 @@
       <a href="../articles/BackgroundEPIC.html">EPIC Background</a>
     </li>
     <li>
+      <a href="../articles/Calibrate_COPD_Exacerbations.html">Calibrate COPD Exacerbations</a>
+    </li>
+    <li>
+      <a href="../articles/Calibrate_COPD_Prevalence.html">Calibrate COPD Prevalence</a>
+    </li>
+    <li>
+      <a href="../articles/Calibrate_Demographics.html">Calibrate Demographics</a>
+    </li>
+    <li>
+      <a href="../articles/Calibrate_Smoking.html">Calibrate Smoking Status</a>
+    </li>
+    <li>
       <a href="../articles/GettingStarted.html">Getting Started with EPIC</a>
     </li>
     <li>
-      <a href="../articles/Optimization.html">Optimization</a>
-    </li>
-    <li>
-      <a href="../articles/RecalibratingEPIC.html">RecalibratingEPIC</a>
-    </li>
-    <li>
-      <a href="../articles/Rep_bgd_Canada.html">Reproducing Background Mortality</a>
+      <a href="../articles/Payoffs.html">Payoffs</a>
     </li>
     <li>
       <a href="../articles/Reproducing_bgd.html">Reproducing Background Mortality</a>
@@ -173,7 +179,7 @@ by epicUS</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">events</span><span class="op">$</span><span class="va">event</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;      0      3      4      5      6     13     14 </span></span>
-<span><span class="co">#&gt; 350001   6726   1439  19794  19535   8699 350001</span></span></code></pre></div>
+<span><span class="co">#&gt; 350001   8227   1485  30790  30360   9136 350001</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step-4-calculating-probability-of-death-from-events-matrix">Step 4: Calculating probability of death from events matrix<a class="anchor" aria-label="anchor" href="#step-4-calculating-probability-of-death-from-events-matrix"></a>
@@ -215,41 +221,41 @@ by epicUS</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># Groups:   age_and_local [8]</span></span></span>
 <span><span class="co">#&gt;    age_and_local female total_count death_count death_probability</span></span>
 <span><span class="co">#&gt;            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            40      0          16          16           1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            40      1           4           4           1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            41      0        <span style="text-decoration: underline;">4</span>576           8           0.001<span style="text-decoration: underline;">75</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            41      1        <span style="text-decoration: underline;">4</span>607          13           0.002<span style="text-decoration: underline;">82</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            42      0        <span style="text-decoration: underline;">4</span>326          19           0.004<span style="text-decoration: underline;">39</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            42      1        <span style="text-decoration: underline;">4</span>519          16           0.003<span style="text-decoration: underline;">54</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            43      0        <span style="text-decoration: underline;">4</span>368          19           0.004<span style="text-decoration: underline;">35</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            43      1        <span style="text-decoration: underline;">4</span>496          13           0.002<span style="text-decoration: underline;">89</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            44      0        <span style="text-decoration: underline;">4</span>451          14           0.003<span style="text-decoration: underline;">15</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            44      1        <span style="text-decoration: underline;">4</span>476          10           0.002<span style="text-decoration: underline;">23</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>            45      0        <span style="text-decoration: underline;">4</span>726          21           0.004<span style="text-decoration: underline;">44</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>            45      1        <span style="text-decoration: underline;">4</span>756          15           0.003<span style="text-decoration: underline;">15</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>            46      0        <span style="text-decoration: underline;">4</span>743          20           0.004<span style="text-decoration: underline;">22</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>            46      1        <span style="text-decoration: underline;">4</span>743          11           0.002<span style="text-decoration: underline;">32</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>            47      0        <span style="text-decoration: underline;">4</span>674          28           0.005<span style="text-decoration: underline;">99</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            40      0          17          17           1      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            40      1           9           9           1      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            41      0        <span style="text-decoration: underline;">4</span>567          26           0.005<span style="text-decoration: underline;">69</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            41      1        <span style="text-decoration: underline;">4</span>567           9           0.001<span style="text-decoration: underline;">97</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            42      0        <span style="text-decoration: underline;">4</span>540          32           0.007<span style="text-decoration: underline;">05</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            42      1        <span style="text-decoration: underline;">4</span>436          22           0.004<span style="text-decoration: underline;">96</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            43      0        <span style="text-decoration: underline;">4</span>497          26           0.005<span style="text-decoration: underline;">78</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            43      1        <span style="text-decoration: underline;">4</span>385          17           0.003<span style="text-decoration: underline;">88</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            44      0        <span style="text-decoration: underline;">4</span>654          39           0.008<span style="text-decoration: underline;">38</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            44      1        <span style="text-decoration: underline;">4</span>688          21           0.004<span style="text-decoration: underline;">48</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>            45      0        <span style="text-decoration: underline;">5</span>019          32           0.006<span style="text-decoration: underline;">38</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>            45      1        <span style="text-decoration: underline;">4</span>960          20           0.004<span style="text-decoration: underline;">03</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>            46      0        <span style="text-decoration: underline;">5</span>110          28           0.005<span style="text-decoration: underline;">48</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>            46      1        <span style="text-decoration: underline;">5</span>187          19           0.003<span style="text-decoration: underline;">66</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>            47      0        <span style="text-decoration: underline;">4</span>814          33           0.006<span style="text-decoration: underline;">86</span></span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">death_prob</span>,<span class="fl">15</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 15 × 5</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Groups:   age_and_local [8]</span></span></span>
 <span><span class="co">#&gt;    age_and_local female total_count death_count death_probability</span></span>
 <span><span class="co">#&gt;            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            94      1         328          74             0.226</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            95      0         265          81             0.306</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            95      1         255          61             0.239</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            96      0         197          71             0.360</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            96      1         159          44             0.277</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            97      0         115          40             0.348</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            97      1          97          27             0.278</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            98      0          85          32             0.376</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            98      1          80          16             0.2  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            99      0          59          31             0.525</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>            99      1          49          19             0.388</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>           100      0          51          29             0.569</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>           100      1          40          17             0.425</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>           101      0          43          12             0.279</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>           101      1          53          13             0.245</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            94      1         343          61             0.178</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            95      0         235          58             0.247</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            95      1         253          65             0.257</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            96      0         199          59             0.296</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            96      1         222          54             0.243</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            97      0         136          48             0.353</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            97      1         131          39             0.298</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            98      0          95          31             0.326</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            98      1          84          25             0.298</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            99      0          51          16             0.314</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>            99      1          68          20             0.294</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>           100      0          74          36             0.486</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>           100      1          71          35             0.493</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>           101      0          47          11             0.234</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>           101      1          67          16             0.239</span></span></code></pre></div>
 <p>While these values are not perfectly aligned with our validation
 target, the variation is negligible.</p>
 <p>Next, we want to ensure a consistent directional effect. We expect
@@ -276,7 +282,7 @@ our target.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">events</span><span class="op">$</span><span class="va">event</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;      0      3      4      5      6     13     14 </span></span>
-<span><span class="co">#&gt; 350001   6726   1439  19794  19535   8699 350001</span></span>
+<span><span class="co">#&gt; 350001   8227   1485  30790  30360   9136 350001</span></span>
 <span></span>
 <span><span class="va">events5</span> <span class="op">&lt;-</span> <span class="va">events5</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>age_and_local <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="va">local_time</span> <span class="op">+</span> <span class="va">age_at_creation</span><span class="op">)</span><span class="op">)</span></span>
@@ -311,41 +317,41 @@ further away:</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># Groups:   age_and_local, female [7]</span></span></span>
 <span><span class="co">#&gt;    age_and_local female local_time_adj total_count death_count death_probability</span></span>
 <span><span class="co">#&gt;            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            40      0              1           5           5                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            40      1              1           4           4                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            41      0              1          16          16                 1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            40      0              1          11          11                 1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            40      1              1           6           6                 1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            41      0              1          19          19                 1</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            41      0              2          12          12                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            41      1              1          10          10                 1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            41      1              1          14          14                 1</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            41      1              2           6           6                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            42      0              1          20          20                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            42      0              2          14          14                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            42      0              3          13          13                 1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            42      0              1          19          19                 1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            42      0              2          20          20                 1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            42      0              3          11          11                 1</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            42      1              1          10          10                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>            42      1              2          10          10                 1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>            42      1              2           6           6                 1</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>            42      1              3           6           6                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>            43      0              1          12          12                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>            43      0              2          17          17                 1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>            43      0              3          14          14                 1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>            43      0              1          29          29                 1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>            43      0              2          30          30                 1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>            43      0              3          21          21                 1</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">death_prob5</span>,<span class="fl">15</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 15 × 6</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># Groups:   age_and_local, female [7]</span></span></span>
 <span><span class="co">#&gt;    age_and_local female local_time_adj total_count death_count death_probability</span></span>
 <span><span class="co">#&gt;            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>           103      1              3           8           8             1    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>           103      1              4           1           1             1    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>           103      1              5           5           5             1    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>           103      1              6           6           1             0.167</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>           104      0              5           3           3             1    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>           104      0              6           3           2             0.667</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>           104      1              4           2           2             1    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>           104      1              5           2           2             1    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>           104      1              6           7           3             0.429</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>           105      0              5           1           1             1    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>           105      0              6           3           2             0.667</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>           105      1              5           1           1             1    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>           105      1              6           3           1             0.333</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>           106      0              6           1           0             0    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>           106      1              6           1           0             0</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>           103      0              6           1           1             1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>           103      1              3           2           2             1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>           103      1              4          10          10             1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>           103      1              5           2           2             1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>           103      1              6          11           2             0.182</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>           104      0              4           3           3             1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>           104      0              5           2           2             1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>           104      1              4           4           4             1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>           104      1              5           1           1             1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>           104      1              6           2           0             0    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>           105      0              5           2           2             1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>           105      0              6           4           1             0.25 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>           105      1              5           1           1             1    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>           105      1              6           6           1             0.167</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>           106      1              6           4           1             0.25</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="visualizing-results">Visualizing results<a class="anchor" aria-label="anchor" href="#visualizing-results"></a>
@@ -555,7 +561,7 @@ the intercept accordingly to achieve this target.</p>
 <span><span class="va">smoking_num</span><span class="op">&lt;-</span><span class="va">output</span><span class="op">$</span><span class="va">n_smoking_status_by_ctime</span></span>
 <span><span class="va">never_smoker_ratio</span> <span class="op">&lt;-</span> <span class="va">smoking_num</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">]</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">smoking_num</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">never_smoker_ratio</span></span>
-<span><span class="co">#&gt; [1] 0.2093018</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.2109738</span></span></code></pre></div>
 <p>Now we can visualize the change:</p>
 <pre><code><span><span class="co">#&gt; `summarise()` has grouped output by 'age_and_local'. You can override using the</span></span>
 <span><span class="co">#&gt; `.groups` argument.</span></span></code></pre>
