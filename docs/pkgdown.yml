@@ -1,14 +1,34 @@
 pandoc: '3.4'
 pkgdown: 2.1.3
 pkgdown_sha: ~
-articles:
-  BackgroundEPIC: BackgroundEPIC.html
-  UsingEPICinR: UsingEPICinR.html
-  GettingStarted: GettingStarted.html
-  Reproducing_bgd: Reproducing_bgd.html
-  Calibrate_Demographics: Calibrate_Demographics.html
-  Calibrate_Smoking: Calibrate_Smoking.html
-  Calibrate_COPD_Prevalence: Calibrate_COPD_Prevalence.html
-  Calibrate_COPD_Exacerbations: Calibrate_COPD_Exacerbations.html
-  Payoffs: Payoffs.html
+
+navbar:
+  structure:
+    left:
+      - home
+      - reference
+      - articles
+  components:
+    articles:
+      text: Articles
+      menu:
+        - text: Using EPIC in R
+          href: articles/UsingEPICinR.html
+        - text: Getting Started
+          href: articles/GettingStarted.html
+        - text: Reproducing Background Mortality
+          href: articles/Reproducing_bgd.html
+        - text: Calibrate Demographics
+          href: articles/Calibrate_Demographics.html
+        - text: Background EPIC
+          href: articles/BackgroundEPIC.html
+        - text: Calibrate COPD Prevalence
+          href: articles/Calibrate_COPD_Prevalence.html
+        - text: Calibrate Smoking
+          href: articles/Calibrate_Smoking.html
+        - text: Calibrate COPD Exacerbations
+          href: articles/Calibrate_COPD_Exacerbations.html
+        - text: Payoffs
+          href: articles/Payoffs.html
+
 last_built: 2025-07-30T01:49Z
