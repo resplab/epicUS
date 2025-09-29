@@ -42,11 +42,11 @@ The ACCEPT study provided target rates for moderate and severe exacerbations:
 
 #### **Diagnosed Patients – Severe Exacerbation Rates**
 
-Two comparator sources were used:  
-- **Hoogendoorn et al. 2021**  
-  - GOLD 1–4: 0.11, 0.16, 0.22, 0.28  
-- **ACCEPT Study**  
-  - GOLD 1–4: 0.10, 0.14, 0.32, 0.42  
+The ACCEPT study provided target rates for severe exacerbations:
+- **GOLD 1:** 0.10 
+- **GOLD 2:** 0.14  
+- **GOLD 3:** 0.32  
+- **GOLD 4:** 0.42
 
 #### **Undiagnosed Patients – Total Exacerbation Rate (CanCOLD)**
 
