@@ -156,11 +156,10 @@ exacerbations: - <strong>GOLD 1:</strong> 0.58<br>
 <h4 id="diagnosed-patients-severe-exacerbation-rates">
 <strong>Diagnosed Patients – Severe Exacerbation Rates</strong><a class="anchor" aria-label="anchor" href="#diagnosed-patients-severe-exacerbation-rates"></a>
 </h4>
-<p>Two comparator sources were used:<br>
-- <strong>Hoogendoorn et al. 2021</strong><br>
-- GOLD 1–4: 0.11, 0.16, 0.22, 0.28<br>
-- <strong>ACCEPT Study</strong><br>
-- GOLD 1–4: 0.10, 0.14, 0.32, 0.42</p>
+<p>The ACCEPT study provided target rates for severe exacerbations: -
+<strong>GOLD 1:</strong> 0.10 - <strong>GOLD 2:</strong> 0.14<br>
+- <strong>GOLD 3:</strong> 0.32<br>
+- <strong>GOLD 4:</strong> 0.42</p>
 </div>
 <div class="section level4">
 <h4 id="undiagnosed-patients-total-exacerbation-rate-cancold">
@@ -194,8 +193,8 @@ visualizations for each validation target.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## ── <span style="font-weight: bold;">Attaching core tidyverse packages</span> ──────────────────────── tidyverse 2.0.0 ──</span></span>
 <span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr    </span> 1.1.4     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr    </span> 2.1.5</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats  </span> 1.0.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr  </span> 1.5.1</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2  </span> 3.5.2     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble   </span> 3.3.0</span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats  </span> 1.0.1     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr  </span> 1.5.2</span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2  </span> 4.0.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble   </span> 3.3.0</span></span>
 <span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">lubridate</span> 1.9.4     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr    </span> 1.3.1</span></span>
 <span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr    </span> 1.1.0     </span></span>
 <span><span class="co">## ── <span style="font-weight: bold;">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
