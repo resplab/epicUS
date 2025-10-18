@@ -18,7 +18,7 @@ This section outlines the internal validation process conducted to align the mod
 
 - Ford et al. 2015 (DOI: 10.1378/chest.14-2146)
 - Hoogendoorn et al. 2021 (DOI: 10.1183/09031936.00043710)
-- ACCEPT study (DOI: 10.1016/S2213-2600(19)30397-2)  
+- Wallace et al. 2019 (DOI: 10.18553/jmcp.2019.25.2.205)
 - CanCOLD study (DOI: 10.3109/15412555.2012.665520)
 
 ---
@@ -41,21 +41,21 @@ Simulated rates were compared against those reported by Hoogendoorn et al. 2021:
 - **GOLD 3:** 1.61  
 - **GOLD 4:** 2.10  
 
-#### **Diagnosed Patients – Moderate and Severe Exacerbation Rates (ACCEPT Study)**
+#### **Diagnosed Patients – Moderate and Severe Exacerbation Rates (Wallace et al. 2019 Study)**
 
-The ACCEPT study provided target rates for moderate and severe exacerbations:
-- **GOLD 1:** 0.58  
-- **GOLD 2:** 0.91  
-- **GOLD 3:** 1.41  
-- **GOLD 4:** 1.69  
+Wallace et al. 2019 provided target rates for moderate and severe exacerbations:
+- **GOLD 1:** 0.404
+- **GOLD 2:** 0.489  
+- **GOLD 3:** 0.836 
+- **GOLD 4:** 0.891 
 
-#### **Diagnosed Patients – Severe Exacerbation Rates**
+#### **Diagnosed Patients – Severe Exacerbation Rates** (Wallace et al. 2019 Study)
 
-The ACCEPT study provided target rates for severe exacerbations:
-- **GOLD 1:** 0.10 
-- **GOLD 2:** 0.14  
-- **GOLD 3:** 0.32  
-- **GOLD 4:** 0.42
+Wallace et al. 2019 provided target rates for severe exacerbations:
+- **GOLD 1:** 0.12 
+- **GOLD 2:** 0.139  
+- **GOLD 3:** 0.254  
+- **GOLD 4:** 0.422
 
 #### **Undiagnosed Patients – Total Exacerbation Rate (CanCOLD)**
 
@@ -97,8 +97,8 @@ input <- get_input()
 time_horizon <- 26
 
 # Modify intercept value to calibrate proportion of COPD exacerbations
-input$values$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 2.0, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.15 , gold2 = -0.10 , gold3 = -0.40 , gold4 = -0.75 , diagnosis_effect = 0)))
-input$values$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -2.809, intercept2 = 2.402, intercept3 = 3.808, female = -0.764, age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
+input$values$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 1.8, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.15 , gold2 = -0.10 , gold3 = -0.40 , gold4 = -0.75 , diagnosis_effect = 0)))
+input$values$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -0.309, intercept2 = 2.502, intercept3 = 5.508, female = -0.764, age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
 
 # Load EPIC general settings
 run(input = input$values)
@@ -261,17 +261,18 @@ all_events <- as.data.frame(Cget_all_events_matrix())
   #----------------------------Diagnosed Moderate and Severe------------------------------------
   #-------------------------------------------------------------------------
 
+  # Updated October 14, 2025
   Exac_per_GOLD_diagnosed <- matrix (NA, nrow = 4, ncol = 3)
-  colnames(Exac_per_GOLD_diagnosed) <- c("GOLD", "EPIC", "ACCEPT")
-  # ACCEPT data is rates from a join of ECLIPSE, MACRO, OPTIMAL and STATCOPE.
+  colnames(Exac_per_GOLD_diagnosed) <- c("GOLD", "EPIC", "Wallace 2019")
+
   Exac_per_GOLD_diagnosed[1:4, 1] <- c("gold1", "gold2", "gold3", "gold4")
   Exac_per_GOLD_diagnosed[1:4, 2] <- round(
     x=as.data.frame(table(mod_sev_exac_events_diagnosed[, "gold"]))[, 2]/
       Follow_up_GOLD_diagnosed, digit = 2)
-  Exac_per_GOLD_diagnosed[1:4, 3] <- c(0.58, 0.91, 1.41, 1.69)
+  Exac_per_GOLD_diagnosed[1:4, 3] <- c(0.404, 0.489, 0.836, 0.891)
 
   df <- as.data.frame(Exac_per_GOLD_diagnosed)
-  dfm <- melt(df[,c("GOLD", "EPIC", "ACCEPT")],id.vars = 1)
+  dfm <- melt(df[,c("GOLD", "EPIC", "Wallace 2019")],id.vars = 1)
   plot <-
     ggplot(dfm, aes(x = GOLD, y = as.numeric(value))) +
     scale_y_continuous(breaks = seq(0, 3, by = 0.5)) +
@@ -286,19 +287,17 @@ all_events <- as.data.frame(Cget_all_events_matrix())
   #----------------------------Diagnosed Severe------------------------------------
   #-------------------------------------------------------------------------
 
-  Exac_per_GOLD_diagnosed <- matrix (NA, nrow = 4, ncol = 4)
-  colnames(Exac_per_GOLD_diagnosed) <- c("GOLD", "EPIC", "Hoogendoorn", "ACCEPT")
-  # ACCEPT data is rates from a join of ECLIPSE, MACRO, OPTIMAL and STATCOPE.
+  Exac_per_GOLD_diagnosed <- matrix (NA, nrow = 4, ncol = 3)
+  colnames(Exac_per_GOLD_diagnosed) <- c("GOLD", "EPIC", "Wallace 2019")
+
   Exac_per_GOLD_diagnosed[1:4, 1] <- c("gold1", "gold2", "gold3", "gold4")
   Exac_per_GOLD_diagnosed[1:4, 2] <- round(
     x=as.data.frame(table(sev_exac_events_diagnosed[, "gold"]))[, 2]/
       Follow_up_GOLD_diagnosed, digit = 2)
-
-  Exac_per_GOLD_diagnosed[1:4, 3] <- c(0.11, 0.16, 0.22, 0.28)
-  Exac_per_GOLD_diagnosed[1:4, 4] <- c(0.10, 0.14, 0.32, 0.42)
+  Exac_per_GOLD_diagnosed[1:4, 3] <- c(0.12, 0.139, 0.254, 0.422)
 
   df <- as.data.frame(Exac_per_GOLD_diagnosed)
-  dfm <- melt(df[,c("GOLD", "EPIC", "Hoogendoorn", "ACCEPT")],id.vars = 1)
+  dfm <- melt(df[,c("GOLD", "EPIC", "Wallace 2019")],id.vars = 1)
   plot <-
     ggplot(dfm, aes(x = GOLD, y = as.numeric(value))) +
     scale_y_continuous(breaks = seq(0, 3, by = 0.5)) +

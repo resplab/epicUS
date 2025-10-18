@@ -208,9 +208,9 @@ get_input <- function(age0 = 40,
   input_ref$agent$p_bgd_by_sex <- "Life table"
 
 
-  # Ece changed these values according to the results from the optimization function
+  # Ece changed these values according to the results from the optimization function (modified October 13, 2025)
   input_help$agent$l_inc_betas <- "Ln of incidence rate of the new population - Calibration target to keep populatoin size and age pyramid in line with calibration"
-  input$agent$l_inc_betas <- t(as.matrix(c(intercept = -3.48672063032448-input$global_parameters$closed_cohort*100, y = 0.00202274171887977, y2 = -4.37035899506131e-05))) # intercept is the result of model calibration,
+  input$agent$l_inc_betas <- t(as.matrix(c(intercept = -3.48672063032448-input$global_parameters$closed_cohort*100, y = 0.00502274171887977, y2 = -4.37035899506131e-06))) # intercept is the result of model calibration,
   input_ref$agent$l_inc_betas <- "If closed cohort is enabled, incidence population will be turned off."
 
 
@@ -367,18 +367,18 @@ get_input <- function(age0 = 40,
 
   ## Exacerbation;
 
-  # Adapted to US setting (July 21, 2025)
+  # Adapted to US setting (October 16, 2025)
   input_help$exacerbation$ln_rate_betas = "Regression coefficients for the random-effects log-hazard model of exacerbation (of any severity)"
-  input$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 2.0, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.15 , gold2 = -0.10 , gold3 = -0.40 , gold4 = -0.75 , diagnosis_effect = 0)))
+  input$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 1.8, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.15 , gold2 = -0.10 , gold3 = -0.40 , gold4 = -0.75 , diagnosis_effect = 0)))
   input_ref$exacerbation$ln_rate_betas = "Rates from DOI: 10.2147/COPD.S13826, adjusted to account for diganosis bias. Adjusted on 2018-10-02 to match manuscript. Recalibrated on 2022-11-04, see validate_exacerbations()"
 
   input_help$exacerbation$ln_rate_intercept_sd = "SD of the random intercept for log-hazard of exacerbation"
   input$exacerbation$ln_rate_intercept_sd = sqrt(0.55)
   input_ref$exacerbation$ln_rate_intercept_sd = ""
 
-  # Adapted to US setting (July 21, 2025)
+  # Adapted to US setting (October 16, 2025)
   input_help$exacerbation$logit_severity_betas = "Regression coefficients for the proportional odds model of exacerbation severity"
-  input$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -2.809, intercept2 = 2.402, intercept3 = 3.808, female = -0.764, age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
+  input$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -0.309, intercept2 = 2.502, intercept3 = 5.508, female = -0.764, age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
   input_ref$exacerbation$logit_severity_betas = "Shahzad's regression on MACRO with adjusted intercepts to match severity levels reported by Hoogendoorn et al. Last updated on manuscript submission"
 
 
@@ -591,51 +591,34 @@ get_input <- function(age0 = 40,
   input$medication$medication_adherence <- 0.7
   input_ref$medication$medication_adherence <- ""
 
-  # Adapted to US setting (July 9, 2025)- temporarily disabled
+  # Adapted to US setting (Sep 29, 2025)-
+  # P0 pooled from TRISTAN, TORCH, UPLIFT; NMA ORs converted to RR, then to RRR = 1 - RR
+  # Buckets:
+  #   - Average (mono & SABA combos): RR = 0.932  → RRR = 0.068
+  #   - Midpoint (all duals):          RR = 0.883  → RRR = 0.117
+  #   - Triple:                        RR = 0.795  → RRR = 0.205
+
   # medication log-hazard regression matrix for rate reduction in exacerbations
   input_help$medication$medication_ln_hr_exac <- "Rate reduction in exacerbations due to treatment"
-  input$medication$medication_ln_hr_exac<-c(input$medication$medication_ln_hr_exac<-c(None=0,
-                                                                                      SABA=0,
-                                                                                      LABA=log((1-0.20)^input$medication$medication_adherence),
-                                                                                      SABA_LABA=log((1-0.20)^input$medication$medication_adherence),
-                                                                                      LAMA=log((1-0.22)^input$medication$medication_adherence),
-                                                                                      LAMA_SABA=log((1-0.22)^input$medication$medication_adherence),
-                                                                                      LAMA_LABA=log((1-0.23)^input$medication$medication_adherence),
-                                                                                      LAMA_LABA_SABA=log((1-0.23)^input$medication$medication_adherence),
-                                                                                      ICS=log((1-0.19)^input$medication$medication_adherence),
-                                                                                      ICS_SABA=log((1-0.19)^input$medication$medication_adherence),
-                                                                                      ICS_LABA=log((1-0.25)^input$medication$medication_adherence),
-                                                                                      ICS_LABA_SABA=log((1-0.25)^input$medication$medication_adherence),
-                                                                                      ICS_LAMA=log((1-0.25)^input$medication$medication_adherence),
-                                                                                      ICS_LAMA_SABA=log((1-0.25)^input$medication$medication_adherence),
-                                                                                      ICS_LAMA_LABA=log((1-0.34)^input$medication$medication_adherence),
-                                                                                      ICS_LAMA_LABA_SABA=log((1-0.34)^input$medication$medication_adherence)))
-  input_ref$medication$medication_ln_hr_exac <- "ICS/LABA: Annual Rate Ratio of Comibation Therapy (Salmeterol and Fluticasone Propionate) vs. Placebo from TORCH (doi: 10.1056/NEJMoa063070),
-                                                 ICS: Annual Rate Ratio between Fluticasone vs. Placebo from TRISTAN Trial (doi:10.1016/S0140-6736(03)12459-2),
-                                                 LABA: Annual Rate Ratio between Salmeterol vs. Placebo from TRISTAN Trial (doi:10.1016/S0140-6736(03)12459-2),
-                                                 LAMA-Zhou et al. 2017, LAMA/LABA-UPLIFT 2008, ICS/LAMA/LABA-KRONOS 2018"
-
-
-  # input$medication$medication_ln_hr_exac <- c(
-  #   None = 0,
-  #   SABA = 0,
-  #   LABA = log((1 - 0.12)^input$medication$medication_adherence),          # RR = 0.88
-  #   SABA_LABA = log((1 - 0.12)^input$medication$medication_adherence),
-  #   LAMA = log((1 - 0.20)^input$medication$medication_adherence),          # RR = 0.80
-  #   LAMA_SABA = log((1 - 0.20)^input$medication$medication_adherence),
-  #   LAMA_LABA = log((1 - 0.26)^input$medication$medication_adherence),     # RR = 0.74
-  #   LAMA_LABA_SABA = log((1 - 0.26)^input$medication$medication_adherence),
-  #   ICS = log((1 - 0.14)^input$medication$medication_adherence),           # RR = 0.86
-  #   ICS_SABA = log((1 - 0.14)^input$medication$medication_adherence),
-  #   ICS_LABA = log((1 - 0.23)^input$medication$medication_adherence),      # RR = 0.77
-  #   ICS_LABA_SABA = log((1 - 0.23)^input$medication$medication_adherence),
-  #   ICS_LAMA = log((1 - 0.23)^input$medication$medication_adherence),      # assumed equal to ICS/LABA
-  #   ICS_LAMA_SABA = log((1 - 0.23)^input$medication$medication_adherence),
-  #   ICS_LAMA_LABA = log((1 - 0.37)^input$medication$medication_adherence), # RR = 0.63
-  #   ICS_LAMA_LABA_SABA = log((1 - 0.37)^input$medication$medication_adherence)
-  # )
-  # input_ref$medication$medication_ln_hr_exac <- "doi:10.1371/journal.pmed.1002958"
-
+  input$medication$medication_ln_hr_exac <- c(
+    None               = 0,
+    SABA               = 0,
+    LABA               = log((1 - 0.068)^input$medication$medication_adherence),        # RR = 0.93
+    SABA_LABA          = log((1 - 0.068)^input$medication$medication_adherence),
+    LAMA               = log((1 - 0.068)^input$medication$medication_adherence),        # RR = 0.93
+    LAMA_SABA          = log((1 - 0.068)^input$medication$medication_adherence),
+    LAMA_LABA          = log((1 - 0.117)^input$medication$medication_adherence),        # RR = 0.88
+    LAMA_LABA_SABA     = log((1 - 0.117)^input$medication$medication_adherence),
+    ICS                = log((1 - 0.068)^input$medication$medication_adherence),        # RR = 0.93
+    ICS_SABA           = log((1 - 0.068)^input$medication$medication_adherence),
+    ICS_LABA           = log((1 - 0.117)^input$medication$medication_adherence),        # RR = 0.88
+    ICS_LABA_SABA      = log((1 - 0.117)^input$medication$medication_adherence),
+    ICS_LAMA           = log((1 - 0.117)^input$medication$medication_adherence),        # RR = 0.88 (treated equal to dual midpoint)
+    ICS_LAMA_SABA      = log((1 - 0.117)^input$medication$medication_adherence),
+    ICS_LAMA_LABA      = log((1 - 0.205)^input$medication$medication_adherence),        # RR = 0.80
+    ICS_LAMA_LABA_SABA = log((1 - 0.205)^input$medication$medication_adherence)
+  )
+  input_ref$medication$medication_ln_hr_exac <- "doi:10.1371/journal.pmed.1002958"
 
   # cost of medications
 

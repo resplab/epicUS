@@ -1430,17 +1430,18 @@ validate_exacerbation <- function(base_agents=1e4, input=NULL) {
   #----------------------------Diagnosed Moderate and Severe------------------------------------
   #-------------------------------------------------------------------------
 
+  # Updated October 14, 2025
   Exac_per_GOLD_diagnosed <- matrix (NA, nrow = 4, ncol = 3)
-  colnames(Exac_per_GOLD_diagnosed) <- c("GOLD", "EPIC", "ACCEPT")
-  # ACCEPT data is rates from a join of ECLIPSE, MACRO, OPTIMAL and STATCOPE.
+  colnames(Exac_per_GOLD_diagnosed) <- c("GOLD", "EPIC", "Wallace 2019")
+
   Exac_per_GOLD_diagnosed[1:4, 1] <- c("gold1", "gold2", "gold3", "gold4")
   Exac_per_GOLD_diagnosed[1:4, 2] <- round(
     x=as.data.frame(table(mod_sev_exac_events_diagnosed[, "gold"]))[, 2]/
       Follow_up_GOLD_diagnosed, digit = 2)
-  Exac_per_GOLD_diagnosed[1:4, 3] <- c(0.58, 0.91, 1.41, 1.69)
+  Exac_per_GOLD_diagnosed[1:4, 3] <- c(0.404, 0.489, 0.836, 0.891)
 
   df <- as.data.frame(Exac_per_GOLD_diagnosed)
-  dfm <- melt(df[,c("GOLD", "EPIC", "ACCEPT")],id.vars = 1)
+  dfm <- melt(df[,c("GOLD", "EPIC", "Wallace 2019")],id.vars = 1)
   plot <-
     ggplot(dfm, aes(x = GOLD, y = as.numeric(value))) +
     scale_y_continuous(breaks = seq(0, 3, by = 0.5)) +
@@ -1455,19 +1456,17 @@ validate_exacerbation <- function(base_agents=1e4, input=NULL) {
   #----------------------------Diagnosed Severe------------------------------------
   #-------------------------------------------------------------------------
 
-  Exac_per_GOLD_diagnosed <- matrix (NA, nrow = 4, ncol = 4)
-  colnames(Exac_per_GOLD_diagnosed) <- c("GOLD", "EPIC", "Hoogendoorn", "ACCEPT")
-  # ACCEPT data is rates from a join of ECLIPSE, MACRO, OPTIMAL and STATCOPE.
+  Exac_per_GOLD_diagnosed <- matrix (NA, nrow = 4, ncol = 3)
+  colnames(Exac_per_GOLD_diagnosed) <- c("GOLD", "EPIC", "Wallace 2019")
+
   Exac_per_GOLD_diagnosed[1:4, 1] <- c("gold1", "gold2", "gold3", "gold4")
   Exac_per_GOLD_diagnosed[1:4, 2] <- round(
     x=as.data.frame(table(sev_exac_events_diagnosed[, "gold"]))[, 2]/
       Follow_up_GOLD_diagnosed, digit = 2)
-
-  Exac_per_GOLD_diagnosed[1:4, 3] <- c(0.11, 0.16, 0.22, 0.28)
-  Exac_per_GOLD_diagnosed[1:4, 4] <- c(0.10, 0.14, 0.32, 0.42)
+  Exac_per_GOLD_diagnosed[1:4, 3] <- c(0.12, 0.139, 0.254, 0.422)
 
   df <- as.data.frame(Exac_per_GOLD_diagnosed)
-  dfm <- melt(df[,c("GOLD", "EPIC", "Hoogendoorn", "ACCEPT")],id.vars = 1)
+  dfm <- melt(df[,c("GOLD", "EPIC", "Wallace 2019")],id.vars = 1)
   plot <-
     ggplot(dfm, aes(x = GOLD, y = as.numeric(value))) +
     scale_y_continuous(breaks = seq(0, 3, by = 0.5)) +
