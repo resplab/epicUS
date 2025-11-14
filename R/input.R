@@ -208,16 +208,16 @@ get_input <- function(age0 = 40,
   input_ref$agent$p_bgd_by_sex <- "Life table"
 
 
-  # Ece changed these values according to the results from the optimization function (modified October 13, 2025)
+  # Ece changed these values according to the results from the optimization function (modified November 10, 2025)
   input_help$agent$l_inc_betas <- "Ln of incidence rate of the new population - Calibration target to keep populatoin size and age pyramid in line with calibration"
-  input$agent$l_inc_betas <- t(as.matrix(c(intercept = -3.48672063032448-input$global_parameters$closed_cohort*100, y = 0.00502274171887977, y2 = -4.37035899506131e-06))) # intercept is the result of model calibration,
+  input$agent$l_inc_betas <- t(as.matrix(c(intercept = -3.62672063032448-input$global_parameters$closed_cohort*100, y = 0.0040274171887977, y2 = -4.37035899506131e-05))) # intercept is the result of model calibration,
   input_ref$agent$l_inc_betas <- "If closed cohort is enabled, incidence population will be turned off."
 
 
 
   # Ece changed these values according to the results from the optimization function
   input_help$agent$ln_h_bgd_betas <- "Increased Longevity Over time and effect of other variables"
-  input$agent$ln_h_bgd_betas <- t(as.matrix(c(intercept = 0, y = -1e-04, y2 = 0, age = -0.000132065698144107, b_mi = 0, n_mi = 0, b_stroke = 0,
+  input$agent$ln_h_bgd_betas <- t(as.matrix(c(intercept = 0, y = -1e-02, y2 = 0, age = -0.00532065698144107, b_mi = 0, n_mi = 0, b_stroke = 0,
                                               n_stroke = 0, hf = 0)))  #AKA longevity
   input_ref$agent$ln_h_bgd_betas <- ""
 
@@ -269,7 +269,7 @@ get_input <- function(age0 = 40,
   input_ref$smoking$ln_h_ces_betas <- "Diagnosis coefficient from Wu et al. BMC Public Health 2006"
 
   input_help$smoking$smoking_ces_coefficient <- "Coefficient for the decay rate of smoking cessaton treatment, default is 100"
-  input$smoking$smoking_ces_coefficient <- 100
+  input$smoking$smoking_ces_coefficient <- 0.69
   input_ref$smoking$smoking_ces_coefficient <- ""
 
   input_help$smoking$smoking_cessation_adherence <- "Proportion adherent to smoking cessation treatment"
@@ -376,9 +376,9 @@ get_input <- function(age0 = 40,
   input$exacerbation$ln_rate_intercept_sd = sqrt(0.55)
   input_ref$exacerbation$ln_rate_intercept_sd = ""
 
-  # Adapted to US setting (October 16, 2025)
+  # Adapted to US setting (October 25, 2025)
   input_help$exacerbation$logit_severity_betas = "Regression coefficients for the proportional odds model of exacerbation severity"
-  input$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -0.309, intercept2 = 2.502, intercept3 = 5.508, female = -0.764, age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
+  input$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -0.309, intercept2 = 2.002, intercept3 = 5.508, female = -0.764, age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
   input_ref$exacerbation$logit_severity_betas = "Shahzad's regression on MACRO with adjusted intercepts to match severity levels reported by Hoogendoorn et al. Last updated on manuscript submission"
 
 
