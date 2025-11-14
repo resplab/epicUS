@@ -220,10 +220,10 @@ visualizations for each validation target.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## ── <span style="font-weight: bold;">Attaching core tidyverse packages</span> ──────────────────────── tidyverse 2.0.0 ──</span></span>
 <span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr    </span> 1.1.4     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr    </span> 2.1.5</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats  </span> 1.0.1     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr  </span> 1.5.2</span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats  </span> 1.0.1     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr  </span> 1.6.0</span></span>
 <span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2  </span> 4.0.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble   </span> 3.3.0</span></span>
 <span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">lubridate</span> 1.9.4     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr    </span> 1.3.1</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr    </span> 1.1.0     </span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr    </span> 1.2.0     </span></span>
 <span><span class="co">## ── <span style="font-weight: bold;">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
 <span><span class="co">## <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">filter()</span> masks <span style="color: #0000BB;">stats</span>::filter()</span></span>
 <span><span class="co">## <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">lag()</span>    masks <span style="color: #0000BB;">stats</span>::lag()</span></span>
@@ -361,16 +361,16 @@ visualizations for each validation target.</p>
 <span>  <span class="va">GOLD_IV</span>  <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">exac_events</span><span class="op">[</span>, <span class="st">"gold"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">4</span>, <span class="fl">2</span><span class="op">]</span><span class="op">/</span><span class="va">Follow_up_GOLD</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"exacRateGOLDI   = "</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">GOLD_I</span>  , <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## exacRateGOLDI   = 0.43</span></span></code></pre>
+<pre><code><span><span class="co">## exacRateGOLDI   = 0.44</span></span></code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"exacRateGOLDII  = "</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">GOLD_II</span> , <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## exacRateGOLDII  = 0.75</span></span></code></pre>
+<pre><code><span><span class="co">## exacRateGOLDII  = 0.77</span></span></code></pre>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"exacRateGOLDIII = "</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">GOLD_III</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## exacRateGOLDIII = 1.21</span></span></code></pre>
+<pre><code><span><span class="co">## exacRateGOLDIII = 1.18</span></span></code></pre>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"exacRateGOLDIV  = "</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">GOLD_IV</span> , <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## exacRateGOLDIV  = 1.62</span></span></code></pre>
+<pre><code><span><span class="co">## exacRateGOLDIV  = 1.54</span></span></code></pre>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="co">#----------------------------All ------------------------------------</span></span>
 <span>  <span class="co">#-------------------------------------------------------------------------</span></span>
@@ -401,7 +401,7 @@ visualizations for each validation target.</p>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Total rate of exacerbations per year for all patients"</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Calibrate_COPD_Exacerbations_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
+<p><img src="Calibrate_COPD_Exacerbations_files/figure-html/unnamed-chunk-1-1.png" class="r-plt" width="700"></p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="co">#--------------------------- total number of severe exacerbations:</span></span>
 <span></span>
@@ -409,12 +409,12 @@ visualizations for each validation target.</p>
 <span>  <span class="va">avgRate_sevExac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">n_exac</span><span class="op">$</span><span class="va">Severe_Exacerbations</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">n_exac</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">n_exac</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span>  <span class="va">avgRate_sevExac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">avgRate_sevExac</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Average rate during 20 years: "</span>, <span class="va">avgRate_sevExac</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Average rate during 20 years: 708.02</span></span></code></pre>
+<pre><code><span><span class="co">## Average rate during 20 years: 790.52</span></span></code></pre>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="va">rate2017_sevExac</span> <span class="op">&lt;-</span><span class="op">(</span><span class="va">output_ex</span><span class="op">$</span><span class="va">n_exac_by_ctime_severity</span><span class="op">[</span><span class="fl">3</span>,<span class="fl">3</span><span class="op">]</span><span class="op">+</span><span class="va">output_ex</span><span class="op">$</span><span class="va">n_exac_by_ctime_severity</span><span class="op">[</span><span class="fl">3</span>,<span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="fl">100000</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">output_ex</span><span class="op">$</span><span class="va">n_alive_by_ctime_sex</span><span class="op">[</span><span class="fl">3</span>,<span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">rate2017_sevExac</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">rate2017_sevExac</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Rate in 2017: "</span>, <span class="va">rate2017_sevExac</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Rate in 2017: 417.13</span></span></code></pre>
+<pre><code><span><span class="co">## Rate in 2017: 432.47</span></span></code></pre>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="co">#----------------------------Diagnosed ------------------------------------</span></span>
 <span>  <span class="co">#-------------------------------------------------------------------------</span></span>
@@ -437,10 +437,10 @@ visualizations for each validation target.</p>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span> <span class="op">(</span><span class="st">"Rate"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Total rate of exacerbations per year for diagnosed patients"</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Calibrate_COPD_Exacerbations_files/figure-html/unnamed-chunk-1-2.png" width="700"></p>
+<p><img src="Calibrate_COPD_Exacerbations_files/figure-html/unnamed-chunk-1-2.png" class="r-plt" width="700"></p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"Total rate of exacerbation in diagnosed patients (1.5 per year in Hoogendoorn): "</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">exac_events_diagnosed</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Follow_up_GOLD_diagnosed</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Total rate of exacerbation in diagnosed patients (1.5 per year in Hoogendoorn): 1.05</span></span></code></pre>
+<pre><code><span><span class="co">## Total rate of exacerbation in diagnosed patients (1.5 per year in Hoogendoorn): 1.04</span></span></code></pre>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="co">#----------------------------Diagnosed Moderate and Severe------------------------------------</span></span>
 <span>  <span class="co">#-------------------------------------------------------------------------</span></span>
@@ -466,7 +466,7 @@ visualizations for each validation target.</p>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Total rate of moderate/severe exacerbations per year for diagnosed patients"</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Calibrate_COPD_Exacerbations_files/figure-html/unnamed-chunk-1-3.png" width="700"></p>
+<p><img src="Calibrate_COPD_Exacerbations_files/figure-html/unnamed-chunk-1-3.png" class="r-plt" width="700"></p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="co">#----------------------------Diagnosed Severe------------------------------------</span></span>
 <span>  <span class="co">#-------------------------------------------------------------------------</span></span>
@@ -491,7 +491,7 @@ visualizations for each validation target.</p>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Total rate of severe exacerbations per year for diagnosed patients"</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Calibrate_COPD_Exacerbations_files/figure-html/unnamed-chunk-1-4.png" width="700"></p>
+<p><img src="Calibrate_COPD_Exacerbations_files/figure-html/unnamed-chunk-1-4.png" class="r-plt" width="700"></p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="co">#----------------------------Undiagnosed ------------------------------------</span></span>
 <span>  <span class="co">#----------------------------------------------------------------------------</span></span>
@@ -522,11 +522,11 @@ visualizations for each validation target.</p>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span> <span class="op">(</span><span class="st">"Rate"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Total rate of exacerbations per year for undiagnosed patients"</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">plot</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Calibrate_COPD_Exacerbations_files/figure-html/unnamed-chunk-1-5.png" width="700"></p>
+<p><img src="Calibrate_COPD_Exacerbations_files/figure-html/unnamed-chunk-1-5.png" class="r-plt" width="700"></p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"Total rate of exacerbation in undiagnosed patients (0.30 per year in CanCOLD): "</span>,</span>
 <span>          <span class="va">total_rate_undiagnosed</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Total rate of exacerbation in undiagnosed patients (0.30 per year in CanCOLD): 0.43</span></span></code></pre>
+<pre><code><span><span class="co">## Total rate of exacerbation in undiagnosed patients (0.30 per year in CanCOLD): 0.45</span></span></code></pre>
 </div>
 </div>
   </div>
@@ -546,7 +546,7 @@ visualizations for each validation target.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer>
