@@ -228,11 +228,11 @@ get_input <- function(age0 = 40,
 
   # Adapted to US setting (July 21, 2025)
   input_help$smoking$logit_p_current_smoker_0_betas <- "Probability of being a current smokerval at the time of creation"
-  input$smoking$logit_p_current_smoker_0_betas <- t(as.matrix(c(Intercept = 0.35, sex = -0.4, age = -0.032, age2 = 0, sex_age = 0, sex_age2 = 0, year = -0.02)))
+  input$smoking$logit_p_current_smoker_0_betas <- t(as.matrix(c(Intercept = 0.40, sex = -0.4, age = -0.032, age2 = 0, sex_age = 0, sex_age2 = 0, year = -0.02)))
   input_ref$smoking$logit_p_current_smoker_0_betas <- ""
   # Adapted to US setting (July 21, 2025)
   input_help$smoking$logit_p_never_smoker_con_not_current_0_betas <- "Probability of being a never-smoker conditional on not being current smoker, at the time of creation"
-  input$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.9, sex = 0, age = -0.06, age2 = 0, sex_age = 0,sex_age2 = 0, year = -0.02)))
+  input$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.40, sex = 0, age = -0.06, age2 = 0, sex_age = 0,sex_age2 = 0, year = -0.02)))
   input_ref$smoking$logit_p_never_smoker_con_not_current_0_betas <- ""
 
   # Adapted to US setting (July 9, 2025)
@@ -266,7 +266,7 @@ get_input <- function(age0 = 40,
 
   # Adapted to US setting (July 9, 2025)
   input_help$smoking$ln_h_ces_betas <- "Log-hazard of smoking cessation"
-  input$smoking$ln_h_ces_betas <- c(intercept = -3.35,  sex = 0, age = 0.02, age2 = 0, calendar_time = -0.01, diagnosis = log(1.38))
+  input$smoking$ln_h_ces_betas <- c(intercept = -3.38,  sex = 0, age = 0.02, age2 = 0, calendar_time = -0.01, diagnosis = log(1.38))
   input_ref$smoking$ln_h_ces_betas <- "Diagnosis coefficient from Wu et al. BMC Public Health 2006"
 
   input_help$smoking$smoking_ces_coefficient <- "Coefficient for the decay rate of smoking cessaton treatment, default is 100"
@@ -282,9 +282,9 @@ get_input <- function(age0 = 40,
 
   # Adapted to US setting (July 22, 2025)
   input_help$COPD$logit_p_COPD_betas_by_sex <- "Logit of the probability of having COPD (FEV1/FVC<0.7) at time of creation (separately by sex)"
-  input$COPD$logit_p_COPD_betas_by_sex <- cbind(male = c(intercept = -4.30190, age = 0.033070, age2 = 0, pack_years = 0.025049   ,
+  input$COPD$logit_p_COPD_betas_by_sex <- cbind(male = c(intercept = -4.35190, age = 0.033070, age2 = 0, pack_years = 0.025049   ,
                                                                 current_smoking = 0, year = 0, asthma = 0),
-                                                       female = c(intercept = -4.35202, age = 0.027359   , age2 = 0, pack_years = 0.030399   ,
+                                                       female = c(intercept = -4.40202, age = 0.027359   , age2 = 0, pack_years = 0.030399   ,
                                                                   current_smoking = 0, year = 0, asthma = 0))
 
   input_ref$COPD$logit_p_COPD_betas_by_sex <- "CanCold - Shahzad's Derivation. Last Updated on 2017-09-19, ne wmodel with no currnet smoker term"
