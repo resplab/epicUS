@@ -229,11 +229,11 @@ get_input <- function(age0 = 40,
   # Adapted to US setting (July 21, 2025)
   input_help$smoking$logit_p_current_smoker_0_betas <- "Probability of being a current smokerval at the time of creation"
   input$smoking$logit_p_current_smoker_0_betas <- t(as.matrix(c(Intercept = 0.40, sex = -0.4, age = -0.032, age2 = 0, sex_age = 0, sex_age2 = 0, year = -0.02)))
-  input_ref$smoking$logit_p_current_smoker_0_betas <- ""
+  input_ref$smoking$logit_p_current_smoker_0_betas <- "NHIS 2018 and 2023"
   # Adapted to US setting (July 21, 2025)
   input_help$smoking$logit_p_never_smoker_con_not_current_0_betas <- "Probability of being a never-smoker conditional on not being current smoker, at the time of creation"
   input$smoking$logit_p_never_smoker_con_not_current_0_betas<-t(as.matrix(c(intercept = 4.40, sex = 0, age = -0.06, age2 = 0, sex_age = 0,sex_age2 = 0, year = -0.02)))
-  input_ref$smoking$logit_p_never_smoker_con_not_current_0_betas <- ""
+  input_ref$smoking$logit_p_never_smoker_con_not_current_0_betas <- "NHIS 2018 and 2023"
 
   # Adapted to US setting (July 9, 2025)
   input_help$smoking$minimum_smoking_prevalence <- "Minimum Smoking Prevalence"
@@ -267,7 +267,7 @@ get_input <- function(age0 = 40,
   # Adapted to US setting (July 9, 2025)
   input_help$smoking$ln_h_ces_betas <- "Log-hazard of smoking cessation"
   input$smoking$ln_h_ces_betas <- c(intercept = -3.38,  sex = 0, age = 0.02, age2 = 0, calendar_time = -0.01, diagnosis = log(1.38))
-  input_ref$smoking$ln_h_ces_betas <- "Diagnosis coefficient from Wu et al. BMC Public Health 2006"
+  input_ref$smoking$ln_h_ces_betas <- "Diagnosis coefficient"
 
   input_help$smoking$smoking_ces_coefficient <- "Coefficient for the decay rate of smoking cessaton treatment, default is 100"
   input$smoking$smoking_ces_coefficient <- 0.69
@@ -287,7 +287,7 @@ get_input <- function(age0 = 40,
                                                        female = c(intercept = -4.40202, age = 0.027359   , age2 = 0, pack_years = 0.030399   ,
                                                                   current_smoking = 0, year = 0, asthma = 0))
 
-  input_ref$COPD$logit_p_COPD_betas_by_sex <- "CanCold - Shahzad's Derivation. Last Updated on 2017-09-19, ne wmodel with no currnet smoker term"
+  input_ref$COPD$logit_p_COPD_betas_by_sex <- "NHANES"
 
   # Calibrated on November 18, 2025
   input_help$COPD$ln_h_COPD_betas_by_sex <- "Log-hazard of developing COPD (FEV1/FVC<LLN) for those who did not have COPD at creation time (separately by sex)"
@@ -371,7 +371,7 @@ get_input <- function(age0 = 40,
   # Adapted to US setting (October 16, 2025)
   input_help$exacerbation$ln_rate_betas = "Regression coefficients for the random-effects log-hazard model of exacerbation (of any severity)"
   input$exacerbation$ln_rate_betas <- t(as.matrix(c(intercept = 1.8, female = 0, age = 0.04082 * 0.1, fev1 = -1.5, smoking_status = 0.7, gold1 = 0.15 , gold2 = -0.10 , gold3 = -0.40 , gold4 = -0.75 , diagnosis_effect = 0)))
-  input_ref$exacerbation$ln_rate_betas = "Rates from DOI: 10.2147/COPD.S13826, adjusted to account for diganosis bias. Adjusted on 2018-10-02 to match manuscript. Recalibrated on 2022-11-04, see validate_exacerbations()"
+  input_ref$exacerbation$ln_rate_betas = "Rates from DOI: 10.2147/COPD.S13826, adjusted to account for diganosis bias"
 
   input_help$exacerbation$ln_rate_intercept_sd = "SD of the random intercept for log-hazard of exacerbation"
   input$exacerbation$ln_rate_intercept_sd = sqrt(0.55)
@@ -380,7 +380,7 @@ get_input <- function(age0 = 40,
   # Adapted to US setting (October 25, 2025)
   input_help$exacerbation$logit_severity_betas = "Regression coefficients for the proportional odds model of exacerbation severity"
   input$exacerbation$logit_severity_betas = t(as.matrix(c(intercept1 = -0.309, intercept2 = 2.002, intercept3 = 5.508, female = -0.764, age = -0.007, fev1 = 0.98, smoking_status = 0.348, pack_years = -0.001 , BMI = 0.018)))
-  input_ref$exacerbation$logit_severity_betas = "Shahzad's regression on MACRO with adjusted intercepts to match severity levels reported by Hoogendoorn et al. Last updated on manuscript submission"
+  input_ref$exacerbation$logit_severity_betas = "Adjusted intercepts to match severity levels reported by Wallace et al. 2019."
 
 
   input_help$exacerbation$logit_severity_intercept_sd = "SD of the random intercept for proportional odds model of exacerbation severity"
@@ -625,12 +625,12 @@ get_input <- function(age0 = 40,
 
   # Adapted to US setting (July 9, 2025)
   input_help$medication$medication_costs <- "Costs of treatment"
-  input$medication$medication_costs <-c(None=0,SABA=386.40*input$medication$medication_adherence, LABA=0, SABA_LABA=0,
-                                        LAMA=2497.20*input$medication$medication_adherence, LAMA_SABA=0,
-                                        LAMA_LABA=2616.60*input$medication$medication_adherence, LAMA_LAMA_SABA=0,
+  input$medication$medication_costs <-c(None=0,SABA=495*input$medication$medication_adherence, LABA=0, SABA_LABA=0,
+                                        LAMA=3200*input$medication$medication_adherence, LAMA_SABA=0,
+                                        LAMA_LABA=3353*input$medication$medication_adherence, LAMA_LAMA_SABA=0,
                                         ICS=0, ICS_SABA=0, ICS_LABA=0, ICS_LABA_SABA=0, ICS_LAMA=0, ICS_LAMA_SABA=0,
-                                        ICS_LAMA_LABA=3553.32*input$medication$medication_adherence, ICS_LAMA_LABA_SABA=0)
-  input_ref$medication$medication_costs <- "BC administrative data"
+                                        ICS_LAMA_LABA=4554*input$medication$medication_adherence, ICS_LAMA_LABA_SABA=0)
+  input_ref$medication$medication_costs <- "Feldman et al. 2021"
 
   # utility from medications
   input_help$medication$medication_utility <- "Utility addition from treatment"
@@ -685,29 +685,29 @@ get_input <- function(age0 = 40,
   ##cost and utility
 
   # Adapted to US setting (July 9, 2025)
-  input$cost$bg_cost_by_stage=t(as.matrix(c(N=0, I=1314*1.0528, II=1284*1.0528, III=2281*1.0528, IV=2918*1.0528)))
-  input_help$cost$bg_cost_by_stage="Annual direct (NON-TREATMENT) maintenance costs for non-COPD and COPD by GOLD grades"
+  input$cost$bg_cost_by_stage=t(as.matrix(c(N=0, I=1786*1.0528, II=1754*1.0528, III=3100*1.0528, IV=3966*1.0528)))
+  input_help$cost$bg_cost_by_stage="Annual direct (NON-TREATMENT) maintenance costs for non-COPD and COPD by GOLD grades: Wallace et al. 2019"
   #  input$cost$ind_bg_cost_by_stage=t(as.matrix(c(N=0, I=40, II=80, III=134, IV=134))) #TODO Not implemented in C yet.
   #  input_help$cost$ind_bg_cost_by_stage="Annual indirect costs for non-COPD, and COPD by GOLD grades"
 
   # Adapted to US setting (July 9, 2025)
-  input$cost$exac_dcost=t(as.matrix(c(mild=16.1*1.0528,moderate=2107*1.0528,severe=22729*1.0528, verysevere=44909*1.0528)))
-  input_help$cost$exac_dcost="Incremental direct costs of exacerbations by severity levels"
+  input$cost$exac_dcost=t(as.matrix(c(mild=16*1.0528,moderate=2756*1.0528,severe=29733*1.0528, verysevere=67587*1.0528)))
+  input_help$cost$exac_dcost="GoodRx, Bogart et al. 2020, Dalal et al. 2011"
 
   input$cost$cost_case_detection <- input$diagnosis$case_detection_methods[3,"None"]
   input_help$cost$cost_case_detection <- "Cost of case detection"
 
   # Adapted to US setting (July 9, 2025)
-  input$cost$cost_outpatient_diagnosis <- 61.81
-  input_help$cost$cost_outpatient_diagnosis <- "Cost of diagnostic spirometry"
+  input$cost$cost_outpatient_diagnosis <- 38
+  input_help$cost$cost_outpatient_diagnosis <- "Cost of diagnostic spirometry CMS code"
 
   # Adapted to US setting (July 9, 2025)
-  input$cost$cost_gp_visit <- 94.15
-  input_help$cost$cost_gp_visit <- "Cost of GP visit"
+  input$cost$cost_gp_visit <- 125
+  input_help$cost$cost_gp_visit <- "Cost of GP visit CMS code"
 
   # Adapted to US setting (July 9, 2025)
-  input$cost$cost_smoking_cessation <- 125.65
-  input_help$cost$cost_smoking_cessation <- "Cost of 12 weeks Nicotine Replacement Therapy from Mullen BMJ Tobacco Control 2014"
+  input$cost$cost_smoking_cessation <- 133.93
+  input_help$cost$cost_smoking_cessation <- "Cost of 12 weeks Nicotine Replacement Therapy and Behavioural Counselling"
 
   #input$cost$doctor_visit_by_type<-t(as.matrix(c(50,150)))
 
